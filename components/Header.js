@@ -1,14 +1,33 @@
 import React from 'react'
 import  Navbar  from 'react-bootstrap/Navbar'
+import  Nav  from 'react-bootstrap/Nav'
+import  NavItem  from 'react-bootstrap/NavItem'
+import Link from 'next/link'
+import NavLink from 'react-bootstrap/NavLink';
+
 
 export default class Header extends React.Component {
   static async getInitialProps() {
     return {}
   }
-  render() {
-    return (
-        <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
   
+  render() {
+      
+    const linkStyle = {
+        marginRight: 15
+    }
+
+    return (
+        <Navbar bg="dark" variant="dark">
+            <Navbar.Brand>NBA Stats</Navbar.Brand>
+            <Nav className="mr-auto">
+                <Link href="/">
+                    <a style={linkStyle}>Home</a>
+                </Link>
+                <Link href="/about">
+                    <a style={linkStyle}>About</a>
+                </Link>
+            </Nav>
         </Navbar>
     )
   }
