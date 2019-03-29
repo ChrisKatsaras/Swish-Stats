@@ -1,4 +1,3 @@
-const withPlugins = require('next-compose-plugins');
 const withBundleAnalyzer = require("@zeit/next-bundle-analyzer");
 const withCSS = require('@zeit/next-css');
 
