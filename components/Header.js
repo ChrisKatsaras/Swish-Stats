@@ -1,9 +1,7 @@
 import React from 'react'
 import  Navbar  from 'react-bootstrap/Navbar'
 import  Nav  from 'react-bootstrap/Nav'
-import  NavItem  from 'react-bootstrap/NavItem'
 import Link from 'next/link'
-import NavLink from 'react-bootstrap/NavLink';
 
 
 export default class Header extends React.Component {
