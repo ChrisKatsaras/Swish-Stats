@@ -1,31 +1,23 @@
-import 'bootstrap/dist/css/bootstrap.css';
 import Layout from '../components/Layout.js'
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Jumbotron from 'react-bootstrap/Jumbotron'
-import Button from 'react-bootstrap/Button'
 
+
+const image = {
+    backgroundImage: `url('../static/nba.jpg')`
+}
 const Index = (props) => (
     
     <Layout>
-        <Container>
-            <Row className="justify-content-md-center">
-                <Col>
-                    <h1 className="text-center">Hello, world!</h1>
-                </Col>
-            </Row>
-            <Jumbotron>
-            <h1>Hello, world!</h1>
-            <p>
-            This is a simple hero unit, a simple jumbotron-style component for calling
-            extra attention to featured content or information.
-            </p>
-            <p>
-            <Button variant="primary">Learn more</Button>
-            </p>
-            </Jumbotron>
-        </Container>
+        <div  style={image} className="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
+            <div className="col-md-5 p-lg-5 mx-auto my-5">
+                <h1 className="display-4 font-weight-normal">NBA Stats</h1>
+                <p className="lead font-weight-normal">And an even wittier subheading to boot. Jumpstart your marketing efforts with this example based on Apple’s marketing pages.</p>
+                <a className="btn btn-outline-secondary" href="#">Coming soon</a>
+            </div>
+            <div className="product-device shadow-sm d-none d-md-block"></div>
+            <div className="product-device product-device-2 shadow-sm d-none d-md-block"></div>
+        </div>
+
+        
     </Layout>
 )
   

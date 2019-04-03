@@ -16,7 +16,7 @@ export default class Header extends React.Component {
     }
 
     return (
-        <Navbar bg="dark" variant="dark">
+        <Navbar fixed="top" bg="dark" variant="dark" >
             <Navbar.Brand>NBA Stats</Navbar.Brand>
             <Nav className="mr-auto">
                 <Link href="/">
