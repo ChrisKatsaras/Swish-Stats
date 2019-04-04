@@ -18,9 +18,15 @@ export default class Header extends React.Component {
         background: 'transparent'
     }
 
+    const fontPrimary = {
+        fontFamily: `'Ubuntu', sans-serif`,
+        fontWeight: 'bold'
+    }
+    
+
     return (
         <Navbar style={navbarBackground} fixed="top" variant="dark" >
-            <Navbar.Brand>Swish Stats</Navbar.Brand>
+            <Navbar.Brand style={fontPrimary}>Swish Stats</Navbar.Brand>
             <Nav className="mr-auto">
                 <Link href="/">
                     <a style={linkStyle}>Home</a>
