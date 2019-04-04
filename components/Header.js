@@ -1,6 +1,6 @@
 import React from 'react'
-import  Navbar  from 'react-bootstrap/Navbar'
-import  Nav  from 'react-bootstrap/Nav'
+import Navbar  from 'react-bootstrap/Navbar'
+import Nav  from 'react-bootstrap/Nav'
 import Link from 'next/link'
 
 
@@ -14,10 +14,13 @@ export default class Header extends React.Component {
     const linkStyle = {
         marginRight: 15
     }
+    const navbarBackground = {
+        background: 'transparent'
+    }
 
     return (
-        <Navbar fixed="top" bg="dark" variant="dark" >
-            <Navbar.Brand>NBA Stats</Navbar.Brand>
+        <Navbar style={navbarBackground} fixed="top" variant="dark" >
+            <Navbar.Brand>Swish Stats</Navbar.Brand>
             <Nav className="mr-auto">
                 <Link href="/">
                     <a style={linkStyle}>Home</a>
