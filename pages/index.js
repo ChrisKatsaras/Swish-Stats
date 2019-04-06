@@ -1,5 +1,6 @@
 import Layout from '../components/Layout.js'
 import fetch from 'isomorphic-unfetch'
+import {AsyncTypeahead} from 'react-bootstrap-typeahead';
 
 const masthead = {
     background: 'linear-gradient(#16222A, #343a44)',
@@ -18,6 +19,14 @@ const Index = (props) => (
             <div className="col-md-5 p-lg-5 mx-auto my-5">
                 <h1 className="display-4 text-light" style={fontPrimary}>Swish Stats</h1>
             </div>
+
+            <AsyncTypeahead
+                onSearch={query => {
+                    fetch(`https://api.github.com/search/users?q=${query}`)
+                    
+                }}
+                className="col-md-5 p-lg-5 mx-auto my-5"/>
+
             <div className="product-device shadow-sm d-none d-md-block"></div>
             <div className="product-device product-device-2 shadow-sm d-none d-md-block"></div>
         </div>

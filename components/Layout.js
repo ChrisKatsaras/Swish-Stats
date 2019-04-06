@@ -1,4 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.css';
+import 'react-bootstrap-typeahead/css/Typeahead.css';
 import Header from './Header';
 import Head from 'next/head'
 
