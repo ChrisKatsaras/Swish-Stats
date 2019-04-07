@@ -13,6 +13,14 @@ const fontPrimary = {
     fontWeight: 'bold'
 }
 
+
+const filterByCallback = function callback(option, props) {
+    return (
+        props.text.toLowerCase().indexOf(option.first_name.toLowerCase()) !== -1 ||
+        props.text.toLowerCase().indexOf(props.text.toLowerCase()) !== -1
+    )
+}
+
 export default class Index extends React.Component {
     constructor(props) {
         super(props);
@@ -28,7 +36,6 @@ export default class Index extends React.Component {
     }
 
     _handleSearch = debounce(1000, function(query) {
-        console.log(query)
         this.setState({isLoading: true});
         fetch(`https://www.balldontlie.io/api/v1/players?search=${query}`)
         .then(resp => resp.json())
@@ -49,13 +56,10 @@ export default class Index extends React.Component {
 
                     <AsyncTypeahead
                         id="Search"
-
-                        {...this.state}
-                        filterBy={ filterByFields}
-                        labelKey={(option) => `${option.first_name}`}
+                        filterBy={ filterByCallback}
+                        labelKey={(option) => `${option.first_name} ${option.last_name}`}
                         isLoading={this.state.isLoading}
                         minLength={3}
-                        name="CompanyId"
                         onSearch={this._handleSearch}
                         placeholder="Search Player Name"
                         className="col-md-5 p-lg-5 mx-auto my-5"
