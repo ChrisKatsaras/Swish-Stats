@@ -10,12 +10,12 @@ const fontPrimary = {
     fontWeight: 'bold'
 }
 
-export default function About() {
+export default function Results() {
   return (
     <Layout>
     <div style={masthead} className="position-relative overflow-hidden text-center">
             <div className="col-md-5 p-lg-5 mx-auto my-5">
-                <h1 className="display-4 text-light" style={fontPrimary}>About Page</h1>
+                <h1 className="display-4 text-light" style={fontPrimary}>Results</h1>
             </div>
             <div className="product-device shadow-sm d-none d-md-block"></div>
             <div className="product-device product-device-2 shadow-sm d-none d-md-block"></div>
