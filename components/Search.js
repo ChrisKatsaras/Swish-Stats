@@ -1,4 +1,3 @@
-import Layout from '../components/Layout.js'
 import fetch from 'isomorphic-unfetch'
 import {AsyncTypeahead} from 'react-bootstrap-typeahead';
 import { debounce } from 'throttle-debounce';

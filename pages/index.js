@@ -1,5 +1,4 @@
-import Layout from '../components/Layout.js'
-import Search from '../components/Search';
+import Search from '../components/Search.js';
 
 export default class Index extends React.Component {
     constructor(props) {
@@ -12,9 +11,7 @@ export default class Index extends React.Component {
 
     render() {
         return (
-            <Layout>
                 <Search/>
-            </Layout>
         )
     }
 }
