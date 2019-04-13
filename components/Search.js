@@ -2,6 +2,8 @@ import fetch from 'isomorphic-unfetch'
 import {AsyncTypeahead} from 'react-bootstrap-typeahead';
 import { debounce } from 'throttle-debounce';
 import { getMainColor } from 'nba-color';
+import Router from 'next/router'
+
 
 const masthead = {
     background: 'linear-gradient(#16222A, #343a44)',
@@ -30,6 +32,7 @@ export default class Search extends React.Component {
           };
         this._handleSearch = this._handleSearch.bind(this);
         this.setTeamColours = this.setTeamColours.bind(this);
+        this.routeToResults = this.routeToResults.bind(this);
     }
     
     componentDidMount() {
@@ -58,6 +61,16 @@ export default class Search extends React.Component {
             })
         })
     });
+
+    routeToResults(e)
+    {
+        console.log(e)
+        Router.push({
+            pathname: '/results',
+            query: { playerId: e[0].id }
+
+          })
+    }
     
     render() {
         return (
@@ -73,6 +86,7 @@ export default class Search extends React.Component {
                     isLoading={this.state.isLoading}
                     minLength={3}
                     onSearch={this._handleSearch}
+                    onChange={(e) => this.routeToResults(e)}
                     placeholder="Search Player Name"
                     className="col-md-5 p-lg-5 mx-auto my-5"
                     options={this.state.options}
