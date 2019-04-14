@@ -40,14 +40,12 @@ export default class Search extends React.Component {
     }
 
     setTeamColours(searchData){
-
+    
         searchData.forEach(element => {
             element["colour"]=getMainColor(element.team.abbreviation)
         });
 
         this.setState({ options: searchData})
-
-        console.log("The options", this.state.options)
     }
 
     _handleSearch = debounce(1000, function(query) {
@@ -64,12 +62,10 @@ export default class Search extends React.Component {
 
     routeToResults(e)
     {
-        console.log(e)
+        this.props.onResultRoute(e[0].id);            
         Router.push({
-            pathname: '/results',
-            query: { playerId: e[0].id }
-
-          })
+            pathname: '/results'
+        })
     }
     
     render() {

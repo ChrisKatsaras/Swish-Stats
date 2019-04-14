@@ -11,7 +11,7 @@ export default class Index extends React.Component {
 
     render() {
         return (
-                <Search/>
+            <Search onResultRoute={this.props.onResultRoute}/>
         )
     }
 }
