@@ -21,7 +21,7 @@ export function calculateSeasonTotals(playerId) {
             let totalPoints = points.reduce( (a, b) => { return a + b}, 0);
             let totalAssists = assists.reduce( (a, b) => { return a + b}, 0);
             let totalRebounds = rebounds.reduce( (a, b) => { return a + b}, 0);
-            let totalSteal = steals.reduce( (a, b) => { return a + b}, 0);
+            let totalSteals = steals.reduce( (a, b) => { return a + b}, 0);
             let totalBlocks = blocks.reduce( (a, b) => { return a + b}, 0);
             let totalTOV = tov.reduce( (a, b) => { return a + b}, 0);
 

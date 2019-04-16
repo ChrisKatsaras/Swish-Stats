@@ -56,7 +56,7 @@ export default class Results extends React.Component {
                 <div className="col-md-5 p-lg-5 mx-auto my-5">
                     <h1 className="display-4 text-light" style={fontPrimary}>Results</h1>
                     <h3 className="text-light">Points</h3>
-                    <h2 className="display-4 text-light">{this.state.playerSeasonTotals.sumPoints}</h2>
+                    <h2 className="display-4 text-light">{this.state.playerSeasonTotals.totalPoints}</h2>
                 </div>
                 <div className="product-device shadow-sm d-none d-md-block"></div>
                 <div className="product-device product-device-2 shadow-sm d-none d-md-block"></div>
