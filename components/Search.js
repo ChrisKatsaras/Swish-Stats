@@ -87,14 +87,10 @@ export default class Search extends React.Component {
                     className="col-md-5 p-lg-5 mx-auto my-5"
                     options={this.state.options}
                     renderMenuItemChildren={(option) => (
-                        <div className="row">
-                            <div className="col-xs-1" >
-                            </div>
-                            <div className="col-xs-*">
-                                {option.first_name} {option.last_name}
-                                <div>
-                                    <small style={{backgroundColor: option.colour.hex, color: 'white'}}>Team: {option.team.full_name}</small>
-                                </div>
+                        <div className="col-xs-*">
+                            {option.first_name} {option.last_name}
+                            <div>
+                                <span class="badge" style={{backgroundColor: option.colour.hex, color: 'white'}}>{option.team.full_name}</span>
                             </div>
                         </div>
                     )}
