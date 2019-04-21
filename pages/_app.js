@@ -8,14 +8,14 @@ export default class MyApp extends App {
         super(props);
         
         this.state = {
-            playerId: null
+            playerInfo: null
         };
-        this.setPlayerId = this.setPlayerId.bind(this)
+        this.setPlayerInfo = this.setPlayerInfo.bind(this)
     }
 
 
-    setPlayerId = (id) => {
-        this.setState({playerId: id});
+    setPlayerInfo = (playerInfo) => {
+        this.setState({playerInfo: playerInfo});
     }
 
     render () {
@@ -23,7 +23,7 @@ export default class MyApp extends App {
         return (
         <Container>
             <Layout>
-            <Component onResultRoute={this.setPlayerId} playerId={this.state.playerId} {...pageProps} />
+            <Component onResultRoute={this.setPlayerInfo} playerInfo={this.state.playerInfo} {...pageProps} />
             </Layout>
         </Container>
         )

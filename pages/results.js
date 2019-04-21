@@ -32,9 +32,9 @@ export default class Results extends React.Component {
     }
 
     componentDidMount() {
-        if(this.props.playerId != null)
+        if(this.props.playerInfo != null)
         {
-            calculateSeasonTotals(this.props.playerId)
+            calculateSeasonTotals(this.props.playerInfo.id)
             .then(res => {
                 this.setState({playerSeasonTotals:res});
             });
@@ -45,7 +45,7 @@ export default class Results extends React.Component {
         if (!this.state.playerSeasonTotals) {
             return ( 
                 <div style={masthead} className="position-relative overflow-hidden text-light text-center">
-                    <div style={loader} class="spinner-grow col-md-5 p-lg-5 mx-auto my-5" role="status" />
+                    <div style={loader} className="spinner-grow col-md-5 p-lg-5 mx-auto my-5" role="status" />
                 </div>
             )
 

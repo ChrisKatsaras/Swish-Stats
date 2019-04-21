@@ -62,7 +62,7 @@ export default class Search extends React.Component {
 
     routeToResults(e)
     {
-        this.props.onResultRoute(e[0].id);            
+        this.props.onResultRoute(e[0]);            
         Router.push({
             pathname: '/results'
         })
