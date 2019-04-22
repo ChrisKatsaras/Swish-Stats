@@ -14,5 +14,25 @@ module.exports = withCSS(
         analyzerMode: 'static',
         reportFilename: '../bundles/client.html'
       }
-  }
-}));
+    },
+    webpack(config, options) {
+      config.module.rules.push({
+          test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
+          use: [
+      {
+        loader: "url-loader",
+        options: {
+          limit: 8192,
+		      fallback: {
+             loader: 'file-loader',
+             options: { publicPath: '/_next/static/images', outputPath: 'static/images' }
+          }
+        }
+      }
+    ]
+      })
+
+      return config
+    }
+  })
+);

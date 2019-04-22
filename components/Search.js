@@ -3,6 +3,9 @@ import {AsyncTypeahead} from 'react-bootstrap-typeahead';
 import { debounce } from 'throttle-debounce';
 import { getMainColor } from 'nba-color';
 import Router from 'next/router'
+import { importTeamLogos } from '../helpers/image.helper'
+
+const teamLogos = importTeamLogos(require.context('../static', false, /\.(svg)$/));
 
 
 const masthead = {
