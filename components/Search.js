@@ -51,6 +51,11 @@ export default class Search extends React.Component {
         this.setState({ options: searchData})
     }
 
+    getTeamLogo(team)
+    {
+        return teamLogos[team];
+    }
+
     _handleSearch = debounce(1000, function(query) {
         this.setState({isLoading: true});
         fetch(`https://www.balldontlie.io/api/v1/players?search=${query}`)
@@ -93,6 +98,7 @@ export default class Search extends React.Component {
                         <div className="col-xs-*">
                             {option.first_name} {option.last_name}
                             <div>
+                                <img style={{maxHeight: '50px'}}src={this.getTeamLogo(option.team.abbreviation)}></img>
                                 <span class="badge" style={{backgroundColor: option.colour.hex, color: 'white'}}>{option.team.full_name}</span>
                             </div>
                         </div>
