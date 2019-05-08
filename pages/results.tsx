@@ -2,6 +2,7 @@ import React from 'react';
 import { calculateSeasonTotals, getPlayersSeasonTotal } from "../helpers/stat.helper";
 import { Player } from '../models/player';
 import { importTeamLogos } from '../helpers/image.helper';
+import StatCard from '../components/StatCard';
 
 const teamLogos: {[key: string]: string} = importTeamLogos(require.context('../static', false, /\.(svg)$/));
 
@@ -10,19 +11,6 @@ const masthead = {
     height: '100vh',
     paddingLeft: '30px',
     paddingRight: '30px'
-};
-
-const statCard = {
-    background: '#27293d',
-    marginBottom: '30px',
-    fontSize: '1.4375rem',
-    border: 0,
-};
-
-const statCardFooter = {
-    background: '#27293d',
-    border: 0,
-    color: 'white'
 };
 
 const loader = {
@@ -105,50 +93,10 @@ export default class Results extends React.Component<Props, State> {
                         { this.props.playerInfo.first_name } { this.props.playerInfo.last_name }
                     </h1>
                     <div className="row">
-                        <div className="col-lg-3 col-md-6">
-                            <div className="card" style={statCard}>
-                                <div className="card-body">
-                                    <h3 className="display-4 text-light">{this.state.playerSeasonAverages.pts}</h3>
-                                </div>
-                                <div className="card-footer" style={statCardFooter}>
-                                <hr/>
-                                    Point Per Game
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-lg-3 col-md-6">
-                            <div className="card" style={statCard}>
-                                <div className="card-body">
-                                    <h3 className="display-4 text-light">{this.state.playerSeasonAverages.ast}</h3>
-                                </div>
-                                <div className="card-footer" style={statCardFooter}>
-                                <hr/>
-                                    Assists Per Game
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-lg-3 col-md-6">
-                            <div className="card" style={statCard}>
-                                <div className="card-body">
-                                    <h3 className="display-4 text-light">{this.state.playerSeasonAverages.reb}</h3>
-                                </div>
-                                <div className="card-footer" style={statCardFooter}>
-                                <hr/>
-                                    Rebounds Per Game
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-lg-3 col-md-6">
-                            <div className="card" style={statCard}>
-                                <div className="card-body">
-                                    <h3 className="display-4 text-light">{this.state.playerSeasonAverages.stl}</h3>
-                                </div>
-                                <div className="card-footer" style={statCardFooter}>
-                                <hr/>
-                                    Steals Per Game
-                                </div>
-                            </div>
-                        </div>
+                        <StatCard footerText="Points Per Game" statistic={this.state.playerSeasonAverages.pts}/>
+                        <StatCard footerText="Rebounds Per Game" statistic={this.state.playerSeasonAverages.reb}/>
+                        <StatCard footerText="Assists Per Game" statistic={this.state.playerSeasonAverages.ast}/>
+                        <StatCard footerText="Steals Per Game" statistic={this.state.playerSeasonAverages.stl}/>
                     </div>
                 </div>
                 <div className="product-device shadow-sm d-none d-md-block"></div>
