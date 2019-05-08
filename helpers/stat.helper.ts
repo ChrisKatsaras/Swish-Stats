@@ -32,7 +32,15 @@ export function calculateSeasonTotals(playerId: number) {
                 totalSteals,
                 totalBlocks,
                 totalTOV
-            }
+            };
             return playerSeasonTotals;
-        })
+        });
+}
+
+export function getPlayersSeasonTotal(year: number, playerId: number) {
+    return fetch('https://www.balldontlie.io/api/v1/season_averages?season='+year+'&player_ids[]='+playerId)
+        .then(resp => resp.json())
+        .then((res) => {
+            return res.data;
+        });
 }

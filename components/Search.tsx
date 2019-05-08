@@ -10,7 +10,7 @@ import { Player } from '../models/player';
 const teamLogos: {[key: string]: string} = importTeamLogos(require.context('../static', false, /\.(svg)$/));
 
 const masthead = {
-    background: 'linear-gradient(#16222A, #343a44)',
+    background: '#1e1e2f',
     height: '100vh'
 };
 
