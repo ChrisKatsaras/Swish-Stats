@@ -15,7 +15,8 @@ const masthead = {
 const statCard = {
     background: '#27293d',
     marginBottom: '30px',
-    fontSize: '1.4375rem'
+    fontSize: '1.4375rem',
+    border: 0,
 };
 
 const statCardFooter = {
@@ -100,7 +101,7 @@ export default class Results extends React.Component<Props, State> {
             <div style={masthead} className="position-relative overflow-hidden text-center">
                 <div className="mx-auto my-5">
                     <h1 className="display-4 text-light" style={fontPrimary}>
-                        <img style={{ maxHeight: '75px' }} src={this.getTeamLogo(this.props.playerInfo.team.abbreviation)}></img>
+                        <img style={{ maxHeight: '100px' }} src={this.getTeamLogo(this.props.playerInfo.team.abbreviation)}></img>
                         { this.props.playerInfo.first_name } { this.props.playerInfo.last_name }
                     </h1>
                     <div className="row">
