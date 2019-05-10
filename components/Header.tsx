@@ -14,7 +14,7 @@ export default class Header extends React.Component {
     };
 
     const navbarBackground = {
-        background: 'transparent'
+        background: '#1e1e2f'
     };
 
     const fontPrimary = {
@@ -23,7 +23,7 @@ export default class Header extends React.Component {
     } as React.CSSProperties;
 
     return (
-        <Navbar style={navbarBackground} fixed="top" variant="dark">
+        <Navbar style={navbarBackground} className="navbar" variant="dark">
             <Navbar.Brand style={fontPrimary}>Swish Stats</Navbar.Brand>
             <Nav className="mr-auto">
                 <Link href="/">
