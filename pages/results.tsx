@@ -3,14 +3,15 @@ import { calculateSeasonTotals, getPlayersSeasonTotal } from "../helpers/stat.he
 import { Player } from '../models/player';
 import { importTeamLogos } from '../helpers/image.helper';
 import StatCard from '../components/StatCard';
+import Router from 'next/router';
 
 const teamLogos: {[key: string]: string} = importTeamLogos(require.context('../static', false, /\.(svg)$/));
 
 const masthead = {
     background: '#1e1e2f',
-    height: '100vh',
     paddingLeft: '30px',
-    paddingRight: '30px'
+    paddingRight: '30px',
+    minHeight: '100vh'
 };
 
 const loader = {
@@ -50,6 +51,7 @@ export default class Results extends React.Component<Props, State> {
     }
 
     componentDidMount() {
+
         if (this.props.playerInfo != null) {
             calculateSeasonTotals(this.props.playerInfo.id)
             .then((res) => {
@@ -59,6 +61,11 @@ export default class Results extends React.Component<Props, State> {
             getPlayersSeasonTotal(2018, this.props.playerInfo.id)
             .then((res) => {
                 this.setState({ playerSeasonAverages: res[0] });
+            });
+        }
+        else {
+            Router.push({
+                pathname: '/'
             });
         }
     }
@@ -93,10 +100,9 @@ export default class Results extends React.Component<Props, State> {
                         { this.props.playerInfo.first_name } { this.props.playerInfo.last_name }
                     </h1>
                     <div className="row">
-                        <StatCard footerText="Points Per Game" statistic={this.state.playerSeasonAverages.pts}/>
-                        <StatCard footerText="Rebounds Per Game" statistic={this.state.playerSeasonAverages.reb}/>
-                        <StatCard footerText="Assists Per Game" statistic={this.state.playerSeasonAverages.ast}/>
-                        <StatCard footerText="Steals Per Game" statistic={this.state.playerSeasonAverages.stl}/>
+                        <StatCard categoryAbbreviation={'ppg'} logo={this.getTeamLogo(this.props.playerInfo.team.abbreviation)} playerName={this.props.playerInfo.first_name + " " + this.props.playerInfo.last_name} footerText="Points Per Game" statistic={this.state.playerSeasonAverages.pts}/>
+                        <StatCard categoryAbbreviation={'rbg'} logo={this.getTeamLogo(this.props.playerInfo.team.abbreviation)} playerName={this.props.playerInfo.first_name + " " + this.props.playerInfo.last_name} footerText="Rebounds Per Game" statistic={this.state.playerSeasonAverages.reb}/>
+                        <StatCard categoryAbbreviation={'apg'} logo={this.getTeamLogo(this.props.playerInfo.team.abbreviation)} playerName={this.props.playerInfo.first_name + " " + this.props.playerInfo.last_name} footerText="Assists Per Game" statistic={this.state.playerSeasonAverages.ast}/>
                     </div>
                 </div>
                 <div className="product-device shadow-sm d-none d-md-block"></div>
