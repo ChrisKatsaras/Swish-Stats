@@ -1,6 +1,16 @@
 import Search from '../components/Search';
 import React from 'react';
 
+const masthead = {
+    background: '#1e1e2f',
+    height: '100vh'
+};
+
+const fontPrimary = {
+    fontFamily: "'Ubuntu', sans-serif",
+    fontWeight: 'bold'
+} as React.CSSProperties;
+
 type Props = {
     onResultRoute: () => void;
 };
@@ -18,7 +28,12 @@ export default class Index extends React.Component<Props, State> {
 
     render() {
         return (
-            <Search onResultRoute={this.props.onResultRoute}/>
+            <div style={masthead} className="position-relative overflow-hidden text-center">
+                <div className="col-md-5 mx-auto my-5">
+                    <h1 className="display-4 text-light" style={fontPrimary}>Swish Stats</h1>
+                </div>
+                <Search onResultRoute={this.props.onResultRoute}/>
+            </div>
         );
     }
 }

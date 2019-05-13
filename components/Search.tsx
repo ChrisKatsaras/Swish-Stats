@@ -9,16 +9,6 @@ import { Player } from '../models/player';
 
 const teamLogos: {[key: string]: string} = importTeamLogos(require.context('../static', false, /\.(svg)$/));
 
-const masthead = {
-    background: '#1e1e2f',
-    height: '100vh'
-};
-
-const fontPrimary = {
-    fontFamily: "'Ubuntu', sans-serif",
-    fontWeight: 'bold'
-} as React.CSSProperties;
-
 const filterByCallback = function callback(option: Player, props: any) {
     return (
         props.text.toLowerCase().indexOf(option.first_name.toLowerCase()) !== -1 ||
@@ -85,35 +75,27 @@ export default class Search extends React.Component<Props, State> {
 
     render() {
         return (
-            <div style={masthead} className="position-relative overflow-hidden text-center">
-                <div className="col-md-5 p-lg-5 mx-auto my-5">
-                    <h1 className="display-4 text-light" style={fontPrimary}>Swish Stats</h1>
-                </div>
-
-                <AsyncTypeahead
-                    id="Search"
-                    filterBy={ filterByCallback}
-                    labelKey={(option: Player) => `${option.first_name} ${option.last_name}`}
-                    isLoading={this.state.isLoading}
-                    minLength={3}
-                    onSearch={this.handleSearch}
-                    onChange={e => this.routeToResults(e)}
-                    placeholder="Search Player Name"
-                    className="col-md-5 p-lg-5 mx-auto my-5"
-                    options={this.state.options}
-                    renderMenuItemChildren={ option => (
-                        <div className="col-xs-*">
-                            {option.first_name} {option.last_name}
-                            <div>
-                                <img style={{ maxHeight: '50px' }}src={this.getTeamLogo(option.team.abbreviation)}></img>
-                                <span className="badge" style={{ backgroundColor: option.colour.hex, color: 'white' }}>{option.team.full_name}</span>
-                            </div>
+            <AsyncTypeahead
+                id="Search"
+                filterBy={ filterByCallback}
+                labelKey={(option: Player) => `${option.first_name} ${option.last_name}`}
+                isLoading={this.state.isLoading}
+                minLength={3}
+                onSearch={this.handleSearch}
+                onChange={e => this.routeToResults(e)}
+                placeholder="Search Player Name"
+                className="col-md-5 p-lg-5 mx-auto my-5"
+                options={this.state.options}
+                renderMenuItemChildren={ option => (
+                    <div className="col-xs-*">
+                        {option.first_name} {option.last_name}
+                        <div>
+                            <img style={{ maxHeight: '50px' }}src={this.getTeamLogo(option.team.abbreviation)}></img>
+                            <span className="badge" style={{ backgroundColor: option.colour.hex, color: 'white' }}>{option.team.full_name}</span>
                         </div>
-                    )}
-                />
-                <div className="product-device shadow-sm d-none d-md-block"></div>
-                <div className="product-device product-device-2 shadow-sm d-none d-md-block"></div>
-            </div>
+                    </div>
+                )}
+            />
         );
     }
 }
