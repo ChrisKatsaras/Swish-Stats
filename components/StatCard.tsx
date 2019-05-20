@@ -4,8 +4,12 @@ const statCard = {
     background: '#27293d',
     marginBottom: '30px',
     fontSize: '1.4375rem',
-    border: 0,
+    border: 0
 };
+
+const statCardBody = {
+    paddingBottom: '0px'
+}
 
 const statCardFooter = {
     background: '#27293d',
@@ -62,7 +66,7 @@ export default class Index extends React.Component<Props, State> {
         return (
             <div className="col-lg-4 col-md-6">
                 <div className="card" style={statCard}>
-                    <div className="card-body">
+                    <div className="card-body" style={statCardBody}>
                         <div className="row">
                             <div className="col-8 text-light" style={cardInfoSection}>
                                 <div className="column">

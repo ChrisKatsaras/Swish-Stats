@@ -62,8 +62,7 @@ export default class Results extends React.Component<Props, State> {
             .then((res) => {
                 this.setState({ playerSeasonAverages: res[0] });
             });
-        }
-        else {
+        } else {
             Router.push({
                 pathname: '/'
             });
@@ -95,14 +94,13 @@ export default class Results extends React.Component<Props, State> {
         return (
             <div style={masthead} className="position-relative overflow-hidden text-center">
                 <div className="mx-auto my-5">
-                    <h1 className="display-4 text-light" style={fontPrimary}>
-                        <img style={{ maxHeight: '100px' }} src={this.getTeamLogo(this.props.playerInfo.team.abbreviation)}></img>
-                        { this.props.playerInfo.first_name } { this.props.playerInfo.last_name }
-                    </h1>
                     <div className="row">
                         <StatCard categoryAbbreviation={'ppg'} logo={this.getTeamLogo(this.props.playerInfo.team.abbreviation)} playerName={this.props.playerInfo.first_name + " " + this.props.playerInfo.last_name} footerText="Points Per Game" statistic={this.state.playerSeasonAverages.pts}/>
                         <StatCard categoryAbbreviation={'rbg'} logo={this.getTeamLogo(this.props.playerInfo.team.abbreviation)} playerName={this.props.playerInfo.first_name + " " + this.props.playerInfo.last_name} footerText="Rebounds Per Game" statistic={this.state.playerSeasonAverages.reb}/>
                         <StatCard categoryAbbreviation={'apg'} logo={this.getTeamLogo(this.props.playerInfo.team.abbreviation)} playerName={this.props.playerInfo.first_name + " " + this.props.playerInfo.last_name} footerText="Assists Per Game" statistic={this.state.playerSeasonAverages.ast}/>
+                        <StatCard categoryAbbreviation={'mpg'} logo={this.getTeamLogo(this.props.playerInfo.team.abbreviation)} playerName={this.props.playerInfo.first_name + " " + this.props.playerInfo.last_name} footerText="Minutes Per Game" statistic={this.state.playerSeasonAverages.min}/>
+                        <StatCard categoryAbbreviation={'spg'} logo={this.getTeamLogo(this.props.playerInfo.team.abbreviation)} playerName={this.props.playerInfo.first_name + " " + this.props.playerInfo.last_name} footerText="Steals Per Game" statistic={this.state.playerSeasonAverages.stl}/>
+                        <StatCard categoryAbbreviation={'bpg'} logo={this.getTeamLogo(this.props.playerInfo.team.abbreviation)} playerName={this.props.playerInfo.first_name + " " + this.props.playerInfo.last_name} footerText="Blocks Per Game" statistic={this.state.playerSeasonAverages.blk}/>
                     </div>
                 </div>
                 <div className="product-device shadow-sm d-none d-md-block"></div>
