@@ -1,21 +1,21 @@
-import Search from '../components/Search';
-import React from 'react';
+import React from "react";
+import Search from "../components/Search";
 
 const masthead = {
-    background: '#1e1e2f',
-    height: '100vh'
+    background: "#1e1e2f",
+    height: "100vh"
 };
 
 const fontPrimary = {
     fontFamily: "'Ubuntu', sans-serif",
-    fontWeight: 'bold'
+    fontWeight: "bold"
 } as React.CSSProperties;
 
-type Props = {
+interface Props {
     onResultRoute: () => void;
-};
+}
 
-type State = {};
+interface State {}
 
 export default class Index extends React.Component<Props, State> {
     constructor(props: Props, state: State) {
@@ -26,13 +26,17 @@ export default class Index extends React.Component<Props, State> {
         };
     }
 
-    render() {
+    public render() {
         return (
-            <div style={masthead} className="position-relative overflow-hidden text-center">
+            <div
+                style={masthead}
+                className="position-relative overflow-hidden text-center">
                 <div className="col-md-5 mx-auto my-5">
-                    <h1 className="display-4 text-light" style={fontPrimary}>Swish Stats</h1>
+                    <h1 className="display-4 text-light" style={fontPrimary}>
+                        Swish Stats
+                    </h1>
                 </div>
-                <Search onResultRoute={this.props.onResultRoute}/>
+                <Search onResultRoute={this.props.onResultRoute} />
             </div>
         );
     }

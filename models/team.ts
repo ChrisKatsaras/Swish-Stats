@@ -1,5 +1,4 @@
-export interface Team
-{
+export interface Team {
     id: number;
     abbreviation: string;
     city: string;

@@ -7,7 +7,8 @@
         "static-export": "npm run build && npm run export",
         "analyze": "BUNDLE_ANALYZE=both next build",
         "analyze:server": "BUNDLE_ANALYZE=server next build",
-        "analyze:browser": "BUNDLE_ANALYZE=browser next build"
+        "analyze:browser": "BUNDLE_ANALYZE=browser next build",
+        "tslint-check": "tslint-config-prettier-check ./tslint.json"
     },
     "dependencies": {
         "@types/next": "^8.0.4",
@@ -22,6 +23,7 @@
         "jquery": "^3.4.0",
         "nba-color": "^1.4.0",
         "next": "^8.0.3",
+        "next-images": "^1.1.1",
         "preact": "^8.4.2",
         "react": "^16.8.5",
         "react-bootstrap": "^1.0.0-beta.6",
@@ -44,6 +46,7 @@
         "file-loader": "^3.0.1",
         "tslint": "^5.16.0",
         "tslint-config-airbnb": "^5.11.1",
+        "tslint-config-prettier": "^1.18.0",
         "typescript": "^3.4.5"
     }
 }

@@ -1,18 +1,17 @@
+import App, { Container } from "next/app";
+import React from "react";
+import Layout from "../components/Layout";
+import { Player } from "../models/player";
 
-import React from 'react'
-import App, { Container } from 'next/app'
-import Layout from '../components/Layout'
-import { Player } from '../models/player';
+interface Props {
+    pageProps: any;
+    Component: any;
+    router: any;
+}
 
-type Props = {
-    pageProps: any,
-    Component: any,
-    router: any
-};
-
-type State = {
+interface State {
     playerInfo: Player | null;
-};
+}
 
 export default class MyApp extends App<Props, State> {
     constructor(props: Props, state: State) {
@@ -23,17 +22,20 @@ export default class MyApp extends App<Props, State> {
         this.setPlayerInfo = this.setPlayerInfo.bind(this);
     }
 
-    setPlayerInfo = (playerInfo: Player) => {
+    public setPlayerInfo = (playerInfo: Player) => {
         this.setState({ playerInfo });
-    }
+    };
 
-    render () {
-
+    public render() {
         const { Component, pageProps } = this.props;
         return (
             <Container>
                 <Layout>
-                    <Component onResultRoute={this.setPlayerInfo} playerInfo={this.state.playerInfo} {...pageProps} />
+                    <Component
+                        onResultRoute={this.setPlayerInfo}
+                        playerInfo={this.state.playerInfo}
+                        {...pageProps}
+                    />
                 </Layout>
             </Container>
         );
