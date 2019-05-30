@@ -1,11 +1,12 @@
 import Router from "next/router";
 import React from "react";
+import { Button } from "react-bootstrap";
+import UserPlus from "react-feather/dist/icons/user-plus";
+import PlayerModal from "../components/PlayerModal";
+import { PlayersInfoConsumer } from "../components/PlayersProvider";
 import StatCard from "../components/StatCard";
 import { importTeamLogos } from "../helpers/image.helper";
-import {
-    calculateSeasonTotals,
-    getPlayersSeasonTotal
-} from "../helpers/stat.helper";
+import { getPlayersSeasonAverages } from "../helpers/stat.helper";
 import { Player } from "../models/player";
 
 const teamLogos: { [key: string]: string } = importTeamLogos(
@@ -32,32 +33,48 @@ const loader = {
     right: "0"
 } as React.CSSProperties;
 
-interface Props {
-    playerInfo: Player;
-}
+const playerButton = {
+    position: "fixed",
+    right: 0,
+    width: "64px",
+    background: "rgba(0, 0, 0, 0.3)",
+    zIndex: 1031,
+    borderRadius: "8px 0 0 8px",
+    textAlign: "center",
+    top: "30px",
+    border: "none"
+};
+
+interface Props {}
 
 interface State {
-    playerSeasonTotals: any;
     playerSeasonAverages: any;
+    isLoading: boolean;
 }
 
 export default class Results extends React.Component<Props, State> {
+    public static contextType = PlayersInfoConsumer;
     constructor(props: Props, state: State) {
         super(props, state);
         this.state = {
-            playerSeasonAverages: null,
-            playerSeasonTotals: null
+            isLoading: false,
+            playerSeasonAverages: null
         };
+        this.child = React.createRef();
     }
 
     public componentDidMount() {
-        if (this.props.playerInfo != null) {
-            calculateSeasonTotals(this.props.playerInfo.id).then(res => {
-                this.setState({ playerSeasonTotals: res });
-            });
+        const playerIds: number[] = this.context.playersInfo.map(
+            (player: Player) => {
+                return player.id;
+            }
+        );
 
-            getPlayersSeasonTotal(2018, this.props.playerInfo.id).then(res => {
-                this.setState({ playerSeasonAverages: res[0] });
+        if (this.context.playersInfo.length > 0) {
+            this.setState({ isLoading: true });
+            getPlayersSeasonAverages(2018, playerIds).then(res => {
+                this.setState({ playerSeasonAverages: res });
+                this.setState({ isLoading: false });
             });
         } else {
             Router.push({
@@ -70,8 +87,12 @@ export default class Results extends React.Component<Props, State> {
         return teamLogos[team];
     }
 
+    public onClick = () => {
+        this.child.current.showModal();
+    };
+
     public render() {
-        if (!this.state.playerSeasonTotals) {
+        if (this.state.isLoading) {
             return (
                 <div
                     style={masthead}
@@ -102,29 +123,33 @@ export default class Results extends React.Component<Props, State> {
                 style={masthead}
                 className="position-relative overflow-hidden text-center">
                 <div className="mx-auto my-5">
+                    <Button style={playerButton} onClick={this.onClick}>
+                        <UserPlus color="white" />
+                    </Button>
+                    <PlayerModal ref={this.child} />
                     <div className="row">
                         <StatCard
                             categoryAbbreviation={"ppg"}
                             logo={this.getTeamLogo(
-                                this.props.playerInfo.team.abbreviation
+                                this.context.playersInfo[0].team.abbreviation
                             )}
-                            playerName={
-                                this.props.playerInfo.first_name +
-                                " " +
-                                this.props.playerInfo.last_name
-                            }
+                            statistics={this.state.playerSeasonAverages.map(
+                                ({ player_id, pts }) => ({
+                                    player_id,
+                                    stat: pts
+                                })
+                            )}
                             footerText="Points Per Game"
-                            statistic={this.state.playerSeasonAverages.pts}
                         />
-                        <StatCard
-                            categoryAbbreviation={"rbg"}
+                        {/* <StatCard
+                            categoryAbbreviation={"rpg"}
                             logo={this.getTeamLogo(
-                                this.props.playerInfo.team.abbreviation
+                                this.context.playersInfo[0].team.abbreviation
                             )}
                             playerName={
-                                this.props.playerInfo.first_name +
+                                this.context.playersInfo[0].first_name +
                                 " " +
-                                this.props.playerInfo.last_name
+                                this.context.playersInfo[0].last_name
                             }
                             footerText="Rebounds Per Game"
                             statistic={this.state.playerSeasonAverages.reb}
@@ -132,12 +157,12 @@ export default class Results extends React.Component<Props, State> {
                         <StatCard
                             categoryAbbreviation={"apg"}
                             logo={this.getTeamLogo(
-                                this.props.playerInfo.team.abbreviation
+                                this.context.playersInfo[0].team.abbreviation
                             )}
                             playerName={
-                                this.props.playerInfo.first_name +
+                                this.context.playersInfo[0].first_name +
                                 " " +
-                                this.props.playerInfo.last_name
+                                this.context.playersInfo[0].last_name
                             }
                             footerText="Assists Per Game"
                             statistic={this.state.playerSeasonAverages.ast}
@@ -145,12 +170,12 @@ export default class Results extends React.Component<Props, State> {
                         <StatCard
                             categoryAbbreviation={"mpg"}
                             logo={this.getTeamLogo(
-                                this.props.playerInfo.team.abbreviation
+                                this.context.playersInfo[0].team.abbreviation
                             )}
                             playerName={
-                                this.props.playerInfo.first_name +
+                                this.context.playersInfo[0].first_name +
                                 " " +
-                                this.props.playerInfo.last_name
+                                this.context.playersInfo[0].last_name
                             }
                             footerText="Minutes Per Game"
                             statistic={this.state.playerSeasonAverages.min}
@@ -158,12 +183,12 @@ export default class Results extends React.Component<Props, State> {
                         <StatCard
                             categoryAbbreviation={"spg"}
                             logo={this.getTeamLogo(
-                                this.props.playerInfo.team.abbreviation
+                                this.context.playersInfo[0].team.abbreviation
                             )}
                             playerName={
-                                this.props.playerInfo.first_name +
+                                this.context.playersInfo[0].first_name +
                                 " " +
-                                this.props.playerInfo.last_name
+                                this.context.playersInfo[0].last_name
                             }
                             footerText="Steals Per Game"
                             statistic={this.state.playerSeasonAverages.stl}
@@ -171,16 +196,16 @@ export default class Results extends React.Component<Props, State> {
                         <StatCard
                             categoryAbbreviation={"bpg"}
                             logo={this.getTeamLogo(
-                                this.props.playerInfo.team.abbreviation
+                                this.context.playersInfo[0].team.abbreviation
                             )}
                             playerName={
-                                this.props.playerInfo.first_name +
+                                this.context.playersInfo[0].first_name +
                                 " " +
-                                this.props.playerInfo.last_name
+                                this.context.playersInfo[0].last_name
                             }
                             footerText="Blocks Per Game"
                             statistic={this.state.playerSeasonAverages.blk}
-                        />
+                        /> */}
                     </div>
                 </div>
                 <div className="product-device shadow-sm d-none d-md-block" />

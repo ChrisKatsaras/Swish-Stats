@@ -1,6 +1,7 @@
 import App, { Container } from "next/app";
 import React from "react";
 import Layout from "../components/Layout";
+import PlayersInfoProvider from "../components/PlayersProvider";
 import { Player } from "../models/player";
 
 interface Props {
@@ -30,13 +31,15 @@ export default class MyApp extends App<Props, State> {
         const { Component, pageProps } = this.props;
         return (
             <Container>
-                <Layout>
-                    <Component
-                        onResultRoute={this.setPlayerInfo}
-                        playerInfo={this.state.playerInfo}
-                        {...pageProps}
-                    />
-                </Layout>
+                <PlayersInfoProvider>
+                    <Layout>
+                        <Component
+                            onResultRoute={this.setPlayerInfo}
+                            playerInfo={this.state.playerInfo}
+                            {...pageProps}
+                        />
+                    </Layout>
+                </PlayersInfoProvider>
             </Container>
         );
     }

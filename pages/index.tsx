@@ -36,7 +36,9 @@ export default class Index extends React.Component<Props, State> {
                         Swish Stats
                     </h1>
                 </div>
-                <Search onResultRoute={this.props.onResultRoute} />
+                <div className="col-lg-5 container">
+                    <Search onResultRoute={this.props.onResultRoute} />
+                </div>
             </div>
         );
     }

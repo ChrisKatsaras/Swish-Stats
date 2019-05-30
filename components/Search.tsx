@@ -6,6 +6,7 @@ import { AsyncTypeahead } from "react-bootstrap-typeahead";
 import { debounce } from "throttle-debounce";
 import { importTeamLogos } from "../helpers/image.helper";
 import { Player } from "../models/player";
+import { PlayersInfoConsumer } from "./PlayersProvider";
 
 const teamLogos: { [key: string]: string } = importTeamLogos(
     require.context("../static", false, /\.(svg)$/)
@@ -29,6 +30,7 @@ interface State {
 }
 
 export default class Search extends React.Component<Props, State> {
+    public static contextType = PlayersInfoConsumer;
     public handleSearch = debounce(1000, query => {
         this.setState({ isLoading: true });
         fetch(`https://www.balldontlie.io/api/v1/players?search=${query}`)
@@ -67,8 +69,8 @@ export default class Search extends React.Component<Props, State> {
         return teamLogos[team];
     }
 
-    public routeToResults(e: Player[]) {
-        this.props.onResultRoute(e[0]);
+    public routeToResults(players: Player[]) {
+        this.context.addPlayerInfo(players[0]);
         Router.push({
             pathname: "/results"
         });
@@ -87,7 +89,6 @@ export default class Search extends React.Component<Props, State> {
                 onSearch={this.handleSearch}
                 onChange={e => this.routeToResults(e)}
                 placeholder="Search Player Name"
-                className="col-md-5 p-lg-5 mx-auto my-5"
                 options={this.state.options}
                 renderMenuItemChildren={option => (
                     <div className="col-xs-*">

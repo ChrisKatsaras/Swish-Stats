@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export function calculateSeasonTotals(playerId: number) {
     return fetch(
         "https://www.balldontlie.io/api/v1/stats?seasons[]=2018&per_page=100&player_ids[]=" +
@@ -53,15 +55,15 @@ export function calculateSeasonTotals(playerId: number) {
         });
 }
 
-export function getPlayersSeasonTotal(year: number, playerId: number) {
-    return fetch(
-        "https://www.balldontlie.io/api/v1/season_averages?season=" +
-            year +
-            "&player_ids[]=" +
-            playerId
-    )
-        .then(resp => resp.json())
+export function getPlayersSeasonAverages(year: number, playerIds: number[]) {
+    return axios
+        .get("https://www.balldontlie.io/api/v1/season_averages", {
+            params: {
+                "player_ids[]": playerIds,
+                season: year
+            }
+        })
         .then(res => {
-            return res.data;
+            return res.data.data;
         });
 }
