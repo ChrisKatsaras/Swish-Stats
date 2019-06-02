@@ -14,7 +14,8 @@ const statCard = {
 };
 
 const statCardBody = {
-    paddingBottom: "0px"
+    paddingBottom: "0px",
+    paddingTop: "5px"
 };
 
 const statCardFooter = {
@@ -26,7 +27,7 @@ const statCardFooter = {
 const teamIcon = {
     maxHeight: "65px",
     marginLeft: "-15px",
-    marginTop: "-15px"
+    marginTop: "0px"
 };
 
 const cardInfoSection = {
@@ -34,6 +35,7 @@ const cardInfoSection = {
 } as React.CSSProperties;
 
 const cardStatisticSection = {
+    paddingLeft: "0px",
     textAlign: "right"
 } as React.CSSProperties;
 
@@ -50,7 +52,8 @@ const cardDate = {
 };
 
 const divder = {
-    borderColor: "#525F7F"
+    borderColor: "#525F7F",
+    marginBottom: "0px"
 };
 
 interface Props {
@@ -61,7 +64,6 @@ interface Props {
             player_id: number;
         }
     ];
-    logo: string;
     categoryAbbreviation: string;
 }
 
@@ -78,6 +80,9 @@ export default class Index extends React.Component<Props, State> {
     }
 
     public render() {
+        this.props.statistics.sort(function(a, b) {
+            return b.stat - a.stat;
+        });
         return (
             <div className="col-lg-4 col-md-6">
                 <div className="card" style={statCard}>
