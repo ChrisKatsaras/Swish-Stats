@@ -81,7 +81,7 @@ export default class PlayerModal extends React.Component<Props, State> {
                         <tbody>
                             {this.context.playersInfo.map((player: Player) => {
                                 return (
-                                    <tr>
+                                    <tr key={player.id}>
                                         <td>
                                             <img
                                                 style={teamIcon}

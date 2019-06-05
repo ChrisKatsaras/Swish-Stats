@@ -93,7 +93,10 @@ export default class Index extends React.Component<Props, State> {
                         );
 
                         return (
-                            <div className="card-body" style={statCardBody}>
+                            <div
+                                key={stat.player_id}
+                                className="card-body"
+                                style={statCardBody}>
                                 <div className="row">
                                     <div
                                         className="col-8 text-light"
