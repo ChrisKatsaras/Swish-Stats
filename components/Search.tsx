@@ -6,7 +6,7 @@ import { AsyncTypeahead } from "react-bootstrap-typeahead";
 import { debounce } from "throttle-debounce";
 import { importTeamLogos } from "../helpers/image.helper";
 import { Player } from "../models/player";
-import { PlayersInfoConsumer } from "./PlayersProvider";
+import { PlayersInfoContext } from "./PlayersProvider";
 
 const teamLogos: { [key: string]: string } = importTeamLogos(
     require.context("../static", false, /\.(svg)$/)
@@ -30,7 +30,7 @@ interface State {
 }
 
 export default class Search extends React.Component<Props, State> {
-    public static contextType = PlayersInfoConsumer;
+    public static contextType = PlayersInfoContext;
     public handleSearch = debounce(1000, query => {
         this.setState({ isLoading: true });
         fetch(`https://www.balldontlie.io/api/v1/players?search=${query}`)
@@ -50,6 +50,7 @@ export default class Search extends React.Component<Props, State> {
         };
         this.handleSearch = this.handleSearch.bind(this);
         this.setTeamColours = this.setTeamColours.bind(this);
+        this.isSearchDisabled = this.isSearchDisabled.bind(this);
     }
 
     public componentDidMount() {
@@ -68,11 +69,19 @@ export default class Search extends React.Component<Props, State> {
         return teamLogos[team];
     }
 
+    public isSearchDisabled() {
+        if (this.context.playersInfo.length >= 4) {
+            return true;
+        }
+        return false;
+    }
+
     public render() {
         return (
             <AsyncTypeahead
                 id="Search"
                 filterBy={filterByCallback}
+                disabled={this.isSearchDisabled()}
                 labelKey={(option: Player) =>
                     `${option.first_name} ${option.last_name}`
                 }
