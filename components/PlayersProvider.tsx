@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Player } from "../models/player";
 
-const PlayersInfoContext = React.createContext();
+const PlayersInfoContext = React.createContext({});
 
 class PlayersInfoProvider extends Component {
     public state = {
@@ -38,3 +38,4 @@ const PlayersInfoConsumer = PlayersInfoContext.Consumer;
 
 export default PlayersInfoProvider;
 export { PlayersInfoConsumer };
+export { PlayersInfoContext };

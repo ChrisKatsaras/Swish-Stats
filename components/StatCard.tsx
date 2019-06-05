@@ -1,5 +1,6 @@
 import React from "react";
 import { importTeamLogos } from "../helpers/image.helper";
+import { Player } from "../models/player";
 import { PlayersInfoConsumer } from "./PlayersProvider";
 
 const teamLogos: { [key: string]: string } = importTeamLogos(
@@ -80,7 +81,7 @@ export default class Index extends React.Component<Props, State> {
     }
 
     public render() {
-        this.props.statistics.sort(function(a, b) {
+        this.props.statistics.sort((a, b) => {
             return b.stat - a.stat;
         });
         return (
@@ -88,7 +89,7 @@ export default class Index extends React.Component<Props, State> {
                 <div className="card" style={statCard}>
                     {this.props.statistics.map(stat => {
                         const playerInfo = this.context.playersInfo.find(
-                            player => player.id === stat.player_id
+                            (player: Player) => player.id === stat.player_id
                         );
 
                         return (

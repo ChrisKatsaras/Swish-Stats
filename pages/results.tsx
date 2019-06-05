@@ -3,7 +3,7 @@ import React from "react";
 import { Button } from "react-bootstrap";
 import UserPlus from "react-feather/dist/icons/user-plus";
 import PlayerModal from "../components/PlayerModal";
-import { PlayersInfoConsumer } from "../components/PlayersProvider";
+import { PlayersInfoContext } from "../components/PlayersProvider";
 import StatCard from "../components/StatCard";
 import { importTeamLogos } from "../helpers/image.helper";
 import { getPlayersSeasonAverages } from "../helpers/stat.helper";
@@ -50,15 +50,17 @@ interface Props {}
 interface State {
     playerSeasonAverages: any;
     isLoading: boolean;
+    playerIds: number[];
 }
 
 export default class Results extends React.Component<Props, State> {
-    public static contextType = PlayersInfoConsumer;
+    public static contextType = PlayersInfoContext;
     constructor(props: Props, state: State) {
         super(props, state);
         this.state = {
             isLoading: false,
-            playerSeasonAverages: null
+            playerSeasonAverages: null,
+            playerIds: []
         };
         this.child = React.createRef();
     }
@@ -70,6 +72,8 @@ export default class Results extends React.Component<Props, State> {
             }
         );
 
+        this.setState({ playerIds });
+
         if (this.context.playersInfo.length > 0) {
             this.setState({ isLoading: true });
             getPlayersSeasonAverages(2018, playerIds).then(res => {
@@ -80,6 +84,27 @@ export default class Results extends React.Component<Props, State> {
             Router.push({
                 pathname: "/"
             });
+        }
+    }
+
+    public componentDidUpdate(prevProps) {
+        const playerIds: number[] = this.context.playersInfo.map(
+            (player: Player) => {
+                return player.id;
+            }
+        );
+
+        if (!this.arraysEqual(this.state.playerIds, playerIds)) {
+            this.setState({ playerIds });
+            if (this.context.playersInfo.length > 0) {
+                getPlayersSeasonAverages(2018, playerIds).then(res => {
+                    this.setState({ playerSeasonAverages: res });
+                });
+            } else {
+                Router.push({
+                    pathname: "/"
+                });
+            }
         }
     }
 
@@ -130,9 +155,6 @@ export default class Results extends React.Component<Props, State> {
                     <div className="row">
                         <StatCard
                             categoryAbbreviation={"ppg"}
-                            logo={this.getTeamLogo(
-                                this.context.playersInfo[0].team.abbreviation
-                            )}
                             statistics={this.state.playerSeasonAverages.map(
                                 ({ player_id, pts }) => ({
                                     player_id,
@@ -141,76 +163,70 @@ export default class Results extends React.Component<Props, State> {
                             )}
                             footerText="Points Per Game"
                         />
-                        {/* <StatCard
+                        <StatCard
                             categoryAbbreviation={"rpg"}
-                            logo={this.getTeamLogo(
-                                this.context.playersInfo[0].team.abbreviation
+                            statistics={this.state.playerSeasonAverages.map(
+                                ({ player_id, reb }) => ({
+                                    player_id,
+                                    stat: reb
+                                })
                             )}
-                            playerName={
-                                this.context.playersInfo[0].first_name +
-                                " " +
-                                this.context.playersInfo[0].last_name
-                            }
                             footerText="Rebounds Per Game"
-                            statistic={this.state.playerSeasonAverages.reb}
                         />
                         <StatCard
                             categoryAbbreviation={"apg"}
-                            logo={this.getTeamLogo(
-                                this.context.playersInfo[0].team.abbreviation
+                            statistics={this.state.playerSeasonAverages.map(
+                                ({ player_id, ast }) => ({
+                                    player_id,
+                                    stat: ast
+                                })
                             )}
-                            playerName={
-                                this.context.playersInfo[0].first_name +
-                                " " +
-                                this.context.playersInfo[0].last_name
-                            }
                             footerText="Assists Per Game"
-                            statistic={this.state.playerSeasonAverages.ast}
                         />
                         <StatCard
                             categoryAbbreviation={"mpg"}
-                            logo={this.getTeamLogo(
-                                this.context.playersInfo[0].team.abbreviation
+                            statistics={this.state.playerSeasonAverages.map(
+                                ({ player_id, min }) => ({
+                                    player_id,
+                                    stat: min
+                                })
                             )}
-                            playerName={
-                                this.context.playersInfo[0].first_name +
-                                " " +
-                                this.context.playersInfo[0].last_name
-                            }
                             footerText="Minutes Per Game"
-                            statistic={this.state.playerSeasonAverages.min}
                         />
                         <StatCard
-                            categoryAbbreviation={"spg"}
-                            logo={this.getTeamLogo(
-                                this.context.playersInfo[0].team.abbreviation
+                            categoryAbbreviation={"blk"}
+                            statistics={this.state.playerSeasonAverages.map(
+                                ({ player_id, blk }) => ({
+                                    player_id,
+                                    stat: blk
+                                })
                             )}
-                            playerName={
-                                this.context.playersInfo[0].first_name +
-                                " " +
-                                this.context.playersInfo[0].last_name
-                            }
-                            footerText="Steals Per Game"
-                            statistic={this.state.playerSeasonAverages.stl}
-                        />
-                        <StatCard
-                            categoryAbbreviation={"bpg"}
-                            logo={this.getTeamLogo(
-                                this.context.playersInfo[0].team.abbreviation
-                            )}
-                            playerName={
-                                this.context.playersInfo[0].first_name +
-                                " " +
-                                this.context.playersInfo[0].last_name
-                            }
                             footerText="Blocks Per Game"
-                            statistic={this.state.playerSeasonAverages.blk}
-                        /> */}
+                        />
+                        <StatCard
+                            categoryAbbreviation={"stl"}
+                            statistics={this.state.playerSeasonAverages.map(
+                                ({ player_id, stl }) => ({
+                                    player_id,
+                                    stat: stl
+                                })
+                            )}
+                            footerText="Steals Per Game"
+                        />
                     </div>
                 </div>
                 <div className="product-device shadow-sm d-none d-md-block" />
                 <div className="product-device product-device-2 shadow-sm d-none d-md-block" />
             </div>
         );
+    }
+
+    private arraysEqual(arr1, arr2) {
+        if (arr1.length !== arr2.length) return false;
+        for (let i = arr1.length; i--; ) {
+            if (arr1[i] !== arr2[i]) return false;
+        }
+
+        return true;
     }
 }

@@ -21,7 +21,7 @@ const filterByCallback = function callback(option: Player, props: any) {
 };
 
 interface Props {
-    onResultRoute: (option: Player) => void;
+    searchPlayer: (player: Player[]) => void;
 }
 
 interface State {
@@ -50,7 +50,6 @@ export default class Search extends React.Component<Props, State> {
         };
         this.handleSearch = this.handleSearch.bind(this);
         this.setTeamColours = this.setTeamColours.bind(this);
-        this.routeToResults = this.routeToResults.bind(this);
     }
 
     public componentDidMount() {
@@ -69,13 +68,6 @@ export default class Search extends React.Component<Props, State> {
         return teamLogos[team];
     }
 
-    public routeToResults(players: Player[]) {
-        this.context.addPlayerInfo(players[0]);
-        Router.push({
-            pathname: "/results"
-        });
-    }
-
     public render() {
         return (
             <AsyncTypeahead
@@ -87,7 +79,7 @@ export default class Search extends React.Component<Props, State> {
                 isLoading={this.state.isLoading}
                 minLength={3}
                 onSearch={this.handleSearch}
-                onChange={e => this.routeToResults(e)}
+                onChange={e => this.props.searchPlayer(e)}
                 placeholder="Search Player Name"
                 options={this.state.options}
                 renderMenuItemChildren={option => (

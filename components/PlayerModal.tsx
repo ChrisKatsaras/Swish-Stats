@@ -3,7 +3,7 @@ import { Modal, Table } from "react-bootstrap";
 import XIcon from "react-feather/dist/icons/x";
 import { importTeamLogos } from "../helpers/image.helper";
 import { Player } from "../models/player";
-import { PlayersInfoConsumer } from "./PlayersProvider";
+import { PlayersInfoContext } from "./PlayersProvider";
 import Search from "./Search";
 
 const teamLogos: { [key: string]: string } = importTeamLogos(
@@ -33,7 +33,7 @@ const playerTable = {
 };
 
 export default class PlayerModal extends React.Component<Props, State> {
-    public static contextType = PlayersInfoConsumer;
+    public static contextType = PlayersInfoContext;
     constructor(props: Props, state: State) {
         super(props, state);
         this.state = {
@@ -41,6 +41,7 @@ export default class PlayerModal extends React.Component<Props, State> {
         };
         this.showModal = this.showModal.bind(this);
         this.hideModal = this.hideModal.bind(this);
+        this.searchPlayer = this.searchPlayer.bind(this);
     }
 
     public getTeamLogo(team: string) {
@@ -55,13 +56,19 @@ export default class PlayerModal extends React.Component<Props, State> {
         this.setState({ showPlayerModal: false });
     }
 
+    public searchPlayer(players: Player[]) {
+        if (players.length > 0) {
+            this.context.addPlayerInfo(players[0]);
+            this.hideModal();
+        }
+    }
+
     public render() {
-        console.log(this.context.playersInfo);
         return (
             <Modal show={this.state.showPlayerModal} onHide={this.hideModal}>
                 <Modal.Body style={modal}>
                     <h5 className="text-light">Players</h5>
-                    <Search />
+                    <Search searchPlayer={this.searchPlayer} />
                     <Table style={playerTable} borderless hover variant="dark">
                         <thead>
                             <tr>
@@ -97,7 +104,6 @@ export default class PlayerModal extends React.Component<Props, State> {
                             })}
                         </tbody>
                     </Table>
-                    ;
                 </Modal.Body>
             </Modal>
         );

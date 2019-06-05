@@ -1,5 +1,8 @@
+import Router from "next/router";
 import React from "react";
+import { PlayersInfoConsumer } from "../components/PlayersProvider";
 import Search from "../components/Search";
+import { Player } from "../models/player";
 
 const masthead = {
     background: "#1e1e2f",
@@ -11,19 +14,26 @@ const fontPrimary = {
     fontWeight: "bold"
 } as React.CSSProperties;
 
-interface Props {
-    onResultRoute: () => void;
-}
+interface Props {}
 
 interface State {}
 
 export default class Index extends React.Component<Props, State> {
+    public static contextType = PlayersInfoConsumer;
     constructor(props: Props, state: State) {
         super(props, state);
         this.state = {
             isLoading: false,
             options: []
         };
+        this.searchPlayer = this.searchPlayer.bind(this);
+    }
+
+    public searchPlayer(players: Player[]) {
+        this.context.addPlayerInfo(players[0]);
+        Router.push({
+            pathname: "/results"
+        });
     }
 
     public render() {
@@ -37,7 +47,7 @@ export default class Index extends React.Component<Props, State> {
                     </h1>
                 </div>
                 <div className="col-lg-5 container">
-                    <Search onResultRoute={this.props.onResultRoute} />
+                    <Search searchPlayer={this.searchPlayer} />
                 </div>
             </div>
         );
