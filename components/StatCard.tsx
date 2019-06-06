@@ -1,7 +1,7 @@
 import React from "react";
 import { importTeamLogos } from "../helpers/image.helper";
 import { Player } from "../models/player";
-import { PlayersInfoConsumer } from "./PlayersProvider";
+import { PlayersInfoContext } from "./PlayersProvider";
 
 const teamLogos: { [key: string]: string } = importTeamLogos(
     require.context("../static", false, /\.(svg)$/)
@@ -71,7 +71,7 @@ interface Props {
 interface State {}
 
 export default class Index extends React.Component<Props, State> {
-    public static contextType = PlayersInfoConsumer;
+    public static contextType = PlayersInfoContext;
     constructor(props: Props, state: State) {
         super(props, state);
     }
@@ -91,6 +91,10 @@ export default class Index extends React.Component<Props, State> {
                         const playerInfo = this.context.playersInfo.find(
                             (player: Player) => player.id === stat.player_id
                         );
+
+                        if (!playerInfo) {
+                            return null;
+                        }
 
                         return (
                             <div

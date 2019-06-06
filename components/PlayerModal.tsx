@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, Table } from "react-bootstrap";
+import { Button, Modal, Table } from "react-bootstrap";
 import XIcon from "react-feather/dist/icons/x";
 import { importTeamLogos } from "../helpers/image.helper";
 import { Player } from "../models/player";
@@ -63,6 +63,12 @@ export default class PlayerModal extends React.Component<Props, State> {
         }
     }
 
+    public removePlayer = (playerId: number) => {
+        if (playerId != null) {
+            this.context.removePlayerInfo(playerId);
+        }
+    };
+
     public render() {
         return (
             <Modal show={this.state.showPlayerModal} onHide={this.hideModal}>
@@ -97,7 +103,13 @@ export default class PlayerModal extends React.Component<Props, State> {
                                             {player.last_name}
                                         </td>
                                         <td style={gridText}>
-                                            <XIcon />
+                                            <XIcon
+                                                onClick={() => {
+                                                    this.removePlayer(
+                                                        player.id
+                                                    );
+                                                }}
+                                            />
                                         </td>
                                     </tr>
                                 );

@@ -9,14 +9,24 @@ class PlayersInfoProvider extends Component {
     };
 
     public addPlayerInfo = (playerInfo: Player) => {
-        this.setState({
-            playersInfo: [...this.state.playersInfo, playerInfo]
-        });
+        if (this.state.playersInfo.find(p => p.id === playerInfo.id) == null) {
+            this.setState({
+                playersInfo: [...this.state.playersInfo, playerInfo]
+            });
+        }
     };
 
     public setPlayersInfo = (playerInfo: Player) => {
         this.setState({
             playersInfo: [playerInfo]
+        });
+    };
+
+    public removePlayerInfo = (playerId: number) => {
+        this.setState({
+            playersInfo: this.state.playersInfo.filter((player: Player) => {
+                return player.id !== playerId;
+            })
         });
     };
 
@@ -26,7 +36,8 @@ class PlayersInfoProvider extends Component {
                 value={{
                     addPlayerInfo: this.addPlayerInfo,
                     playersInfo: this.state.playersInfo,
-                    setPlayersInfo: this.setPlayersInfo
+                    setPlayersInfo: this.setPlayersInfo,
+                    removePlayerInfo: this.removePlayerInfo
                 }}>
                 {this.props.children}
             </PlayersInfoContext.Provider>
