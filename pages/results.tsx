@@ -87,24 +87,31 @@ export default class Results extends React.Component<Props, State> {
         }
     }
 
-    public componentDidUpdate(prevProps) {
+    public componentDidUpdate() {
+        // Get a list of all player ids currently in context
         const playerIds: number[] = this.context.playersInfo.map(
             (player: Player) => {
                 return player.id;
             }
         );
 
-        if (!this.arraysEqual(this.state.playerIds, playerIds)) {
+        // If there are less players to examine, no need to make an api call
+        if (this.state.playerIds.length > playerIds.length) {
+            this.setState({ playerIds });
+        } else if (!this.arraysEqual(this.state.playerIds, playerIds)) {
             this.setState({ playerIds });
             if (this.context.playersInfo.length > 0) {
                 getPlayersSeasonAverages(2018, playerIds).then(res => {
                     this.setState({ playerSeasonAverages: res });
                 });
-            } else {
-                Router.push({
-                    pathname: "/"
-                });
             }
+        }
+
+        // If there are no players left in context, route user back to homepage
+        if (this.context.playersInfo.length === 0) {
+            Router.push({
+                pathname: "/"
+            });
         }
     }
 
@@ -142,6 +149,10 @@ export default class Results extends React.Component<Props, State> {
                 </div>
             );
         }
+        const collator = new Intl.Collator(undefined, {
+            numeric: true,
+            sensitivity: "base"
+        });
 
         return (
             <div
@@ -155,62 +166,74 @@ export default class Results extends React.Component<Props, State> {
                     <div className="row">
                         <StatCard
                             categoryAbbreviation={"ppg"}
-                            statistics={this.state.playerSeasonAverages.map(
-                                ({ player_id, pts }) => ({
+                            statistics={this.state.playerSeasonAverages
+                                .map(({ player_id, pts }) => ({
                                     player_id,
                                     stat: pts
-                                })
-                            )}
+                                }))
+                                .sort((a, b) => {
+                                    return b.stat - a.stat;
+                                })}
                             footerText="Points Per Game"
                         />
                         <StatCard
                             categoryAbbreviation={"rpg"}
-                            statistics={this.state.playerSeasonAverages.map(
-                                ({ player_id, reb }) => ({
+                            statistics={this.state.playerSeasonAverages
+                                .map(({ player_id, reb }) => ({
                                     player_id,
                                     stat: reb
-                                })
-                            )}
+                                }))
+                                .sort((a, b) => {
+                                    return b.stat - a.stat;
+                                })}
                             footerText="Rebounds Per Game"
                         />
                         <StatCard
                             categoryAbbreviation={"apg"}
-                            statistics={this.state.playerSeasonAverages.map(
-                                ({ player_id, ast }) => ({
+                            statistics={this.state.playerSeasonAverages
+                                .map(({ player_id, ast }) => ({
                                     player_id,
                                     stat: ast
-                                })
-                            )}
+                                }))
+                                .sort((a, b) => {
+                                    return b.stat - a.stat;
+                                })}
                             footerText="Assists Per Game"
                         />
                         <StatCard
                             categoryAbbreviation={"mpg"}
-                            statistics={this.state.playerSeasonAverages.map(
-                                ({ player_id, min }) => ({
+                            statistics={this.state.playerSeasonAverages
+                                .map(({ player_id, min }) => ({
                                     player_id,
                                     stat: min
-                                })
-                            )}
+                                }))
+                                .sort(function(a, b) {
+                                    return collator.compare(b.stat, a.stat);
+                                })}
                             footerText="Minutes Per Game"
                         />
                         <StatCard
                             categoryAbbreviation={"blk"}
-                            statistics={this.state.playerSeasonAverages.map(
-                                ({ player_id, blk }) => ({
+                            statistics={this.state.playerSeasonAverages
+                                .map(({ player_id, blk }) => ({
                                     player_id,
                                     stat: blk
-                                })
-                            )}
+                                }))
+                                .sort((a, b) => {
+                                    return b.stat - a.stat;
+                                })}
                             footerText="Blocks Per Game"
                         />
                         <StatCard
                             categoryAbbreviation={"stl"}
-                            statistics={this.state.playerSeasonAverages.map(
-                                ({ player_id, stl }) => ({
+                            statistics={this.state.playerSeasonAverages
+                                .map(({ player_id, stl }) => ({
                                     player_id,
                                     stat: stl
-                                })
-                            )}
+                                }))
+                                .sort((a, b) => {
+                                    return b.stat - a.stat;
+                                })}
                             footerText="Steals Per Game"
                         />
                     </div>

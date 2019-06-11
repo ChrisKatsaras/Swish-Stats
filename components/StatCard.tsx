@@ -81,9 +81,6 @@ export default class Index extends React.Component<Props, State> {
     }
 
     public render() {
-        this.props.statistics.sort((a, b) => {
-            return b.stat - a.stat;
-        });
         return (
             <div className="col-lg-4 col-md-6">
                 <div className="card" style={statCard}>
