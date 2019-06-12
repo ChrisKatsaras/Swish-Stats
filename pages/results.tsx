@@ -138,7 +138,10 @@ export default class Results extends React.Component<Props, State> {
             );
         }
 
-        if (!this.state.playerSeasonAverages) {
+        if (
+            !this.state.playerSeasonAverages ||
+            this.state.playerSeasonAverages.length === 0
+        ) {
             return (
                 <div
                     style={masthead}

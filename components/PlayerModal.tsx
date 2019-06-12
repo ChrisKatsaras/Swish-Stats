@@ -21,7 +21,7 @@ const modal = {
 };
 
 const teamIcon = {
-    maxHeight: "30px"
+    maxHeight: "50px"
 };
 
 const gridText = {
@@ -75,7 +75,7 @@ export default class PlayerModal extends React.Component<Props, State> {
                 <Modal.Body style={modal}>
                     <h5 className="text-light">Players</h5>
                     <Search searchPlayer={this.searchPlayer} />
-                    <Table style={playerTable} borderless hover variant="dark">
+                    <Table style={playerTable} borderless variant="dark">
                         <thead>
                             <tr>
                                 <th />
