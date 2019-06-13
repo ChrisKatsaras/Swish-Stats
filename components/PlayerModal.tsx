@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Modal, Table } from "react-bootstrap";
+import { Modal, Table } from "react-bootstrap";
 import XIcon from "react-feather/dist/icons/x";
 import { importTeamLogos } from "../helpers/image.helper";
 import { Player } from "../models/player";
