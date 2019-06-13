@@ -152,7 +152,8 @@ export default class Results extends React.Component<Props, State> {
                 </div>
             );
         }
-        const collator = new Intl.Collator(undefined, {
+
+        const mpgCollator = new Intl.Collator(undefined, {
             numeric: true,
             sensitivity: "base"
         });
@@ -211,7 +212,7 @@ export default class Results extends React.Component<Props, State> {
                                     stat: min
                                 }))
                                 .sort((a, b) => {
-                                    return collator.compare(b.stat, a.stat);
+                                    return mpgCollator.compare(b.stat, a.stat);
                                 })}
                             footerText="Minutes Per Game"
                         />
