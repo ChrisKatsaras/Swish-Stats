@@ -98,7 +98,7 @@ export default class Results extends React.Component<Props, State> {
         // If there are less players to examine, no need to make an api call
         if (this.state.playerIds.length > playerIds.length) {
             this.setState({ playerIds });
-        } else if (!this.arraysEqual(this.state.playerIds, playerIds)) {
+        } else if (!this.areArraysEqual(this.state.playerIds, playerIds)) {
             this.setState({ playerIds });
             if (this.context.playersInfo.length > 0) {
                 getPlayersSeasonAverages(2018, playerIds).then(res => {
@@ -210,7 +210,7 @@ export default class Results extends React.Component<Props, State> {
                                     player_id,
                                     stat: min
                                 }))
-                                .sort(function(a, b) {
+                                .sort((a, b) => {
                                     return collator.compare(b.stat, a.stat);
                                 })}
                             footerText="Minutes Per Game"
@@ -247,10 +247,11 @@ export default class Results extends React.Component<Props, State> {
         );
     }
 
-    private arraysEqual(arr1, arr2) {
-        if (arr1.length !== arr2.length) return false;
-        for (let i = arr1.length; i--; ) {
-            if (arr1[i] !== arr2[i]) return false;
+    private areArraysEqual(firstArray: any, secondArray: any) {
+        if (firstArray.length !== secondArray.length) return false;
+
+        for (let i = firstArray.length; i--; ) {
+            if (firstArray[i] !== secondArray[i]) return false;
         }
 
         return true;
