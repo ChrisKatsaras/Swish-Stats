@@ -1,11 +1,12 @@
 import Router from "next/router";
 import React from "react";
+import { Button } from "react-bootstrap";
+import UserPlus from "react-feather/dist/icons/user-plus";
+import PlayerModal from "../components/PlayerModal";
+import { PlayersInfoContext } from "../components/PlayersProvider";
 import StatCard from "../components/StatCard";
 import { importTeamLogos } from "../helpers/image.helper";
-import {
-    calculateSeasonTotals,
-    getPlayersSeasonTotal
-} from "../helpers/stat.helper";
+import { getPlayersSeasonAverages } from "../helpers/stat.helper";
 import { Player } from "../models/player";
 
 const teamLogos: { [key: string]: string } = importTeamLogos(
@@ -32,34 +33,82 @@ const loader = {
     right: "0"
 } as React.CSSProperties;
 
-interface Props {
-    playerInfo: Player;
-}
+const playerButton = {
+    position: "fixed",
+    right: 0,
+    width: "64px",
+    background: "rgba(0, 0, 0, 0.3)",
+    zIndex: 1031,
+    borderRadius: "8px 0 0 8px",
+    textAlign: "center",
+    top: "30px",
+    border: "none"
+};
+
+interface Props {}
 
 interface State {
-    playerSeasonTotals: any;
     playerSeasonAverages: any;
+    isLoading: boolean;
+    playerIds: number[];
 }
 
 export default class Results extends React.Component<Props, State> {
+    public static contextType = PlayersInfoContext;
     constructor(props: Props, state: State) {
         super(props, state);
         this.state = {
+            isLoading: false,
             playerSeasonAverages: null,
-            playerSeasonTotals: null
+            playerIds: []
         };
+        this.child = React.createRef();
     }
 
     public componentDidMount() {
-        if (this.props.playerInfo != null) {
-            calculateSeasonTotals(this.props.playerInfo.id).then(res => {
-                this.setState({ playerSeasonTotals: res });
-            });
+        const playerIds: number[] = this.context.playersInfo.map(
+            (player: Player) => {
+                return player.id;
+            }
+        );
 
-            getPlayersSeasonTotal(2018, this.props.playerInfo.id).then(res => {
-                this.setState({ playerSeasonAverages: res[0] });
+        this.setState({ playerIds });
+
+        if (this.context.playersInfo.length > 0) {
+            this.setState({ isLoading: true });
+            getPlayersSeasonAverages(2018, playerIds).then(res => {
+                this.setState({ playerSeasonAverages: res });
+                this.setState({ isLoading: false });
             });
         } else {
+            Router.push({
+                pathname: "/"
+            });
+        }
+    }
+
+    public componentDidUpdate() {
+        // Get a list of all player ids currently in context
+        const playerIds: number[] = this.context.playersInfo.map(
+            (player: Player) => {
+                return player.id;
+            }
+        );
+
+        // If there are less players to examine, no need to make an api call
+        if (this.state.playerIds.length > playerIds.length) {
+            this.setState({ playerIds });
+        } else if (!this.areArraysEqual(this.state.playerIds, playerIds)) {
+            this.setState({ playerIds });
+            if (this.context.playersInfo.length > 0) {
+                getPlayersSeasonAverages(2018, playerIds).then(res => {
+                    this.setState({ playerSeasonAverages: res });
+                });
+            }
+        }
+
+        // If there are no players left in context, route user back to homepage
+        if (this.context.playersInfo.length === 0) {
             Router.push({
                 pathname: "/"
             });
@@ -70,8 +119,12 @@ export default class Results extends React.Component<Props, State> {
         return teamLogos[team];
     }
 
+    public onClick = () => {
+        this.child.current.showModal();
+    };
+
     public render() {
-        if (!this.state.playerSeasonTotals) {
+        if (this.state.isLoading) {
             return (
                 <div
                     style={masthead}
@@ -85,7 +138,10 @@ export default class Results extends React.Component<Props, State> {
             );
         }
 
-        if (!this.state.playerSeasonAverages) {
+        if (
+            !this.state.playerSeasonAverages ||
+            this.state.playerSeasonAverages.length === 0
+        ) {
             return (
                 <div
                     style={masthead}
@@ -97,89 +153,92 @@ export default class Results extends React.Component<Props, State> {
             );
         }
 
+        const mpgCollator = new Intl.Collator(undefined, {
+            numeric: true,
+            sensitivity: "base"
+        });
+
         return (
             <div
                 style={masthead}
                 className="position-relative overflow-hidden text-center">
                 <div className="mx-auto my-5">
+                    <Button style={playerButton} onClick={this.onClick}>
+                        <UserPlus color="white" />
+                    </Button>
+                    <PlayerModal ref={this.child} />
                     <div className="row">
                         <StatCard
                             categoryAbbreviation={"ppg"}
-                            logo={this.getTeamLogo(
-                                this.props.playerInfo.team.abbreviation
-                            )}
-                            playerName={
-                                this.props.playerInfo.first_name +
-                                " " +
-                                this.props.playerInfo.last_name
-                            }
+                            statistics={this.state.playerSeasonAverages
+                                .map(({ player_id, pts }) => ({
+                                    player_id,
+                                    stat: pts
+                                }))
+                                .sort((a, b) => {
+                                    return b.stat - a.stat;
+                                })}
                             footerText="Points Per Game"
-                            statistic={this.state.playerSeasonAverages.pts}
                         />
                         <StatCard
-                            categoryAbbreviation={"rbg"}
-                            logo={this.getTeamLogo(
-                                this.props.playerInfo.team.abbreviation
-                            )}
-                            playerName={
-                                this.props.playerInfo.first_name +
-                                " " +
-                                this.props.playerInfo.last_name
-                            }
+                            categoryAbbreviation={"rpg"}
+                            statistics={this.state.playerSeasonAverages
+                                .map(({ player_id, reb }) => ({
+                                    player_id,
+                                    stat: reb
+                                }))
+                                .sort((a, b) => {
+                                    return b.stat - a.stat;
+                                })}
                             footerText="Rebounds Per Game"
-                            statistic={this.state.playerSeasonAverages.reb}
                         />
                         <StatCard
                             categoryAbbreviation={"apg"}
-                            logo={this.getTeamLogo(
-                                this.props.playerInfo.team.abbreviation
-                            )}
-                            playerName={
-                                this.props.playerInfo.first_name +
-                                " " +
-                                this.props.playerInfo.last_name
-                            }
+                            statistics={this.state.playerSeasonAverages
+                                .map(({ player_id, ast }) => ({
+                                    player_id,
+                                    stat: ast
+                                }))
+                                .sort((a, b) => {
+                                    return b.stat - a.stat;
+                                })}
                             footerText="Assists Per Game"
-                            statistic={this.state.playerSeasonAverages.ast}
                         />
                         <StatCard
                             categoryAbbreviation={"mpg"}
-                            logo={this.getTeamLogo(
-                                this.props.playerInfo.team.abbreviation
-                            )}
-                            playerName={
-                                this.props.playerInfo.first_name +
-                                " " +
-                                this.props.playerInfo.last_name
-                            }
+                            statistics={this.state.playerSeasonAverages
+                                .map(({ player_id, min }) => ({
+                                    player_id,
+                                    stat: min
+                                }))
+                                .sort((a, b) => {
+                                    return mpgCollator.compare(b.stat, a.stat);
+                                })}
                             footerText="Minutes Per Game"
-                            statistic={this.state.playerSeasonAverages.min}
                         />
                         <StatCard
-                            categoryAbbreviation={"spg"}
-                            logo={this.getTeamLogo(
-                                this.props.playerInfo.team.abbreviation
-                            )}
-                            playerName={
-                                this.props.playerInfo.first_name +
-                                " " +
-                                this.props.playerInfo.last_name
-                            }
-                            footerText="Steals Per Game"
-                            statistic={this.state.playerSeasonAverages.stl}
-                        />
-                        <StatCard
-                            categoryAbbreviation={"bpg"}
-                            logo={this.getTeamLogo(
-                                this.props.playerInfo.team.abbreviation
-                            )}
-                            playerName={
-                                this.props.playerInfo.first_name +
-                                " " +
-                                this.props.playerInfo.last_name
-                            }
+                            categoryAbbreviation={"blk"}
+                            statistics={this.state.playerSeasonAverages
+                                .map(({ player_id, blk }) => ({
+                                    player_id,
+                                    stat: blk
+                                }))
+                                .sort((a, b) => {
+                                    return b.stat - a.stat;
+                                })}
                             footerText="Blocks Per Game"
-                            statistic={this.state.playerSeasonAverages.blk}
+                        />
+                        <StatCard
+                            categoryAbbreviation={"stl"}
+                            statistics={this.state.playerSeasonAverages
+                                .map(({ player_id, stl }) => ({
+                                    player_id,
+                                    stat: stl
+                                }))
+                                .sort((a, b) => {
+                                    return b.stat - a.stat;
+                                })}
+                            footerText="Steals Per Game"
                         />
                     </div>
                 </div>
@@ -187,5 +246,15 @@ export default class Results extends React.Component<Props, State> {
                 <div className="product-device product-device-2 shadow-sm d-none d-md-block" />
             </div>
         );
+    }
+
+    private areArraysEqual(firstArray: any, secondArray: any) {
+        if (firstArray.length !== secondArray.length) return false;
+
+        for (let i = firstArray.length; i--; ) {
+            if (firstArray[i] !== secondArray[i]) return false;
+        }
+
+        return true;
     }
 }

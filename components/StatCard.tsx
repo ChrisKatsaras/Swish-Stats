@@ -1,4 +1,11 @@
 import React from "react";
+import { importTeamLogos } from "../helpers/image.helper";
+import { Player } from "../models/player";
+import { PlayersInfoContext } from "./PlayersProvider";
+
+const teamLogos: { [key: string]: string } = importTeamLogos(
+    require.context("../static", false, /\.(svg)$/)
+);
 
 const statCard = {
     background: "#27293d",
@@ -8,7 +15,8 @@ const statCard = {
 };
 
 const statCardBody = {
-    paddingBottom: "0px"
+    paddingBottom: "0px",
+    paddingTop: "5px"
 };
 
 const statCardFooter = {
@@ -20,7 +28,7 @@ const statCardFooter = {
 const teamIcon = {
     maxHeight: "65px",
     marginLeft: "-15px",
-    marginTop: "-15px"
+    marginTop: "0px"
 };
 
 const cardInfoSection = {
@@ -28,6 +36,7 @@ const cardInfoSection = {
 } as React.CSSProperties;
 
 const cardStatisticSection = {
+    paddingLeft: "0px",
     textAlign: "right"
 } as React.CSSProperties;
 
@@ -44,62 +53,97 @@ const cardDate = {
 };
 
 const divder = {
-    borderColor: "#525F7F"
+    borderColor: "#525F7F",
+    marginBottom: "0px"
 };
 
 interface Props {
     footerText: string;
-    statistic: number;
-    playerName: string;
-    logo: string;
+    statistics: [
+        {
+            stat: number;
+            player_id: number;
+        }
+    ];
     categoryAbbreviation: string;
 }
 
 interface State {}
 
 export default class Index extends React.Component<Props, State> {
+    public static contextType = PlayersInfoContext;
     constructor(props: Props, state: State) {
         super(props, state);
+    }
+
+    public getTeamLogo(team: string) {
+        return teamLogos[team];
     }
 
     public render() {
         return (
             <div className="col-lg-4 col-md-6">
                 <div className="card" style={statCard}>
-                    <div className="card-body" style={statCardBody}>
-                        <div className="row">
+                    {this.props.statistics.map(stat => {
+                        const playerInfo = this.context.playersInfo.find(
+                            (player: Player) => player.id === stat.player_id
+                        );
+
+                        if (!playerInfo) {
+                            return null;
+                        }
+
+                        return (
                             <div
-                                className="col-8 text-light"
-                                style={cardInfoSection}>
-                                <div className="column">
-                                    <img
-                                        style={teamIcon}
-                                        src={this.props.logo}
-                                    />
-                                    <h2 style={{ fontSize: "1.2rem" }}>
-                                        {this.props.playerName}
-                                    </h2>
+                                key={stat.player_id}
+                                className="card-body"
+                                style={statCardBody}>
+                                <div className="row">
+                                    <div
+                                        className="col-8 text-light"
+                                        style={cardInfoSection}>
+                                        <div className="column">
+                                            <img
+                                                style={teamIcon}
+                                                src={this.getTeamLogo(
+                                                    playerInfo.team.abbreviation
+                                                )}
+                                            />
+                                            <h2 style={{ fontSize: "1.2rem" }}>
+                                                {playerInfo.first_name +
+                                                    " " +
+                                                    playerInfo.last_name}
+                                            </h2>
+                                        </div>
+                                    </div>
+                                    <div
+                                        className="col-4"
+                                        style={cardStatisticSection}>
+                                        <div className="column">
+                                            <p
+                                                className="text-light"
+                                                style={cardDate}>
+                                                2018/ 2019
+                                            </p>
+                                            <h3 className="h3 text-light">
+                                                {stat.stat}
+                                            </h3>
+                                            <p
+                                                className="text-light"
+                                                style={cardCategory}>
+                                                {
+                                                    this.props
+                                                        .categoryAbbreviation
+                                                }
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
+                                <hr style={divder} />
                             </div>
-                            <div className="col-4" style={cardStatisticSection}>
-                                <div className="column">
-                                    <p className="text-light" style={cardDate}>
-                                        2018/ 2019
-                                    </p>
-                                    <h3 className="h3 text-light">
-                                        {this.props.statistic}
-                                    </h3>
-                                    <p
-                                        className="text-light"
-                                        style={cardCategory}>
-                                        {this.props.categoryAbbreviation}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        );
+                    })}
                     <div className="card-footer" style={statCardFooter}>
-                        <hr style={divder} />
                         {this.props.footerText}
                     </div>
                 </div>
