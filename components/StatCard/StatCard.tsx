@@ -1,9 +1,9 @@
 import React from "react";
-import { Button } from "react-bootstrap";
 import styled from "styled-components";
 import { importTeamLogos } from "../../helpers/image.helper";
 import { Player } from "../../models/player";
 import { PlayersInfoContext } from "../PlayersProvider";
+import CardDate from "./StarCard-Date";
 import StatCardDivider from "./StatCard-Divider";
 import Footer from "./StatCard-Footer";
 
@@ -11,45 +11,42 @@ const teamLogos: { [key: string]: string } = importTeamLogos(
     require.context("../../static", false, /\.(svg)$/)
 );
 
-const statCard = {
-    background: "#27293d",
-    marginBottom: "30px",
-    fontSize: "1.4375rem",
-    border: 0
-};
+const StatCard = styled.div`
+    background: #27293d;
+    margin-bottom: 30px;
+    font-size: 1.4375rem;
+    border: 0;
+`;
 
-const statCardBody = {
-    paddingBottom: "0px",
-    paddingTop: "5px"
-};
+const StatCardBody = styled.div`
+    padding-bottom: 0px;
+    padding-top: 5px;
+`;
 
+const TeamLogo = styled.img`
+    max-height: 65px;
+    margin-left: -15px;
+    margin-top: 0px;
+`;
 
-const teamIcon = {
-    maxHeight: "65px",
-    marginLeft: "-15px",
-    marginTop: "0px"
-};
+const H4 = styled.h4`
+    font-size: 1.2rem;
+`;
 
-const cardInfoSection = {
-    textAlign: "left"
-} as React.CSSProperties;
+const CardInfo = styled.div`
+    text-align: left;
+`;
 
-const cardStatisticSection = {
-    paddingLeft: "0px",
-    textAlign: "right"
-} as React.CSSProperties;
+const CardStatistic = styled.div`
+    padding-left: 0px;
+    text-align: right;
+`;
 
-const cardCategory = {
-    fontSize: "0.8rem",
-    marginBottom: "0px",
-    marginTop: "-10px"
-};
-
-const cardDate = {
-    fontSize: "0.75rem",
-    marginBottom: "30px",
-    marginTop: "0px"
-};
+const CardCategory = styled.p`
+    font-size: 0.8rem;
+    margin-bottom: 0px;
+    margin-top: -10px;
+`;
 
 interface Props {
     footerText: string;
@@ -77,7 +74,7 @@ export default class Index extends React.Component<Props, State> {
     public render() {
         return (
             <div className="col-lg-4 col-md-6">
-                <div className="card" style={statCard}>
+                <StatCard className="card">
                     {this.props.statistics.map(stat => {
                         const playerInfo = this.context.playersInfo.find(
                             (player: Player) => player.id === stat.player_id
@@ -88,57 +85,45 @@ export default class Index extends React.Component<Props, State> {
                         }
 
                         return (
-                            <div
+                            <StatCardBody
                                 key={stat.player_id}
-                                className="card-body"
-                                style={statCardBody}>
+                                className="card-body">
                                 <div className="row">
-                                    <div
-                                        className="col-8 text-light"
-                                        style={cardInfoSection}>
+                                    <CardInfo className="col-8 text-light">
                                         <div className="column">
-                                            <img
-                                                style={teamIcon}
+                                            <TeamLogo
                                                 src={this.getTeamLogo(
                                                     playerInfo.team.abbreviation
                                                 )}
                                             />
-                                            <h2 style={{ fontSize: "1.2rem" }}>
+                                            <H4>
                                                 {playerInfo.first_name +
                                                     " " +
                                                     playerInfo.last_name}
-                                            </h2>
+                                            </H4>
                                         </div>
-                                    </div>
-                                    <div
-                                        className="col-4"
-                                        style={cardStatisticSection}>
+                                    </CardInfo>
+                                    <CardStatistic className="col-4">
                                         <div className="column">
-                                            <p
-                                                className="text-light"
-                                                style={cardDate}>
-                                                2018/ 2019
-                                            </p>
+                                            <CardDate date="2018 / 2019" />
                                             <h3 className="h3 text-light">
                                                 {stat.stat}
                                             </h3>
-                                            <p
-                                                className="text-light"
-                                                style={cardCategory}>
+                                            <CardCategory className="text-light">
                                                 {
                                                     this.props
                                                         .categoryAbbreviation
                                                 }
-                                            </p>
+                                            </CardCategory>
                                         </div>
-                                    </div>
+                                    </CardStatistic>
                                 </div>
                                 <StatCardDivider />
-                            </div>
+                            </StatCardBody>
                         );
                     })}
                     <Footer footerText={this.props.footerText} />
-                </div>
+                </StatCard>
             </div>
         );
     }

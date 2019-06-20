@@ -1,6 +1,4 @@
 import React from "react";
-import { Button } from "react-bootstrap";
-import UserPlus from "react-feather/dist/icons/user-plus";
 import styled from "styled-components";
 
 const StyledFooter = styled.div`
