@@ -1,10 +1,13 @@
 import React from "react";
-import { importTeamLogos } from "../helpers/image.helper";
-import { Player } from "../models/player";
-import { PlayersInfoContext } from "./PlayersProvider";
+import { Button } from "react-bootstrap";
+import styled from "styled-components";
+import { importTeamLogos } from "../../helpers/image.helper";
+import { Player } from "../../models/player";
+import { PlayersInfoContext } from "../PlayersProvider";
+import StatCardDivider from "./StatCard-Divider";
 
 const teamLogos: { [key: string]: string } = importTeamLogos(
-    require.context("../static", false, /\.(svg)$/)
+    require.context("../../static", false, /\.(svg)$/)
 );
 
 const statCard = {
@@ -50,11 +53,6 @@ const cardDate = {
     fontSize: "0.75rem",
     marginBottom: "30px",
     marginTop: "0px"
-};
-
-const divder = {
-    borderColor: "#525F7F",
-    marginBottom: "0px"
 };
 
 interface Props {
@@ -139,7 +137,7 @@ export default class Index extends React.Component<Props, State> {
                                         </div>
                                     </div>
                                 </div>
-                                <hr style={divder} />
+                                <StatCardDivider />
                             </div>
                         );
                     })}

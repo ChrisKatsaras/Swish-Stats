@@ -5,7 +5,7 @@ import UserPlus from "react-feather/dist/icons/user-plus";
 import PlayerButton from "../components/PlayerButton";
 import PlayerModal from "../components/PlayerModal";
 import { PlayersInfoContext } from "../components/PlayersProvider";
-import StatCard from "../components/StatCard";
+import StatCard from "../components/StatCard/StatCard";
 import { importTeamLogos } from "../helpers/image.helper";
 import { getPlayersSeasonAverages } from "../helpers/stat.helper";
 import { Player } from "../models/player";
