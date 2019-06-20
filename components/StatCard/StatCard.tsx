@@ -5,6 +5,7 @@ import { importTeamLogos } from "../../helpers/image.helper";
 import { Player } from "../../models/player";
 import { PlayersInfoContext } from "../PlayersProvider";
 import StatCardDivider from "./StatCard-Divider";
+import Footer from "./StatCard-Footer";
 
 const teamLogos: { [key: string]: string } = importTeamLogos(
     require.context("../../static", false, /\.(svg)$/)
@@ -22,11 +23,6 @@ const statCardBody = {
     paddingTop: "5px"
 };
 
-const statCardFooter = {
-    background: "#27293d",
-    border: 0,
-    color: "white"
-};
 
 const teamIcon = {
     maxHeight: "65px",
@@ -141,9 +137,7 @@ export default class Index extends React.Component<Props, State> {
                             </div>
                         );
                     })}
-                    <div className="card-footer" style={statCardFooter}>
-                        {this.props.footerText}
-                    </div>
+                    <Footer footerText={this.props.footerText} />
                 </div>
             </div>
         );
