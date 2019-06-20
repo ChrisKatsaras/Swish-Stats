@@ -2,6 +2,7 @@ import Router from "next/router";
 import React from "react";
 import { Button } from "react-bootstrap";
 import UserPlus from "react-feather/dist/icons/user-plus";
+import PlayerButton from "../components/PlayerButton";
 import PlayerModal from "../components/PlayerModal";
 import { PlayersInfoContext } from "../components/PlayersProvider";
 import StatCard from "../components/StatCard";
@@ -32,18 +33,6 @@ const loader = {
     bottom: "0",
     right: "0"
 } as React.CSSProperties;
-
-const playerButton = {
-    position: "fixed",
-    right: 0,
-    width: "64px",
-    background: "rgba(0, 0, 0, 0.3)",
-    zIndex: 1031,
-    borderRadius: "8px 0 0 8px",
-    textAlign: "center",
-    top: "30px",
-    border: "none"
-};
 
 interface Props {}
 
@@ -163,9 +152,7 @@ export default class Results extends React.Component<Props, State> {
                 style={masthead}
                 className="position-relative overflow-hidden text-center">
                 <div className="mx-auto my-5">
-                    <Button style={playerButton} onClick={this.onClick}>
-                        <UserPlus color="white" />
-                    </Button>
+                    <PlayerButton onClick={this.onClick} />
                     <PlayerModal ref={this.child} />
                     <div className="row">
                         <StatCard

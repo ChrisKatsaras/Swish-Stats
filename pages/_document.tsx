@@ -1,9 +1,17 @@
 import document, { Head, Html, Main, NextScript } from "next/document";
+import { ServerStyleSheet } from "styled-components";
 
 class MyDocument extends document {
-    public static async getInitialProps(ctx) {
-        const initialProps = await document.getInitialProps(ctx);
-        return { ...initialProps };
+    public static getInitialProps({ renderPage }) {
+        const sheet = new ServerStyleSheet();
+
+        const page = renderPage(App => props =>
+            sheet.collectStyles(<App {...props} />)
+        );
+
+        const styleTags = sheet.getStyleElement();
+
+        return { ...page, styleTags };
     }
 
     public render() {
@@ -20,6 +28,7 @@ class MyDocument extends document {
                         type="image/x-icon"
                         href="/static/favicon.ico"
                     />
+                    {this.props.styleTags}
                 </Head>
                 <body>
                     <Main />
