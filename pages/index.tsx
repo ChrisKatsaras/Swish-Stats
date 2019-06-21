@@ -1,18 +1,20 @@
 import Router from "next/router";
 import React from "react";
+import styled from "styled-components";
 import { PlayersInfoConsumer } from "../components/PlayersProvider";
 import Search from "../components/Search";
 import { Player } from "../models/player";
 
-const masthead = {
-    background: "#1e1e2f",
-    height: "100vh"
-};
+const HomePage = styled.div`
+    background: ${props => props.theme.primary};
+    height: 100vh;
+`;
 
-const fontPrimary = {
-    fontFamily: "'Ubuntu', sans-serif",
-    fontWeight: "bold"
-} as React.CSSProperties;
+const H1 = styled.h1`
+    font-family: "Ubuntu", sans-serif;
+`;
+
+const fontPrimary = {} as React.CSSProperties;
 
 interface Props {}
 
@@ -38,18 +40,14 @@ export default class Index extends React.Component<Props, State> {
 
     public render() {
         return (
-            <div
-                style={masthead}
-                className="position-relative overflow-hidden text-center">
+            <HomePage className="position-relative overflow-hidden text-center">
                 <div className="col-md-5 mx-auto my-5">
-                    <h1 className="display-4 text-light" style={fontPrimary}>
-                        Swish Stats
-                    </h1>
+                    <H1 className="display-4 text-light">Swish Stats</H1>
                 </div>
                 <div className="col-lg-5 container">
                     <Search searchPlayer={this.searchPlayer} />
                 </div>
-            </div>
+            </HomePage>
         );
     }
 }
