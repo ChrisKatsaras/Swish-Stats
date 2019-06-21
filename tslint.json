@@ -10,7 +10,8 @@
         "max-line-length": [false],
         "trailing-comma": [false],
         "import-name": [false],
-        "interface-name": [true, "never-prefix"]
+        "interface-name": [true, "never-prefix"],
+        "variable-name": [true, "allow-pascal-case"]
     },
     "rulesDirectory": []
 }

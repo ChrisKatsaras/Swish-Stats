@@ -1,21 +1,23 @@
 import Link from "next/link";
+import styled from "styled-components";
+
 import * as React from "react";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { PlayersInfoContext } from "./PlayersProvider";
 
-const linkStyle = {
-    marginRight: 15
-};
+const HeaderLink = styled.a`
+    margin-right: 15px;
+`;
 
-const navbarBackground = {
-    background: "#1e1e2f"
-};
+const StyledHeader = styled(Navbar)`
+    background: ${props => props.theme.primary};
+`;
 
-const fontPrimary = {
-    fontFamily: "'Ubuntu', sans-serif",
-    fontWeight: "bold"
-} as React.CSSProperties;
+const NavbarBrand = styled(Navbar.Brand)`
+    font-family: Ubuntu, sans-serif;
+`;
+
 export default class Header extends React.Component {
     public static contextType = PlayersInfoContext;
 
@@ -23,23 +25,23 @@ export default class Header extends React.Component {
         let resultsLink;
         if (this.context.playersInfo.length > 0) {
             resultsLink = (
-                <Link href="/results">
-                    <a style={linkStyle}>Results</a>
+                <Link href="/results" passHref>
+                    <HeaderLink>Results</HeaderLink>
                 </Link>
             );
         } else {
             resultsLink = null;
         }
         return (
-            <Navbar style={navbarBackground} className="navbar" variant="dark">
-                <Navbar.Brand style={fontPrimary}>Swish Stats</Navbar.Brand>
+            <StyledHeader className="navbar" variant="dark">
+                <NavbarBrand>Swish Stats</NavbarBrand>
                 <Nav className="mr-auto">
-                    <Link href="/">
-                        <a style={linkStyle}>Home</a>
+                    <Link href="/" passHref>
+                        <HeaderLink>Home</HeaderLink>
                     </Link>
                     {resultsLink}
                 </Nav>
-            </Navbar>
+            </StyledHeader>
         );
     }
 }

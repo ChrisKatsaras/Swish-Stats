@@ -12,7 +12,7 @@ const teamLogos: { [key: string]: string } = importTeamLogos(
 );
 
 const StatCard = styled.div`
-    background: #27293d;
+    background: ${props => props.theme.secondary};
     margin-bottom: 30px;
     font-size: 1.4375rem;
     border: 0;

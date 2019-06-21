@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const StyledFooter = styled.div`
-    background: #27293d;
+    background: ${props => props.theme.secondary};
     border: 0;
     color: white;
 `;

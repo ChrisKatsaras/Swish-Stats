@@ -1,7 +1,5 @@
 import Router from "next/router";
 import React from "react";
-import { Button } from "react-bootstrap";
-import UserPlus from "react-feather/dist/icons/user-plus";
 import PlayerButton from "../components/PlayerButton";
 import PlayerModal from "../components/PlayerModal";
 import { PlayersInfoContext } from "../components/PlayersProvider";
@@ -48,8 +46,8 @@ export default class Results extends React.Component<Props, State> {
         super(props, state);
         this.state = {
             isLoading: false,
-            playerSeasonAverages: null,
-            playerIds: []
+            playerIds: [],
+            playerSeasonAverages: null
         };
         this.child = React.createRef();
     }
@@ -204,7 +202,7 @@ export default class Results extends React.Component<Props, State> {
                             footerText="Minutes Per Game"
                         />
                         <StatCard
-                            categoryAbbreviation={"blk"}
+                            categoryAbbreviation={"bpg"}
                             statistics={this.state.playerSeasonAverages
                                 .map(({ player_id, blk }) => ({
                                     player_id,
