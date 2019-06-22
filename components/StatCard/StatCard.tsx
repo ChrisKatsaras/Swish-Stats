@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { importTeamLogos } from "../../helpers/image.helper";
 import { Player } from "../../models/player";
 import { PlayersInfoContext } from "../PlayersProvider";
-import CardDate from "./StarCard-Date";
+import CardDate from "./StatCard-Date";
 import StatCardDivider from "./StatCard-Divider";
 import Footer from "./StatCard-Footer";
 
