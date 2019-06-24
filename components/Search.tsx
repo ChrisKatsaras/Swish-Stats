@@ -1,12 +1,24 @@
 import fetch from "isomorphic-unfetch";
 import { getMainColor } from "nba-color";
-import Router from "next/router";
 import * as React from "react";
 import { AsyncTypeahead } from "react-bootstrap-typeahead";
+import styled from "styled-components";
 import { debounce } from "throttle-debounce";
 import { importTeamLogos } from "../helpers/image.helper";
 import { Player } from "../models/player";
 import { PlayersInfoContext } from "./PlayersProvider";
+
+const TeamBadge = styled.div.attrs({
+    style: (props: any) => ({
+        background: props.bg
+    })
+})`
+    color: white;
+`;
+
+const TeamLogo = styled.img`
+    max-height: 50px;
+`;
 
 const teamLogos: { [key: string]: string } = importTeamLogos(
     require.context("../static", false, /\.(svg)$/)
@@ -95,18 +107,12 @@ export default class Search extends React.Component<Props, State> {
                     <div className="col-xs-*">
                         {option.first_name} {option.last_name}
                         <div>
-                            <img
-                                style={{ maxHeight: "50px" }}
+                            <TeamLogo
                                 src={this.getTeamLogo(option.team.abbreviation)}
                             />
-                            <span
-                                className="badge"
-                                style={{
-                                    backgroundColor: option.colour.hex,
-                                    color: "white"
-                                }}>
+                            <TeamBadge className="badge" bg={option.colour.hex}>
                                 {option.team.full_name}
-                            </span>
+                            </TeamBadge>
                         </div>
                     </div>
                 )}

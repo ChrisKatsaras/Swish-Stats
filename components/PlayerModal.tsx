@@ -1,6 +1,7 @@
 import React from "react";
 import { Modal, Table } from "react-bootstrap";
 import XIcon from "react-feather/dist/icons/x";
+import styled from "styled-components";
 import { importTeamLogos } from "../helpers/image.helper";
 import { Player } from "../models/player";
 import { PlayersInfoContext } from "./PlayersProvider";
@@ -16,21 +17,21 @@ interface State {
     showPlayerModal: boolean;
 }
 
-const modal = {
-    background: "rgb(30, 30, 47)"
-};
+const ModalBody = styled(Modal.Body)`
+    background: ${props => props.theme.primary};
+`;
 
-const teamIcon = {
-    maxHeight: "50px"
-};
+const PlayerTable = styled(Table)`
+    background: transparent;
+`;
 
-const gridText = {
-    verticalAlign: "middle"
-};
+const TeamLogo = styled.img`
+    max-height: 50px;
+`;
 
-const playerTable = {
-    background: "transparent"
-};
+const TableItem = styled.td`
+    vertical-align: middle !important;
+`;
 
 export default class PlayerModal extends React.Component<Props, State> {
     public static contextType = PlayersInfoContext;
@@ -72,10 +73,10 @@ export default class PlayerModal extends React.Component<Props, State> {
     public render() {
         return (
             <Modal show={this.state.showPlayerModal} onHide={this.hideModal}>
-                <Modal.Body style={modal}>
+                <ModalBody>
                     <h5 className="text-light">Players</h5>
                     <Search searchPlayer={this.searchPlayer} />
-                    <Table style={playerTable} borderless variant="dark">
+                    <PlayerTable borderless variant="dark">
                         <thead>
                             <tr>
                                 <th />
@@ -89,20 +90,19 @@ export default class PlayerModal extends React.Component<Props, State> {
                                 return (
                                     <tr key={player.id}>
                                         <td>
-                                            <img
-                                                style={teamIcon}
+                                            <TeamLogo
                                                 src={this.getTeamLogo(
                                                     player.team.abbreviation
                                                 )}
                                             />
                                         </td>
-                                        <td style={gridText}>
+                                        <TableItem>
                                             {player.first_name}
-                                        </td>
-                                        <td style={gridText}>
+                                        </TableItem>
+                                        <TableItem>
                                             {player.last_name}
-                                        </td>
-                                        <td style={gridText}>
+                                        </TableItem>
+                                        <TableItem>
                                             <XIcon
                                                 onClick={() => {
                                                     this.removePlayer(
@@ -110,13 +110,13 @@ export default class PlayerModal extends React.Component<Props, State> {
                                                     );
                                                 }}
                                             />
-                                        </td>
+                                        </TableItem>
                                     </tr>
                                 );
                             })}
                         </tbody>
-                    </Table>
-                </Modal.Body>
+                    </PlayerTable>
+                </ModalBody>
             </Modal>
         );
     }

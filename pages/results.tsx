@@ -1,10 +1,10 @@
 import Router from "next/router";
 import React from "react";
-import { Button } from "react-bootstrap";
-import UserPlus from "react-feather/dist/icons/user-plus";
+import styled from "styled-components";
+import PlayerButton from "../components/PlayerButton";
 import PlayerModal from "../components/PlayerModal";
 import { PlayersInfoContext } from "../components/PlayersProvider";
-import StatCard from "../components/StatCard";
+import StatCard from "../components/StatCard/StatCard";
 import { importTeamLogos } from "../helpers/image.helper";
 import { getPlayersSeasonAverages } from "../helpers/stat.helper";
 import { Player } from "../models/player";
@@ -13,37 +13,25 @@ const teamLogos: { [key: string]: string } = importTeamLogos(
     require.context("../static", false, /\.(svg)$/)
 );
 
-const masthead = {
-    background: "#1e1e2f",
-    minHeight: "100vh",
-    paddingLeft: "30px",
-    paddingRight: "30px"
-};
+const ResultsPage = styled.div`
+    background: ${props => props.theme.primary};
+    min-height: 100vh;
+    padding-left: 30px;
+    padding-right: 30px;
+`;
 
-const loader = {
-    position: "fixed",
-    zindex: "999",
-    height: "2em",
-    width: "2em",
-    overflow: "visible",
-    margin: "auto",
-    top: "0",
-    left: "0",
-    bottom: "0",
-    right: "0"
-} as React.CSSProperties;
-
-const playerButton = {
-    position: "fixed",
-    right: 0,
-    width: "64px",
-    background: "rgba(0, 0, 0, 0.3)",
-    zIndex: 1031,
-    borderRadius: "8px 0 0 8px",
-    textAlign: "center",
-    top: "30px",
-    border: "none"
-};
+const Loader = styled.div`
+    position: fixed;
+    z-index: 999;
+    height: 2em;
+    width: 2em;
+    overflow: visible;
+    margin: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+`;
 
 interface Props {}
 
@@ -59,8 +47,8 @@ export default class Results extends React.Component<Props, State> {
         super(props, state);
         this.state = {
             isLoading: false,
-            playerSeasonAverages: null,
-            playerIds: []
+            playerIds: [],
+            playerSeasonAverages: null
         };
         this.child = React.createRef();
     }
@@ -126,15 +114,12 @@ export default class Results extends React.Component<Props, State> {
     public render() {
         if (this.state.isLoading) {
             return (
-                <div
-                    style={masthead}
-                    className="position-relative overflow-hidden text-light text-center">
-                    <div
-                        style={loader}
+                <ResultsPage className="position-relative overflow-hidden text-light text-center">
+                    <Loader
                         className="spinner-grow col-md-5 p-lg-5 mx-auto my-5"
                         role="status"
                     />
-                </div>
+                </ResultsPage>
             );
         }
 
@@ -143,13 +128,11 @@ export default class Results extends React.Component<Props, State> {
             this.state.playerSeasonAverages.length === 0
         ) {
             return (
-                <div
-                    style={masthead}
-                    className="position-relative overflow-hidden text-light text-center">
+                <ResultsPage className="position-relative overflow-hidden text-light text-center">
                     <h1 className="col-md-5 p-lg-5 mx-auto my-5">
                         No 2018 data found for this player
                     </h1>
-                </div>
+                </ResultsPage>
             );
         }
 
@@ -159,13 +142,9 @@ export default class Results extends React.Component<Props, State> {
         });
 
         return (
-            <div
-                style={masthead}
-                className="position-relative overflow-hidden text-center">
+            <ResultsPage className="position-relative overflow-hidden text-center">
                 <div className="mx-auto my-5">
-                    <Button style={playerButton} onClick={this.onClick}>
-                        <UserPlus color="white" />
-                    </Button>
+                    <PlayerButton onClick={this.onClick} />
                     <PlayerModal ref={this.child} />
                     <div className="row">
                         <StatCard
@@ -217,7 +196,7 @@ export default class Results extends React.Component<Props, State> {
                             footerText="Minutes Per Game"
                         />
                         <StatCard
-                            categoryAbbreviation={"blk"}
+                            categoryAbbreviation={"bpg"}
                             statistics={this.state.playerSeasonAverages
                                 .map(({ player_id, blk }) => ({
                                     player_id,
@@ -244,7 +223,7 @@ export default class Results extends React.Component<Props, State> {
                 </div>
                 <div className="product-device shadow-sm d-none d-md-block" />
                 <div className="product-device product-device-2 shadow-sm d-none d-md-block" />
-            </div>
+            </ResultsPage>
         );
     }
 
