@@ -57,17 +57,42 @@ const ButtonContent = styled.div`
 
 interface Props {}
 
-interface State {}
+interface State {
+    isLoading: boolean;
+    players: Player[];
+}
 
 export default class Index extends React.Component<Props, State> {
     public static contextType = PlayersInfoConsumer;
+
     constructor(props: Props, state: State) {
         super(props, state);
         this.state = {
             isLoading: false,
-            options: []
+            players: []
         };
         this.searchPlayer = this.searchPlayer.bind(this);
+        this.getRandomPlayerList = this.getRandomPlayerList.bind(this);
+    }
+
+    public getRandomPlayerList(length: number) {
+        let result = new Array(length),
+            len = players.length,
+            taken = new Array(len);
+
+        while (length--) {
+            const x = Math.floor(Math.random() * len);
+            result[length] = players[x in taken ? taken[x] : x];
+            taken[x] = --len in taken ? taken[len] : len;
+        }
+
+        return result;
+    }
+
+    public componentDidMount() {
+        this.setState({
+            players: this.getRandomPlayerList(5)
+        });
     }
 
     public searchPlayer(players: Player[]) {
@@ -99,7 +124,7 @@ export default class Index extends React.Component<Props, State> {
                     <Search searchPlayer={this.searchPlayer} />
                 </div>
                 <div className="col-sm-12 mx-auto my-5 row justify-content-center">
-                    {players.map(player => (
+                    {this.state.players.map(player => (
                         <StyledButton
                             onClick={() => {
                                 this.onClick(player);
