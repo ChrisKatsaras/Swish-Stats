@@ -8,11 +8,9 @@ import { importTeamLogos } from "../helpers/image.helper";
 import { Player } from "../models/player";
 import { PlayersInfoContext } from "./PlayersProvider";
 
-const TeamBadge = styled.div.attrs({
-    style: (props: any) => ({
-        background: props.bg
-    })
-})`
+const TeamBadge = styled.div.attrs(props => ({
+    style: { background: `${props.bg}` }
+}))`
     color: white;
 `;
 
