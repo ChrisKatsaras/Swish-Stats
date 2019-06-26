@@ -378,6 +378,24 @@ export default [
         weight_pounds: 220
     },
     {
+        id: 6,
+        first_name: "LaMarcus",
+        height_feet: 6,
+        height_inches: 11,
+        last_name: "Aldridge",
+        position: "F",
+        team: {
+            id: 27,
+            abbreviation: "SAS",
+            city: "San Antonio",
+            conference: "West",
+            division: "Southwest",
+            full_name: "San Antonio Spurs",
+            name: "Spurs"
+        },
+        weight_pounds: 260
+    },
+    {
         id: 452,
         first_name: "Myles",
         height_feet: 6,
@@ -394,6 +412,24 @@ export default [
             name: "Pacers"
         },
         weight_pounds: 250
+    },
+    {
+        id: 357,
+        first_name: "Victor",
+        height_feet: 6,
+        height_inches: 4,
+        last_name: "Oladipo",
+        position: "G",
+        team: {
+            id: 12,
+            abbreviation: "IND",
+            city: "Indiana",
+            conference: "East",
+            division: "Central",
+            full_name: "Indiana Pacers",
+            name: "Pacers"
+        },
+        weight_pounds: 210
     },
     {
         id: 391,
