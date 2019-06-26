@@ -1,7 +1,5 @@
 import React from "react";
-import { Button } from "react-bootstrap";
-import styled from "styled-components";
-import players from "../../data/players";
+import playersData from "../../data/players";
 import { importTeamLogos } from "../../helpers/image.helper";
 import { Player } from "../../models/player";
 import { PlayersInfoContext } from "../PlayersProvider";
@@ -13,6 +11,7 @@ const teamLogos: { [key: string]: string } = importTeamLogos(
 
 interface Props {
     onClick: (player: Player) => void;
+    numberOfItems: number;
 }
 
 interface State {
@@ -36,7 +35,7 @@ export default class QuickSearchItems extends React.Component<Props, State> {
 
     public componentDidMount() {
         this.setState({
-            players: this.getRandomPlayerList(5)
+            players: this.getRandomPlayerList(this.props.numberOfItems)
         });
 
         this.setState({
@@ -48,21 +47,26 @@ export default class QuickSearchItems extends React.Component<Props, State> {
         });
     }
 
-    public getRandomPlayerList(length: number) {
-        const result = new Array(length);
-        let len = players.length;
-        const taken = new Array(len);
+    public getRandomPlayerList(length: number): Player[] {
+        const result = [];
+
+        // Remove players that are already being searched for
+        const filteredPlayerData = playersData.filter(
+            player => !this.context.playersInfo.includes(player)
+        );
+        let len = filteredPlayerData.length;
+        const taken: number[] = [];
 
         while (length--) {
             const x = Math.floor(Math.random() * len);
-            result[length] = players[x in taken ? taken[x] : x];
+            result[length] = filteredPlayerData[x in taken ? taken[x] : x];
             taken[x] = --len in taken ? taken[len] : len;
         }
 
         return result;
     }
 
-    public isQuickSearchDisabled() {
+    public isQuickSearchDisabled(): boolean {
         if (this.context.playersInfo.length >= 4) {
             return true;
         }

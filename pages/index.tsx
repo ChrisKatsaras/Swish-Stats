@@ -79,7 +79,10 @@ export default class Index extends React.Component<Props, State> {
                     <Search searchPlayer={this.searchPlayer} />
                 </div>
                 <div className="col-sm-12 mx-auto my-5 row justify-content-center">
-                    <QuickSearchItems onClick={this.onClick} />
+                    <QuickSearchItems
+                        onClick={this.onClick}
+                        numberOfItems={5}
+                    />
                 </div>
             </HomePage>
         );

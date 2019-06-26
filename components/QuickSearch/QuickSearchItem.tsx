@@ -14,18 +14,49 @@ const StyledButton = styled(Button)`
     padding: 11px 20px;
     border: none;
     margin: 5px;
+    animation-name: fadeInOpacity;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in;
+    animation-duration: 0.35s;
+
+    @keyframes fadeInOpacity {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+
+    &:disabled {
+        animation-name: fadeInOpacity;
+        animation-iteration-count: 1;
+        animation-timing-function: ease-in;
+        animation-duration: 0.35s;
+        @keyframes fadeInOpacity {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 0.65;
+            }
+        }
+    }
+
     &:hover: enabled {
         outline: none !important;
         box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.4);
         background-color: #27293d !important;
         transform: translateY(-1px);
     }
+
     &:active: enabled {
         outline: none !important;
         box-shadow: none !important;
         background-color: #27293d !important;
         transform: translateY(1px);
     }
+
     &:focus {
         outline: none !important;
         box-shadow: !important;
@@ -45,6 +76,7 @@ const TeamIcon = styled.img`
 
 const ButtonText = styled.h2`
     font-size: 1rem;
+    margin-bottom: 0px;
 `;
 
 interface Props {
@@ -87,9 +119,8 @@ export default class QuickSearchItem extends React.Component<Props, State> {
                         />
                         <div className="align-self-center">
                             <ButtonText>
-                                {this.props.player.first_name +
-                                    " " +
-                                    this.props.player.last_name}
+                                {`${this.props.player.first_name}
+                                ${this.props.player.last_name}`}
                             </ButtonText>
                         </div>
                     </ButtonContent>
