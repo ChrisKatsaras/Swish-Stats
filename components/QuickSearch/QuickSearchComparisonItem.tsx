@@ -64,14 +64,16 @@ const StyledButton = styled(Button)`
     }
 `;
 
-const ButtonContent = styled.div`
-    margin-right: 5px;
-    margin-left: -10px;
-`;
+const ButtonContent = styled.div``;
 
-const TeamIcon = styled.img`
+const TeamIconLeft = styled.img`
     max-height: 55px;
     padding-right: 10px;
+`;
+
+const TeamIconRight = styled.img`
+    max-height: 55px;
+    padding-left: 10px;
 `;
 
 const ButtonText = styled.h2`
@@ -80,15 +82,18 @@ const ButtonText = styled.h2`
 `;
 
 interface Props {
-    onClick: (player: Player) => void;
+    onClick: (player: Player[]) => void;
     quickSearchDisabled: boolean;
-    player: Player;
+    players: Player[];
     isLoading: boolean;
 }
 
 interface State {}
 
-export default class QuickSearchItem extends React.Component<Props, State> {
+export default class QuickSearchComparisonItem extends React.Component<
+    Props,
+    State
+> {
     public static contextType = PlayersInfoContext;
     constructor({ props, state }: { props: Props; state: State }) {
         super(props, state);
@@ -108,21 +113,30 @@ export default class QuickSearchItem extends React.Component<Props, State> {
                 <StyledButton
                     disabled={this.props.quickSearchDisabled}
                     onClick={() => {
-                        this.props.onClick(this.props.player);
-                    }}
-                    key={this.props.player.id}>
+                        this.props.onClick(this.props.players);
+                    }}>
                     <ButtonContent className="row">
-                        <TeamIcon
+                        <TeamIconLeft
                             src={this.getTeamLogo(
-                                this.props.player.team.abbreviation
+                                this.props.players[0].team.abbreviation
                             )}
                         />
                         <div className="align-self-center">
                             <ButtonText>
-                                {`${this.props.player.first_name}
-                                ${this.props.player.last_name}`}
+                                {`${this.props.players[0].first_name}
+                                ${this.props.players[0].last_name}`}
+                            </ButtonText>
+                            <ButtonText>vs</ButtonText>
+                            <ButtonText>
+                                {`${this.props.players[1].first_name}
+                                ${this.props.players[1].last_name}`}
                             </ButtonText>
                         </div>
+                        <TeamIconRight
+                            src={this.getTeamLogo(
+                                this.props.players[1].team.abbreviation
+                            )}
+                        />
                     </ButtonContent>
                 </StyledButton>
             );

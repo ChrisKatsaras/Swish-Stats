@@ -59,7 +59,7 @@ export default class PlayerModal extends React.Component<Props, State> {
 
     public searchPlayer(players: Player[]) {
         if (players.length > 0) {
-            this.context.addPlayerInfo(players[0]);
+            this.context.addPlayerInfo(players);
             this.hideModal();
         }
     }

@@ -2,6 +2,7 @@ import Router from "next/router";
 import React from "react";
 import styled from "styled-components";
 import { PlayersInfoContext } from "../components/PlayersProvider";
+import QuickSearchComparisonItems from "../components/QuickSearch/QuickSearchComparisonItems";
 import QuickSearchItems from "../components/QuickSearch/QuickSearchItems";
 import Search from "../components/Search";
 import { importTeamLogos } from "../helpers/image.helper";
@@ -13,7 +14,7 @@ const teamLogos: { [key: string]: string } = importTeamLogos(
 
 const HomePage = styled.div`
     background: ${props => props.theme.primary};
-    height: 100vh;
+    min-height: 100vh;
 `;
 
 const H1 = styled.h1`
@@ -52,17 +53,26 @@ export default class Index extends React.Component<Props, State> {
         };
         this.searchPlayer = this.searchPlayer.bind(this);
         this.onClick = this.onClick.bind(this);
+        this.searchPlayerComparison = this.searchPlayerComparison.bind(this);
     }
 
     public searchPlayer(players: Player[]) {
-        this.context.addPlayerInfo(players[0]);
+        this.context.addPlayerInfo(players);
         Router.push({
             pathname: "/results"
         });
     }
 
     public onClick(player: Player) {
-        this.context.addPlayerInfo(player);
+        this.context.addPlayerInfo([player]);
+
+        Router.push({
+            pathname: "/results"
+        });
+    }
+
+    public searchPlayerComparison(players: Player[]) {
+        this.context.addPlayerInfo(players);
 
         Router.push({
             pathname: "/results"
@@ -82,6 +92,10 @@ export default class Index extends React.Component<Props, State> {
                     <QuickSearchItems
                         onClick={this.onClick}
                         numberOfItems={5}
+                    />
+                    <QuickSearchComparisonItems
+                        onClick={this.searchPlayerComparison}
+                        numberOfItems={4}
                     />
                 </div>
             </HomePage>
