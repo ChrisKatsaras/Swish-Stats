@@ -72,6 +72,24 @@ export default [
         weight_pounds: 196
     },
     {
+        id: 416,
+        first_name: "Pascal",
+        height_feet: 6,
+        height_inches: 9,
+        last_name: "Siakam",
+        position: "F",
+        team: {
+            id: 28,
+            abbreviation: "TOR",
+            city: "Toronto",
+            conference: "East",
+            division: "Atlantic",
+            full_name: "Toronto Raptors",
+            name: "Raptors"
+        },
+        weight_pounds: 230
+    },
+    {
         id: 15,
         first_name: "Giannis",
         height_feet: 6,
@@ -214,6 +232,24 @@ export default [
             name: "Pistons"
         },
         weight_pounds: 279
+    },
+    {
+        id: 189,
+        first_name: "Blake",
+        height_feet: 6,
+        height_inches: 10,
+        last_name: "Griffin",
+        position: "F",
+        team: {
+            id: 9,
+            abbreviation: "DET",
+            city: "Detroit",
+            conference: "East",
+            division: "Central",
+            full_name: "Detroit Pistons",
+            name: "Pistons"
+        },
+        weight_pounds: 250
     },
     {
         id: 145,
@@ -574,5 +610,23 @@ export default [
             name: "Knicks"
         },
         weight_pounds: 195
+    },
+    {
+        id: 268,
+        first_name: "Zach",
+        height_feet: 6,
+        height_inches: 5,
+        last_name: "LaVine",
+        position: "G",
+        team: {
+            id: 5,
+            abbreviation: "CHI",
+            city: "Chicago",
+            conference: "East",
+            division: "Central",
+            full_name: "Chicago Bulls",
+            name: "Bulls"
+        },
+        weight_pounds: 200
     }
 ];

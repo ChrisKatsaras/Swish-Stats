@@ -28,9 +28,9 @@ class PlayersInfoProvider extends Component<State> {
         });
     };
 
-    public setPlayersInfo = (playerInfo: Player) => {
+    public setPlayersInfo = (playerInfo: Player[]) => {
         this.setState({
-            playersInfo: [playerInfo]
+            playersInfo: [...playerInfo]
         });
     };
 
