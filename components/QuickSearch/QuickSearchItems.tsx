@@ -70,6 +70,7 @@ export default class QuickSearchItems extends React.Component<Props, State> {
         } else {
             quickSearch = this.state.players.map(player => (
                 <QuickSearchItem
+                    key={player.id}
                     player={player}
                     isLoading={this.state.isLoading}
                     onClick={() => {

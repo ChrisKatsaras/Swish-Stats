@@ -81,8 +81,9 @@ export default class QuickSearchComparisonItems extends React.Component<
         if (this.state.isLoading) {
             quickSearch = null;
         } else {
-            quickSearch = this.state.players.map(player => (
+            quickSearch = this.state.players.map((player, index) => (
                 <QuickSearchComparisonItem
+                    key={index}
                     players={player}
                     quickSearchDisabled={false}
                     isLoading={this.state.isLoading}
