@@ -42,8 +42,10 @@ export default class Index extends React.Component<Props, State> {
             quickSearchDisabled: true
         };
         this.searchPlayer = this.searchPlayer.bind(this);
-        this.onClick = this.onClick.bind(this);
-        this.searchPlayerComparison = this.searchPlayerComparison.bind(this);
+        this.quickSearchPlayer = this.quickSearchPlayer.bind(this);
+        this.quickSearchPlayerComparison = this.quickSearchPlayerComparison.bind(
+            this
+        );
     }
 
     public searchPlayer(players: Player[]) {
@@ -53,7 +55,7 @@ export default class Index extends React.Component<Props, State> {
         });
     }
 
-    public onClick(player: Player) {
+    public quickSearchPlayer(player: Player) {
         this.context.addPlayerInfo([player]);
 
         Router.push({
@@ -61,7 +63,7 @@ export default class Index extends React.Component<Props, State> {
         });
     }
 
-    public searchPlayerComparison(players: Player[]) {
+    public quickSearchPlayerComparison(players: Player[]) {
         this.context.setPlayersInfo(players);
 
         Router.push({
@@ -93,13 +95,13 @@ export default class Index extends React.Component<Props, State> {
                 {limitWarning}
                 <div className="col-sm-12 row justify-content-center">
                     <QuickSearchItems
-                        onClick={this.onClick}
+                        onClick={this.quickSearchPlayer}
                         numberOfItems={5}
                     />
                 </div>
                 <div className="col-sm-12 row justify-content-center">
                     <QuickSearchComparisonItems
-                        onClick={this.searchPlayerComparison}
+                        onClick={this.quickSearchPlayerComparison}
                         numberOfItems={4}
                     />
                 </div>

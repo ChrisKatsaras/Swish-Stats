@@ -16,7 +16,6 @@ interface Props {
 
 interface State {
     players: Player[][];
-    quickSearchDisabled: boolean;
     isLoading: boolean;
 }
 
@@ -29,7 +28,6 @@ export default class QuickSearchComparisonItems extends React.Component<
         super(props, state);
         this.state = {
             players: [],
-            quickSearchDisabled: true,
             isLoading: true
         };
         this.getRandomPlayerList = this.getRandomPlayerList.bind(this);
