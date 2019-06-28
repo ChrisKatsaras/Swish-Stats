@@ -89,8 +89,10 @@ export default class Results extends React.Component<Props, State> {
         } else if (!this.areArraysEqual(this.state.playerIds, playerIds)) {
             this.setState({ playerIds });
             if (this.context.playersInfo.length > 0) {
+                this.setState({ isLoading: true });
                 getPlayersSeasonAverages(2018, playerIds).then(res => {
                     this.setState({ playerSeasonAverages: res });
+                    this.setState({ isLoading: false });
                 });
             }
         }
@@ -128,11 +130,7 @@ export default class Results extends React.Component<Props, State> {
             this.state.playerSeasonAverages.length === 0
         ) {
             return (
-                <ResultsPage className="position-relative overflow-hidden text-light text-center">
-                    <h1 className="col-md-5 p-lg-5 mx-auto my-5">
-                        No 2018 data found for this player
-                    </h1>
-                </ResultsPage>
+                <ResultsPage className="position-relative overflow-hidden text-center" />
             );
         }
 

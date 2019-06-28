@@ -36,6 +36,24 @@ export default [
         weight_pounds: 190
     },
     {
+        id: 443,
+        first_name: "Klay",
+        height_feet: 6,
+        height_inches: 7,
+        last_name: "Thompson",
+        position: "G",
+        team: {
+            id: 10,
+            abbreviation: "GSW",
+            city: "Golden State",
+            conference: "West",
+            division: "Pacific",
+            full_name: "Golden State Warriors",
+            name: "Warriors"
+        },
+        weight_pounds: 215
+    },
+    {
         id: 274,
         first_name: "Kawhi",
         height_feet: 6,
@@ -628,5 +646,59 @@ export default [
             name: "Bulls"
         },
         weight_pounds: 200
+    },
+    {
+        id: 194,
+        first_name: "Montrezl",
+        height_feet: 6,
+        height_inches: 8,
+        last_name: "Harrell",
+        position: "F-C",
+        team: {
+            id: 13,
+            abbreviation: "LAC",
+            city: "LA",
+            conference: "West",
+            division: "Pacific",
+            full_name: "LA Clippers",
+            name: "Clippers"
+        },
+        weight_pounds: 240
+    },
+    {
+        id: 455,
+        first_name: "Jonas",
+        height_feet: 7,
+        height_inches: 0,
+        last_name: "Valanciunas",
+        position: "C",
+        team: {
+            id: 15,
+            abbreviation: "MEM",
+            city: "Memphis",
+            conference: "West",
+            division: "Southwest",
+            full_name: "Memphis Grizzlies",
+            name: "Grizzlies"
+        },
+        weight_pounds: 265
+    },
+    {
+        id: 214,
+        first_name: "Jrue",
+        height_feet: 6,
+        height_inches: 4,
+        last_name: "Holiday",
+        position: "G",
+        team: {
+            id: 19,
+            abbreviation: "NOP",
+            city: "New Orleans",
+            conference: "West",
+            division: "Southwest",
+            full_name: "New Orleans Pelicans",
+            name: "Pelicans"
+        },
+        weight_pounds: 205
     }
 ];
