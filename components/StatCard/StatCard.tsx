@@ -97,9 +97,8 @@ export default class Index extends React.Component<Props, State> {
                                                 )}
                                             />
                                             <H4>
-                                                {playerInfo.first_name +
-                                                    " " +
-                                                    playerInfo.last_name}
+                                                {`${playerInfo.first_name}
+                                                ${playerInfo.last_name}`}
                                             </H4>
                                         </div>
                                     </CardInfo>

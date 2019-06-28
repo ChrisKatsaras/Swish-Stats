@@ -3,22 +3,34 @@ import { Player } from "../models/player";
 
 const PlayersInfoContext = React.createContext({});
 
-class PlayersInfoProvider extends Component {
-    public state = {
-        playersInfo: []
-    };
+interface State {
+    playersInfo: Player[];
+}
 
-    public addPlayerInfo = (playerInfo: Player) => {
-        if (this.state.playersInfo.find(p => p.id === playerInfo.id) == null) {
-            this.setState({
-                playersInfo: [...this.state.playersInfo, playerInfo]
-            });
-        }
-    };
+class PlayersInfoProvider extends Component<State> {
+    constructor(state: State) {
+        super(state);
 
-    public setPlayersInfo = (playerInfo: Player) => {
+        this.state = {
+            playersInfo: []
+        };
+    }
+
+    public addPlayerInfo = (playerInfo: Player[]) => {
+        const playersToAdd: Player[] = [];
+        playerInfo.map(player => {
+            if (this.state.playersInfo.find(p => p.id === player.id) == null) {
+                playersToAdd.push(player);
+            }
+        });
         this.setState({
-            playersInfo: [playerInfo]
+            playersInfo: [...this.state.playersInfo, ...playersToAdd]
+        });
+    };
+
+    public setPlayersInfo = (playerInfo: Player[]) => {
+        this.setState({
+            playersInfo: [...playerInfo]
         });
     };
 

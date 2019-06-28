@@ -1,22 +1,37 @@
-import document, { Head, Html, Main, NextScript } from "next/document";
+import Document, { Head, Main, NextScript } from "next/document";
+import React from "react";
 import { ServerStyleSheet } from "styled-components";
 
-class MyDocument extends document {
-    public static getInitialProps({ renderPage }) {
+export default class CustomDocument extends Document {
+    public static async getInitialProps(ctx) {
         const sheet = new ServerStyleSheet();
+        const originalRenderPage = ctx.renderPage;
 
-        const page = renderPage(App => props =>
-            sheet.collectStyles(<App {...props} />)
-        );
+        try {
+            ctx.renderPage = () =>
+                originalRenderPage({
+                    enhanceApp: App => props =>
+                        sheet.collectStyles(<App {...props} />)
+                });
+            const initialProps = await Document.getInitialProps(ctx);
 
-        const styleTags = sheet.getStyleElement();
-
-        return { ...page, styleTags };
+            return {
+                ...initialProps,
+                styles: (
+                    <>
+                        {initialProps.styles}
+                        {sheet.getStyleElement()}
+                    </>
+                )
+            };
+        } finally {
+            sheet.seal();
+        }
     }
 
     public render() {
         return (
-            <Html>
+            <html lang="en">
                 <Head>
                     <meta
                         name="viewport"
@@ -28,15 +43,13 @@ class MyDocument extends document {
                         type="image/x-icon"
                         href="/static/favicon.ico"
                     />
-                    {this.props.styleTags}
                 </Head>
+
                 <body>
                     <Main />
                     <NextScript />
                 </body>
-            </Html>
+            </html>
         );
     }
 }
-
-export default MyDocument;
