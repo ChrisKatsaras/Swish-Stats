@@ -59,7 +59,7 @@ const StyledButton = styled(Button)`
 
     &:focus {
         outline: none !important;
-        box-shadow: !important;
+        box-shadow: none !important;
         background: #27293d;
     }
 `;
