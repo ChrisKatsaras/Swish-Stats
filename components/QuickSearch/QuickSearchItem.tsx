@@ -81,7 +81,6 @@ const ButtonText = styled.h2`
 
 interface Props {
     onClick: (player: Player) => void;
-    quickSearchDisabled: boolean;
     player: Player;
     isLoading: boolean;
 }
@@ -93,10 +92,18 @@ export default class QuickSearchItem extends React.Component<Props, State> {
     constructor({ props, state }: { props: Props; state: State }) {
         super(props, state);
         this.state = {};
+        this.isQuickSearchDisabled = this.isQuickSearchDisabled.bind(this);
     }
 
     public getTeamLogo(team: string) {
         return teamLogos[team];
+    }
+
+    public isQuickSearchDisabled(): boolean {
+        if (this.context.playersInfo.length >= 4) {
+            return true;
+        }
+        return false;
     }
 
     public render() {
@@ -106,7 +113,7 @@ export default class QuickSearchItem extends React.Component<Props, State> {
         } else {
             quickSearch = (
                 <StyledButton
-                    disabled={this.props.quickSearchDisabled}
+                    disabled={this.isQuickSearchDisabled()}
                     onClick={() => {
                         this.props.onClick(this.props.player);
                     }}

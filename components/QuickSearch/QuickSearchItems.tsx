@@ -16,7 +16,6 @@ interface Props {
 
 interface State {
     players: Player[];
-    quickSearchDisabled: boolean;
     isLoading: boolean;
 }
 
@@ -26,20 +25,14 @@ export default class QuickSearchItems extends React.Component<Props, State> {
         super(props, state);
         this.state = {
             players: [],
-            quickSearchDisabled: true,
             isLoading: true
         };
         this.getRandomPlayerList = this.getRandomPlayerList.bind(this);
-        this.isQuickSearchDisabled = this.isQuickSearchDisabled.bind(this);
     }
 
     public componentDidMount() {
         this.setState({
             players: this.getRandomPlayerList(this.props.numberOfItems)
-        });
-
-        this.setState({
-            quickSearchDisabled: this.isQuickSearchDisabled()
         });
 
         this.setState({
@@ -66,13 +59,6 @@ export default class QuickSearchItems extends React.Component<Props, State> {
         return result;
     }
 
-    public isQuickSearchDisabled(): boolean {
-        if (this.context.playersInfo.length >= 4) {
-            return true;
-        }
-        return false;
-    }
-
     public getTeamLogo(team: string) {
         return teamLogos[team];
     }
@@ -85,7 +71,6 @@ export default class QuickSearchItems extends React.Component<Props, State> {
             quickSearch = this.state.players.map(player => (
                 <QuickSearchItem
                     player={player}
-                    quickSearchDisabled={this.state.quickSearchDisabled}
                     isLoading={this.state.isLoading}
                     onClick={() => {
                         this.props.onClick(player);
