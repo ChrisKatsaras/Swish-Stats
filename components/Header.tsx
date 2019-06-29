@@ -14,8 +14,14 @@ const StyledHeader = styled(Navbar)`
     background: ${props => props.theme.primary};
 `;
 
-const NavbarBrand = styled(Navbar.Brand)`
+const BrandLink = styled.a`
     font-family: Ubuntu, sans-serif;
+    color: white;
+
+    &:hover {
+        color: white;
+        text-decoration: none;
+    }
 `;
 
 export default class Header extends React.Component {
@@ -34,13 +40,12 @@ export default class Header extends React.Component {
         }
         return (
             <StyledHeader className="navbar" variant="dark">
-                <NavbarBrand>Swish Stats</NavbarBrand>
-                <Nav className="mr-auto">
+                <Navbar.Brand>
                     <Link href="/" passHref>
-                        <HeaderLink>Home</HeaderLink>
+                        <BrandLink>Swish Stats</BrandLink>
                     </Link>
-                    {resultsLink}
-                </Nav>
+                </Navbar.Brand>
+                <Nav className="mr-auto">{resultsLink}</Nav>
             </StyledHeader>
         );
     }
