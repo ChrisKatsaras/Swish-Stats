@@ -1,4 +1,5 @@
 import App, { Container } from "next/app";
+import Router from "next/router";
 import React from "react";
 import { ThemeProvider } from "styled-components";
 import Layout from "../components/Layout";
@@ -18,6 +19,20 @@ interface State {
 export default class Application extends App<Props, State> {
     constructor(props: Props, state: State) {
         super(props, state);
+    }
+
+    public componentDidMount() {
+        Router.onRouteChangeComplete = url => {
+            this.trackPageView(url);
+        };
+    }
+
+    public trackPageView(url) {
+        try {
+            window.gtag("config", "UA-142981522-1", {
+                page_location: url
+            });
+        } catch (error) {}
     }
 
     public render() {
