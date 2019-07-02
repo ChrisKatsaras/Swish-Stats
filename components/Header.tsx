@@ -1,6 +1,7 @@
 import Link from "next/link";
 import styled from "styled-components";
 
+import Router, { withRouter } from "next/router";
 import * as React from "react";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -38,16 +39,21 @@ class Header extends React.Component {
     }
 
     public render() {
-        let resultsLink;
+        let resultsLink = null;
+        let searchBar = null;
+
         if (this.context.playersInfo.length > 0) {
             resultsLink = (
                 <Link href="/results" passHref>
                     <HeaderLink>Results</HeaderLink>
                 </Link>
             );
-        } else {
-            resultsLink = null;
         }
+
+        if (this.props.router.route != "/") {
+            searchBar = <Search searchPlayer={this.searchPlayer} />;
+        }
+
         return (
             <StyledHeader className="navbar" variant="dark">
                 <Navbar.Brand>
@@ -57,13 +63,11 @@ class Header extends React.Component {
                 </Navbar.Brand>
                 <Nav className="mr-auto">{resultsLink}</Nav>
                 <Nav.Item className="jutify-content-end fill mr-sm-2">
-                    <div className="input-group">
-                        <Search searchPlayer={this.searchPlayer} />
-                    </div>
+                    <div className="input-group">{searchBar}</div>
                 </Nav.Item>
             </StyledHeader>
         );
     }
 }
 
-export default Header;
+export default withRouter(Header);
