@@ -4,7 +4,9 @@ import styled from "styled-components";
 import * as React from "react";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
+import { Player } from "../models/player";
 import { PlayersInfoContext } from "./PlayersProvider";
+import Search from "./Search";
 
 const HeaderLink = styled.a`
     margin-right: 15px;
@@ -24,8 +26,16 @@ const BrandLink = styled.a`
     }
 `;
 
-export default class Header extends React.Component {
+class Header extends React.Component {
     public static contextType = PlayersInfoContext;
+    constructor() {
+        super();
+        this.searchPlayer = this.searchPlayer.bind(this);
+    }
+
+    public searchPlayer(players: Player[]) {
+        this.context.addPlayerInfo(players);
+    }
 
     public render() {
         let resultsLink;
@@ -46,7 +56,14 @@ export default class Header extends React.Component {
                     </Link>
                 </Navbar.Brand>
                 <Nav className="mr-auto">{resultsLink}</Nav>
+                <Nav.Item className="jutify-content-end fill mr-sm-2">
+                    <div className="input-group">
+                        <Search searchPlayer={this.searchPlayer} />
+                    </div>
+                </Nav.Item>
             </StyledHeader>
         );
     }
 }
+
+export default Header;

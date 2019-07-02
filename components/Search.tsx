@@ -1,13 +1,33 @@
 import fetch from "isomorphic-unfetch";
 import { getMainColor } from "nba-color";
 import * as React from "react";
-import { AsyncTypeahead } from "react-bootstrap-typeahead";
+import { AsyncTypeahead, Typeahead } from "react-bootstrap-typeahead";
 import styled from "styled-components";
 import { debounce } from "throttle-debounce";
 import { importTeamLogos } from "../helpers/image.helper";
 import { Player } from "../models/player";
 import { PlayersInfoContext } from "./PlayersProvider";
 
+const StyledSearch = styled(AsyncTypeahead)`
+    &&& {
+        border-radius: 30px;
+        min-width: 250px;
+        > .form-control: {
+            border-radius: 30px;
+        }
+        > .rbt-input-main: {
+            border-radius: 30px;
+        }
+
+        &:nth-child(1) {
+            > :nth-child(1) {
+                > :nth-child(1) {
+                    border-radius: 20px;
+                }
+            }
+        }
+    }
+`;
 const TeamBadge = styled.div.attrs({
     style: (props: any) => ({
         background: props.bg
@@ -67,6 +87,7 @@ export default class Search extends React.Component<Props, State> {
 
     public componentDidMount() {
         this.setState({ isLoading: false });
+        console.log(styled(AsyncTypeahead));
     }
 
     public setTeamColours(searchData: Player[]) {
@@ -90,7 +111,7 @@ export default class Search extends React.Component<Props, State> {
 
     public render() {
         return (
-            <AsyncTypeahead
+            <StyledSearch
                 id="Search"
                 filterBy={filterByCallback}
                 disabled={this.isSearchDisabled()}
@@ -103,7 +124,7 @@ export default class Search extends React.Component<Props, State> {
                 onChange={e => this.props.searchPlayer(e)}
                 placeholder="Search Player Name"
                 options={this.state.options}
-                renderMenuItemChildren={option => (
+                renderMenuItemChildren={(option: Player) => (
                     <div className="col-xs-*">
                         {option.first_name} {option.last_name}
                         <div>
@@ -116,6 +137,7 @@ export default class Search extends React.Component<Props, State> {
                         </div>
                     </div>
                 )}
+                style={{ borderRadius: "30px" }}
             />
         );
     }

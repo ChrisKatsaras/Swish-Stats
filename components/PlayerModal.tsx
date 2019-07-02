@@ -34,7 +34,9 @@ const TeamLogo = styled.img`
 `;
 
 const TableItem = styled.td`
-    vertical-align: middle !important;
+    &&& {
+        vertical-align: middle;
+    }
 `;
 
 export default class PlayerModal extends React.Component<Props, State> {
