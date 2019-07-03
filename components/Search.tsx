@@ -87,7 +87,6 @@ export default class Search extends React.Component<Props, State> {
 
     public componentDidMount() {
         this.setState({ isLoading: false });
-        console.log(styled(AsyncTypeahead));
     }
 
     public setTeamColours(searchData: Player[]) {
@@ -103,7 +102,7 @@ export default class Search extends React.Component<Props, State> {
     }
 
     public isSearchDisabled() {
-        if (this.context.playersInfo.length >= 4) {
+        if (this.context.playersInfo.length >= 10) {
             return true;
         }
         return false;

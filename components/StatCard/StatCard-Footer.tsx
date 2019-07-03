@@ -8,7 +8,9 @@ const StyledFooter = styled.div`
 `;
 
 const Footer = (props: any) => (
-    <StyledFooter className="card-footer">{props.footerText}</StyledFooter>
+    <StyledFooter className="card-footer text-center">
+        {props.footerText}
+    </StyledFooter>
 );
 
 export default Footer;

@@ -102,7 +102,7 @@ export default class QuickSearchItem extends React.Component<Props, State> {
     }
 
     public isQuickSearchDisabled(): boolean {
-        if (this.context.playersInfo.length >= 4) {
+        if (this.context.playersInfo.length >= 10) {
             return true;
         }
         return false;

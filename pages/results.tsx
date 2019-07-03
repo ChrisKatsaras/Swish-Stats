@@ -2,8 +2,10 @@ import Router from "next/router";
 import React from "react";
 import styled from "styled-components";
 import PlayerButton from "../components/PlayerButton";
+import PlayerChip from "../components/PlayerChip/PlayerChip";
 import PlayerModal from "../components/PlayerModal";
 import { PlayersInfoContext } from "../components/PlayersProvider";
+import QuickSearchItems from "../components/QuickSearch/QuickSearchItems";
 import StatCard from "../components/StatCard/StatCard";
 import { importTeamLogos } from "../helpers/image.helper";
 import { getPlayersSeasonAverages } from "../helpers/stat.helper";
@@ -51,6 +53,7 @@ export default class Results extends React.Component<Props, State> {
             playerSeasonAverages: null
         };
         this.child = React.createRef();
+        this.removePlayer = this.removePlayer.bind(this);
     }
 
     public componentDidMount() {
@@ -113,6 +116,10 @@ export default class Results extends React.Component<Props, State> {
         this.child.current.showModal();
     };
 
+    public removePlayer(playerId: number) {
+        this.context.removePlayerInfo(playerId);
+    }
+
     public render() {
         if (this.state.isLoading) {
             return (
@@ -140,10 +147,19 @@ export default class Results extends React.Component<Props, State> {
         });
 
         return (
-            <ResultsPage className="position-relative overflow-hidden text-center">
-                <div className="mx-auto my-5">
-                    <PlayerButton onClick={this.onClick} />
-                    <PlayerModal ref={this.child} />
+            <ResultsPage className="position-relative overflow-hidden">
+                <div className="my-4">
+                    <div className="mr-auto">
+                        {this.context.playersInfo.map((player: Player) => {
+                            return (
+                                <PlayerChip
+                                    key={player.id}
+                                    onClick={this.removePlayer}
+                                    player={player}
+                                />
+                            );
+                        })}
+                    </div>
                     <div className="row">
                         <StatCard
                             categoryAbbreviation={"ppg"}
@@ -206,7 +222,7 @@ export default class Results extends React.Component<Props, State> {
                             footerText="Blocks Per Game"
                         />
                         <StatCard
-                            categoryAbbreviation={"stl"}
+                            categoryAbbreviation={"spg"}
                             statistics={this.state.playerSeasonAverages
                                 .map(({ player_id, stl }) => ({
                                     player_id,

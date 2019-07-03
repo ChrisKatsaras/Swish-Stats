@@ -5,10 +5,6 @@ import { Player } from "../../models/player";
 import { PlayersInfoContext } from "../PlayersProvider";
 import QuickSearchItem from "./QuickSearchItem";
 
-const teamLogos: { [key: string]: string } = importTeamLogos(
-    require.context("../../static", false, /\.(svg)$/)
-);
-
 interface Props {
     onClick: (player: Player) => void;
     numberOfItems: number;
@@ -57,10 +53,6 @@ export default class QuickSearchItems extends React.Component<Props, State> {
         }
 
         return result;
-    }
-
-    public getTeamLogo(team: string) {
-        return teamLogos[team];
     }
 
     public render() {

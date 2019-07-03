@@ -15,15 +15,28 @@ const HeaderLink = styled.a`
 
 const StyledHeader = styled(Navbar)`
     background: ${props => props.theme.primary};
+    min-height: 62px;
 `;
 
 const BrandLink = styled.a`
     font-family: Ubuntu, sans-serif;
     color: white;
+    font-size: 1.4rem;
 
     &:hover {
         color: white;
         text-decoration: none;
+    }
+`;
+
+const StyledToggle = styled(Navbar.Toggle)`
+    &:active {
+        outline: none;
+        box-shadow: none;
+    }
+    &:focus {
+        outline: none;
+        box-shadow: none;
     }
 `;
 
@@ -39,32 +52,40 @@ class Header extends React.Component {
     }
 
     public render() {
-        let resultsLink = null;
         let searchBar = null;
 
-        if (this.context.playersInfo.length > 0) {
-            resultsLink = (
-                <Link href="/results" passHref>
-                    <HeaderLink>Results</HeaderLink>
-                </Link>
+        if (this.props.router.route !== "/") {
+            searchBar = (
+                <React.Fragment>
+                    <StyledToggle />
+                    <Navbar.Collapse
+                        className="justify-content-end"
+                        id="basic-navbar-nav">
+                        <Nav.Item className="justify-content-end fill my-1 mr-sm-2">
+                            <div className="input-group">
+                                <Search searchPlayer={this.searchPlayer} />
+                            </div>
+                        </Nav.Item>
+                    </Navbar.Collapse>
+                </React.Fragment>
             );
         }
 
-        if (this.props.router.route != "/") {
-            searchBar = <Search searchPlayer={this.searchPlayer} />;
-        }
-
         return (
-            <StyledHeader className="navbar" variant="dark">
+            <StyledHeader className="navbar" variant="dark" expand="sm">
                 <Navbar.Brand>
                     <Link href="/" passHref>
                         <BrandLink>Swish Stats</BrandLink>
                     </Link>
                 </Navbar.Brand>
-                <Nav className="mr-auto">{resultsLink}</Nav>
-                <Nav.Item className="jutify-content-end fill mr-sm-2">
-                    <div className="input-group">{searchBar}</div>
+                <Nav.Item className="mr-auto">
+                    {this.context.playersInfo.length > 0 && (
+                        <Link href="/results" passHref>
+                            <HeaderLink>Results</HeaderLink>
+                        </Link>
+                    )}
                 </Nav.Item>
+                {searchBar}
             </StyledHeader>
         );
     }
