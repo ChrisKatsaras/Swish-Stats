@@ -1,4 +1,6 @@
-const withBundleAnalyzer = require("@zeit/next-bundle-analyzer");
+const withBundleAnalyzer = require("@next/bundle-analyzer")({
+    enabled: process.env.ANALYZE === "true"
+});
 const withCSS = require("@zeit/next-css");
 const withTypescript = require("@zeit/next-typescript");
 const withImages = require("next-images");
