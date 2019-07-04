@@ -1,11 +1,8 @@
 import Router from "next/router";
 import React from "react";
 import styled from "styled-components";
-import PlayerButton from "../components/PlayerButton";
 import PlayerChip from "../components/PlayerChip/PlayerChip";
-import PlayerModal from "../components/PlayerModal";
 import { PlayersInfoContext } from "../components/PlayersProvider";
-import QuickSearchItems from "../components/QuickSearch/QuickSearchItems";
 import StatCard from "../components/StatCard/StatCard";
 import { importTeamLogos } from "../helpers/image.helper";
 import { getPlayersSeasonAverages } from "../helpers/stat.helper";
@@ -52,7 +49,7 @@ export default class Results extends React.Component<Props, State> {
             playerIds: [],
             playerSeasonAverages: null
         };
-        this.child = React.createRef();
+
         this.removePlayer = this.removePlayer.bind(this);
     }
 
@@ -112,10 +109,6 @@ export default class Results extends React.Component<Props, State> {
         return teamLogos[team];
     }
 
-    public onClick = () => {
-        this.child.current.showModal();
-    };
-
     public removePlayer(playerId: number) {
         this.context.removePlayerInfo(playerId);
     }
@@ -164,11 +157,19 @@ export default class Results extends React.Component<Props, State> {
                         <StatCard
                             categoryAbbreviation={"ppg"}
                             statistics={this.state.playerSeasonAverages
-                                .map(({ player_id, pts }) => ({
-                                    player_id,
-                                    stat: pts
-                                }))
-                                .sort((a, b) => {
+                                .map(
+                                    ({
+                                        player_id,
+                                        pts
+                                    }: {
+                                        player_id: number;
+                                        pts: number;
+                                    }) => ({
+                                        player_id,
+                                        stat: pts
+                                    })
+                                )
+                                .sort((a: any, b: any) => {
                                     return b.stat - a.stat;
                                 })}
                             footerText="Points Per Game"
@@ -176,11 +177,19 @@ export default class Results extends React.Component<Props, State> {
                         <StatCard
                             categoryAbbreviation={"rpg"}
                             statistics={this.state.playerSeasonAverages
-                                .map(({ player_id, reb }) => ({
-                                    player_id,
-                                    stat: reb
-                                }))
-                                .sort((a, b) => {
+                                .map(
+                                    ({
+                                        player_id,
+                                        reb
+                                    }: {
+                                        player_id: number;
+                                        reb: number;
+                                    }) => ({
+                                        player_id,
+                                        stat: reb
+                                    })
+                                )
+                                .sort((a: any, b: any) => {
                                     return b.stat - a.stat;
                                 })}
                             footerText="Rebounds Per Game"
@@ -188,11 +197,19 @@ export default class Results extends React.Component<Props, State> {
                         <StatCard
                             categoryAbbreviation={"apg"}
                             statistics={this.state.playerSeasonAverages
-                                .map(({ player_id, ast }) => ({
-                                    player_id,
-                                    stat: ast
-                                }))
-                                .sort((a, b) => {
+                                .map(
+                                    ({
+                                        player_id,
+                                        ast
+                                    }: {
+                                        player_id: number;
+                                        ast: number;
+                                    }) => ({
+                                        player_id,
+                                        stat: ast
+                                    })
+                                )
+                                .sort((a: any, b: any) => {
                                     return b.stat - a.stat;
                                 })}
                             footerText="Assists Per Game"
@@ -200,11 +217,19 @@ export default class Results extends React.Component<Props, State> {
                         <StatCard
                             categoryAbbreviation={"mpg"}
                             statistics={this.state.playerSeasonAverages
-                                .map(({ player_id, min }) => ({
-                                    player_id,
-                                    stat: min
-                                }))
-                                .sort((a, b) => {
+                                .map(
+                                    ({
+                                        player_id,
+                                        min
+                                    }: {
+                                        player_id: number;
+                                        min: string;
+                                    }) => ({
+                                        player_id,
+                                        stat: min
+                                    })
+                                )
+                                .sort((a: any, b: any) => {
                                     return mpgCollator.compare(b.stat, a.stat);
                                 })}
                             footerText="Minutes Per Game"
@@ -212,11 +237,19 @@ export default class Results extends React.Component<Props, State> {
                         <StatCard
                             categoryAbbreviation={"bpg"}
                             statistics={this.state.playerSeasonAverages
-                                .map(({ player_id, blk }) => ({
-                                    player_id,
-                                    stat: blk
-                                }))
-                                .sort((a, b) => {
+                                .map(
+                                    ({
+                                        player_id,
+                                        blk
+                                    }: {
+                                        player_id: number;
+                                        blk: number;
+                                    }) => ({
+                                        player_id,
+                                        stat: blk
+                                    })
+                                )
+                                .sort((a: any, b: any) => {
                                     return b.stat - a.stat;
                                 })}
                             footerText="Blocks Per Game"
@@ -224,11 +257,19 @@ export default class Results extends React.Component<Props, State> {
                         <StatCard
                             categoryAbbreviation={"spg"}
                             statistics={this.state.playerSeasonAverages
-                                .map(({ player_id, stl }) => ({
-                                    player_id,
-                                    stat: stl
-                                }))
-                                .sort((a, b) => {
+                                .map(
+                                    ({
+                                        player_id,
+                                        stl
+                                    }: {
+                                        player_id: number;
+                                        stl: number;
+                                    }) => ({
+                                        player_id,
+                                        stat: stl
+                                    })
+                                )
+                                .sort((a: any, b: any) => {
                                     return b.stat - a.stat;
                                 })}
                             footerText="Steals Per Game"

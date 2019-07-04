@@ -1,6 +1,6 @@
 import React from "react";
-import { Badge, Button, Row } from "react-bootstrap";
-import XIcon from "react-feather/dist/icons/x";
+import { Badge, Row } from "react-bootstrap";
+import { X } from "react-feather";
 import styled from "styled-components";
 import { importTeamLogos } from "../../helpers/image.helper";
 import { Player } from "../../models/player";
@@ -22,7 +22,7 @@ const BadgeText = styled.h6`
     margin-left: 5px;
 `;
 
-const RemoveIcon = styled(XIcon)``;
+const RemoveIcon = styled(X)``;
 
 const PlayerBadge = styled(Badge)`
     background: ${props => props.theme.secondary};
@@ -39,14 +39,12 @@ const PlayerBadge = styled(Badge)`
 `;
 interface Props {
     player: Player;
-    onClick: (player: Player) => void;
+    onClick: (player: number) => void;
 }
 
-interface State {}
-
-export default class PlayerChip extends React.Component<Props, State> {
+export default class PlayerChip extends React.Component<Props, {}> {
     public static contextType = PlayersInfoContext;
-    constructor({ props, state }: { props: Props; state: State }) {
+    constructor({ props, state }: { props: Props; state: {} }) {
         super(props, state);
         this.state = {};
     }

@@ -23,18 +23,16 @@ const H4 = styled.h4`
     font-family: "Ubuntu", sans-serif;
 `;
 
-interface Props {}
-
 interface State {
     isLoading: boolean;
     players: Player[];
     quickSearchDisabled: boolean;
 }
 
-export default class Index extends React.Component<Props, State> {
+export default class Index extends React.Component<{}, State> {
     public static contextType = PlayersInfoContext;
 
-    constructor(props: Props, state: State) {
+    constructor(props: {}, state: State) {
         super(props, state);
         this.state = {
             isLoading: true,

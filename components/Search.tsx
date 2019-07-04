@@ -1,7 +1,7 @@
 import fetch from "isomorphic-unfetch";
 import { getMainColor } from "nba-color";
 import * as React from "react";
-import { AsyncTypeahead, Typeahead } from "react-bootstrap-typeahead";
+import { AsyncTypeahead } from "react-bootstrap-typeahead";
 import styled from "styled-components";
 import { debounce } from "throttle-debounce";
 import { importTeamLogos } from "../helpers/image.helper";
@@ -28,11 +28,13 @@ const StyledSearch = styled(AsyncTypeahead)`
         }
     }
 `;
-const TeamBadge = styled.div.attrs({
-    style: (props: any) => ({
-        background: props.bg
-    })
-})`
+
+interface TeamBadgeProps {
+    background: string;
+}
+const TeamBadge = styled.div.attrs((props: TeamBadgeProps) => ({
+    style: { background: props.background }
+}))`
     color: white;
 `;
 
@@ -44,7 +46,10 @@ const teamLogos: { [key: string]: string } = importTeamLogos(
     require.context("../static", false, /\.(svg)$/)
 );
 
-const filterByCallback = function callback(option: Player, props: any) {
+const filterByCallback = function callback(
+    option: Player,
+    props: any
+): boolean {
     return (
         props.text.toLowerCase().indexOf(option.first_name.toLowerCase()) !==
             -1 ||
@@ -91,7 +96,7 @@ export default class Search extends React.Component<Props, State> {
 
     public setTeamColours(searchData: Player[]) {
         searchData.forEach(element => {
-            element.colour = getMainColor(element.team.abbreviation);
+            element.teamColor = getMainColor(element.team.abbreviation).hex;
         });
 
         this.setState({ options: searchData });
@@ -130,7 +135,9 @@ export default class Search extends React.Component<Props, State> {
                             <TeamLogo
                                 src={this.getTeamLogo(option.team.abbreviation)}
                             />
-                            <TeamBadge className="badge" bg={option.colour.hex}>
+                            <TeamBadge
+                                className="badge"
+                                background={option.teamColor}>
                                 {option.team.full_name}
                             </TeamBadge>
                         </div>

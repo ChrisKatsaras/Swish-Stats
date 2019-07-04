@@ -59,11 +59,9 @@ interface Props {
     categoryAbbreviation: string;
 }
 
-interface State {}
-
-export default class Index extends React.Component<Props, State> {
+export default class Index extends React.Component<Props, {}> {
     public static contextType = PlayersInfoContext;
-    constructor(props: Props, state: State) {
+    constructor(props: Props, state: {}) {
         super(props, state);
     }
 

@@ -1,10 +1,9 @@
 import Link from "next/link";
-import styled from "styled-components";
-
-import Router, { withRouter } from "next/router";
+import { SingletonRouter, withRouter } from "next/router";
 import * as React from "react";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
+import styled from "styled-components";
 import { Player } from "../models/player";
 import { PlayersInfoContext } from "./PlayersProvider";
 import Search from "./Search";
@@ -40,10 +39,14 @@ const StyledToggle = styled(Navbar.Toggle)`
     }
 `;
 
-class Header extends React.Component {
+interface Props {
+    router: SingletonRouter;
+}
+
+class Header extends React.Component<Props> {
     public static contextType = PlayersInfoContext;
-    constructor() {
-        super();
+    constructor(props: Props) {
+        super(props);
         this.searchPlayer = this.searchPlayer.bind(this);
     }
 

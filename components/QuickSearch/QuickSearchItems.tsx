@@ -1,6 +1,5 @@
 import React from "react";
 import playersData from "../../data/players";
-import { importTeamLogos } from "../../helpers/image.helper";
 import { Player } from "../../models/player";
 import { PlayersInfoContext } from "../PlayersProvider";
 import QuickSearchItem from "./QuickSearchItem";
@@ -37,22 +36,27 @@ export default class QuickSearchItems extends React.Component<Props, State> {
     }
 
     public getRandomPlayerList(length: number): Player[] {
-        const result = [];
-
+        const playerList = [];
+        let remainingItems = length;
         // Remove players that are already being searched for
         const filteredPlayerData = playersData.filter(
             player => !this.context.playersInfo.includes(player)
         );
-        let len = filteredPlayerData.length;
+        let playerDataLength = filteredPlayerData.length;
         const taken: number[] = [];
 
-        while (length--) {
-            const x = Math.floor(Math.random() * len);
-            result[length] = filteredPlayerData[x in taken ? taken[x] : x];
-            taken[x] = --len in taken ? taken[len] : len;
+        while (remainingItems > 0) {
+            const x = Math.floor(Math.random() * playerDataLength);
+            playerList[remainingItems] =
+                filteredPlayerData[x in taken ? taken[x] : x];
+            taken[x] =
+                --playerDataLength in taken
+                    ? taken[playerDataLength]
+                    : playerDataLength;
+            remainingItems -= 1;
         }
 
-        return result;
+        return playerList;
     }
 
     public render() {

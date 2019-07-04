@@ -87,11 +87,9 @@ interface Props {
     isLoading: boolean;
 }
 
-interface State {}
-
-export default class QuickSearchItem extends React.Component<Props, State> {
+export default class QuickSearchItem extends React.Component<Props, {}> {
     public static contextType = PlayersInfoContext;
-    constructor({ props, state }: { props: Props; state: State }) {
+    constructor({ props, state }: { props: Props; state: {} }) {
         super(props, state);
         this.state = {};
         this.isQuickSearchDisabled = this.isQuickSearchDisabled.bind(this);
