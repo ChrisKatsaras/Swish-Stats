@@ -1,6 +1,7 @@
 import Router from "next/router";
 import React from "react";
 import styled from "styled-components";
+import ClearAllChip from "../components/ClearAllChip/ClearAllChip";
 import PlayerChip from "../components/PlayerChip/PlayerChip";
 import { PlayersInfoContext } from "../components/PlayersProvider";
 import StatCard from "../components/StatCard/StatCard";
@@ -51,6 +52,7 @@ export default class Results extends React.Component<Props, State> {
         };
 
         this.removePlayer = this.removePlayer.bind(this);
+        this.clearAllPlayers = this.clearAllPlayers.bind(this);
     }
 
     public componentDidMount() {
@@ -109,8 +111,8 @@ export default class Results extends React.Component<Props, State> {
         return teamLogos[team];
     }
 
-    public removePlayer(playerId: number) {
-        this.context.removePlayerInfo(playerId);
+    public clearAllPlayers(): void {
+        this.context.setPlayersInfo([]);
     }
 
     public render() {
@@ -152,6 +154,7 @@ export default class Results extends React.Component<Props, State> {
                                 />
                             );
                         })}
+                        <ClearAllChip onClick={this.clearAllPlayers} />
                     </div>
                     <div className="row">
                         <StatCard
