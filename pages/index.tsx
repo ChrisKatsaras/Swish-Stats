@@ -1,5 +1,6 @@
 import Router from "next/router";
 import React from "react";
+import { Row } from "react-bootstrap";
 import styled from "styled-components";
 import { PlayersInfoContext } from "../components/PlayersProvider";
 import QuickSearchItems from "../components/QuickSearch/QuickSearchItems";
@@ -73,11 +74,11 @@ export default class Index extends React.Component<{}, State> {
         let limitWarning = null;
         if (this.context.playersInfo.length >= playerLimit) {
             limitWarning = (
-                <div className="row justify-content-center">
+                <Row className="justify-content-center">
                     <WarningAlert
                         text={`Cannot search for more than ${playerLimit} players`}
                     />
-                </div>
+                </Row>
             );
         }
 
@@ -91,18 +92,18 @@ export default class Index extends React.Component<{}, State> {
                 </div>
                 <H4 className="display-12 text-light">Quick Search</H4>
                 {limitWarning}
-                <div className="col-sm-12 row justify-content-center">
+                <Row className="col-sm-12 justify-content-center">
                     <QuickSearchItems
                         onClick={this.quickSearchPlayer}
                         numberOfItems={5}
                     />
-                </div>
-                <div className="col-sm-12 row justify-content-center">
+                </Row>
+                <Row className="col-sm-12 justify-content-center">
                     <QuickSearchComparisonItems
                         onClick={this.quickSearchPlayerComparison}
                         numberOfItems={4}
                     />
-                </div>
+                </Row>
             </HomePage>
         );
     }

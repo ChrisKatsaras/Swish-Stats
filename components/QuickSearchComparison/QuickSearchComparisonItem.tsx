@@ -1,13 +1,9 @@
 import React from "react";
-import { Button } from "react-bootstrap";
+import { Button, Row } from "react-bootstrap";
 import styled from "styled-components";
-import { importTeamLogos } from "../../helpers/image.helper";
+import teamLogos from "../../helpers/TeamLogos";
 import { Player } from "../../models/player";
 import { PlayersInfoContext } from "../PlayersProvider";
-
-const teamLogos: { [key: string]: string } = importTeamLogos(
-    require.context("../../static", false, /\.(svg)$/)
-);
 
 const StyledButton = styled(Button)`
     &&& {
@@ -66,8 +62,6 @@ const StyledButton = styled(Button)`
     }
 `;
 
-const ButtonContent = styled.div``;
-
 const TeamIconLeft = styled.img`
     max-height: 55px;
     padding-right: 10px;
@@ -102,10 +96,6 @@ export default class QuickSearchComparisonItem extends React.Component<
         this.state = {};
     }
 
-    public getTeamLogo(team: string) {
-        return teamLogos[team];
-    }
-
     public render() {
         let quickSearch;
         if (this.props.isLoading) {
@@ -117,11 +107,13 @@ export default class QuickSearchComparisonItem extends React.Component<
                     onClick={() => {
                         this.props.onClick(this.props.players);
                     }}>
-                    <ButtonContent className="row">
+                    <Row>
                         <TeamIconLeft
-                            src={this.getTeamLogo(
-                                this.props.players[0].team.abbreviation
-                            )}
+                            src={
+                                teamLogos[
+                                    this.props.players[0].team.abbreviation
+                                ]
+                            }
                         />
                         <div className="align-self-center">
                             <ButtonText>
@@ -135,11 +127,13 @@ export default class QuickSearchComparisonItem extends React.Component<
                             </ButtonText>
                         </div>
                         <TeamIconRight
-                            src={this.getTeamLogo(
-                                this.props.players[1].team.abbreviation
-                            )}
+                            src={
+                                teamLogos[
+                                    this.props.players[1].team.abbreviation
+                                ]
+                            }
                         />
-                    </ButtonContent>
+                    </Row>
                 </StyledButton>
             );
         }

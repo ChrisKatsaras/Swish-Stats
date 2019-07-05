@@ -1,17 +1,13 @@
 import Router from "next/router";
 import React from "react";
+import { Row } from "react-bootstrap";
 import styled from "styled-components";
 import ClearAllChip from "../components/ClearAllChip/ClearAllChip";
 import PlayerChip from "../components/PlayerChip/PlayerChip";
 import { PlayersInfoContext } from "../components/PlayersProvider";
 import StatCard from "../components/StatCard/StatCard";
-import { importTeamLogos } from "../helpers/image.helper";
 import { getPlayersSeasonAverages } from "../helpers/stat.helper";
 import { Player } from "../models/player";
-
-const teamLogos: { [key: string]: string } = importTeamLogos(
-    require.context("../static", false, /\.(svg)$/)
-);
 
 const ResultsPage = styled.div`
     background: ${props => props.theme.primary};
@@ -33,17 +29,15 @@ const Loader = styled.div`
     right: 0;
 `;
 
-interface Props {}
-
 interface State {
     playerSeasonAverages: any;
     isLoading: boolean;
     playerIds: number[];
 }
 
-export default class Results extends React.Component<Props, State> {
+export default class Results extends React.Component<{}, State> {
     public static contextType = PlayersInfoContext;
-    constructor(props: Props, state: State) {
+    constructor(props: {}, state: State) {
         super(props, state);
         this.state = {
             isLoading: false,
@@ -107,8 +101,8 @@ export default class Results extends React.Component<Props, State> {
         }
     }
 
-    public getTeamLogo(team: string) {
-        return teamLogos[team];
+    public removePlayer(playerId: number) {
+        this.context.removePlayerInfo(playerId);
     }
 
     public clearAllPlayers(): void {
@@ -156,7 +150,7 @@ export default class Results extends React.Component<Props, State> {
                         })}
                         <ClearAllChip onClick={this.clearAllPlayers} />
                     </div>
-                    <div className="row">
+                    <Row>
                         <StatCard
                             categoryAbbreviation={"ppg"}
                             statistics={this.state.playerSeasonAverages
@@ -277,7 +271,7 @@ export default class Results extends React.Component<Props, State> {
                                 })}
                             footerText="Steals Per Game"
                         />
-                    </div>
+                    </Row>
                 </div>
                 <div className="product-device shadow-sm d-none d-md-block" />
                 <div className="product-device product-device-2 shadow-sm d-none d-md-block" />

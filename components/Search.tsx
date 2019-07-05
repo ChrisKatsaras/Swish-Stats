@@ -4,14 +4,14 @@ import * as React from "react";
 import { AsyncTypeahead } from "react-bootstrap-typeahead";
 import styled from "styled-components";
 import { debounce } from "throttle-debounce";
-import { importTeamLogos } from "../helpers/image.helper";
+import teamLogos from "../helpers/TeamLogos";
 import { Player } from "../models/player";
 import { PlayersInfoContext } from "./PlayersProvider";
 
 const StyledSearch = styled(AsyncTypeahead)`
     &&& {
         border-radius: 30px;
-        min-width: 250px;
+        min-width: 275px;
         > .form-control: {
             border-radius: 30px;
         }
@@ -41,10 +41,6 @@ const TeamBadge = styled.div.attrs((props: TeamBadgeProps) => ({
 const TeamLogo = styled.img`
     max-height: 50px;
 `;
-
-const teamLogos: { [key: string]: string } = importTeamLogos(
-    require.context("../static", false, /\.(svg)$/)
-);
 
 const filterByCallback = function callback(
     option: Player,
@@ -102,10 +98,6 @@ export default class Search extends React.Component<Props, State> {
         this.setState({ options: searchData });
     }
 
-    public getTeamLogo(team: string) {
-        return teamLogos[team];
-    }
-
     public isSearchDisabled() {
         if (this.context.playersInfo.length >= 10) {
             return true;
@@ -133,7 +125,7 @@ export default class Search extends React.Component<Props, State> {
                         {option.first_name} {option.last_name}
                         <div>
                             <TeamLogo
-                                src={this.getTeamLogo(option.team.abbreviation)}
+                                src={teamLogos[option.team.abbreviation]}
                             />
                             <TeamBadge
                                 className="badge"

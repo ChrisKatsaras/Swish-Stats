@@ -1,13 +1,9 @@
-import React from "react";
-import { Button } from "react-bootstrap";
+import React, { useContext } from "react";
+import { Button, Row } from "react-bootstrap";
 import styled from "styled-components";
-import { importTeamLogos } from "../../helpers/image.helper";
+import teamLogos from "../../helpers/TeamLogos";
 import { Player } from "../../models/player";
 import { PlayersInfoContext } from "../PlayersProvider";
-
-const teamLogos: { [key: string]: string } = importTeamLogos(
-    require.context("../../static", false, /\.(svg)$/)
-);
 
 const StyledButton = styled(Button)`
     &&& {
@@ -66,7 +62,7 @@ const StyledButton = styled(Button)`
     }
 `;
 
-const ButtonContent = styled.div`
+const ButtonContent = styled(Row)`
     margin-right: 5px;
     margin-left: -10px;
 `;
@@ -87,53 +83,38 @@ interface Props {
     isLoading: boolean;
 }
 
-export default class QuickSearchItem extends React.Component<Props, {}> {
-    public static contextType = PlayersInfoContext;
-    constructor({ props, state }: { props: Props; state: {} }) {
-        super(props, state);
-        this.state = {};
-        this.isQuickSearchDisabled = this.isQuickSearchDisabled.bind(this);
-    }
+const QuickSearchItem = (props: Props) => {
+    const playerContext = useContext(PlayersInfoContext);
 
-    public getTeamLogo(team: string) {
-        return teamLogos[team];
-    }
-
-    public isQuickSearchDisabled(): boolean {
-        if (this.context.playersInfo.length >= 10) {
+    const isQuickSearchDisabled = () => {
+        if (playerContext.playersInfo.length >= 10) {
             return true;
         }
         return false;
-    }
+    };
 
-    public render() {
-        let quickSearch;
-        if (this.props.isLoading) {
-            quickSearch = null;
-        } else {
-            quickSearch = (
-                <StyledButton
-                    disabled={this.isQuickSearchDisabled()}
-                    onClick={() => {
-                        this.props.onClick(this.props.player);
-                    }}
-                    key={this.props.player.id}>
-                    <ButtonContent className="row">
-                        <TeamIcon
-                            src={this.getTeamLogo(
-                                this.props.player.team.abbreviation
-                            )}
-                        />
-                        <div className="align-self-center">
-                            <ButtonText>
-                                {`${this.props.player.first_name}
-                                ${this.props.player.last_name}`}
-                            </ButtonText>
-                        </div>
-                    </ButtonContent>
-                </StyledButton>
-            );
-        }
-        return quickSearch;
+    let quickSearch;
+    if (props.isLoading) {
+        quickSearch = null;
+    } else {
+        quickSearch = (
+            <StyledButton
+                disabled={isQuickSearchDisabled()}
+                onClick={() => props.onClick(props.player)}
+                key={props.player.id}>
+                <ButtonContent>
+                    <TeamIcon src={teamLogos[props.player.team.abbreviation]} />
+                    <div className="align-self-center">
+                        <ButtonText>
+                            {`${props.player.first_name}
+                                ${props.player.last_name}`}
+                        </ButtonText>
+                    </div>
+                </ButtonContent>
+            </StyledButton>
+        );
     }
-}
+    return quickSearch;
+};
+
+export default QuickSearchItem;

@@ -2,13 +2,9 @@ import React from "react";
 import { Badge, Row } from "react-bootstrap";
 import { X } from "react-feather";
 import styled from "styled-components";
-import { importTeamLogos } from "../../helpers/image.helper";
+import teamLogos from "../../helpers/TeamLogos";
 import { Player } from "../../models/player";
 import { PlayersInfoContext } from "../PlayersProvider";
-
-const teamLogos: { [key: string]: string } = importTeamLogos(
-    require.context("../../static", false, /\.(svg)$/)
-);
 
 const TeamIcon = styled.img`
     max-height: 30px;
@@ -42,37 +38,21 @@ interface Props {
     onClick: (player: number) => void;
 }
 
-export default class PlayerChip extends React.Component<Props, {}> {
-    public static contextType = PlayersInfoContext;
-    constructor({ props, state }: { props: Props; state: {} }) {
-        super(props, state);
-        this.state = {};
-    }
+const PlayerChip = (props: Props) => (
+    <PlayerBadge
+        pill
+        onClick={() => {
+            props.onClick(props.player.id);
+        }}>
+        <Row>
+            <TeamIcon src={teamLogos[props.player.team.abbreviation]} />
+            <BadgeText className="align-self-center">
+                {`${props.player.first_name}
+                         ${props.player.last_name}`}
+            </BadgeText>
+            <RemoveIcon className="align-self-center" color="white" />
+        </Row>
+    </PlayerBadge>
+);
 
-    public getTeamLogo(team: string) {
-        return teamLogos[team];
-    }
-
-    public render() {
-        return (
-            <PlayerBadge
-                pill
-                onClick={() => {
-                    this.props.onClick(this.props.player.id);
-                }}>
-                <Row>
-                    <TeamIcon
-                        src={this.getTeamLogo(
-                            this.props.player.team.abbreviation
-                        )}
-                    />
-                    <BadgeText className="align-self-center">
-                        {`${this.props.player.first_name}
-                         ${this.props.player.last_name}`}
-                    </BadgeText>
-                    <RemoveIcon className="align-self-center" color="white" />
-                </Row>
-            </PlayerBadge>
-        );
-    }
-}
+export default PlayerChip;

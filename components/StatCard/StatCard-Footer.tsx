@@ -7,7 +7,11 @@ const StyledFooter = styled.div`
     color: white;
 `;
 
-const Footer = (props: any) => (
+interface Props {
+    footerText: string;
+}
+
+const Footer = (props: Props) => (
     <StyledFooter className="card-footer text-center">
         {props.footerText}
     </StyledFooter>
