@@ -11,8 +11,9 @@ interface Props {
     date: string;
 }
 
-const CardDate = (props: Props) => (
-    <StyledDate className="text-light">{props.date}</StyledDate>
-);
+const CardDate = (props: Props) => {
+    const { date } = props;
+    return <StyledDate className="text-light">{date}</StyledDate>;
+};
 
 export default CardDate;

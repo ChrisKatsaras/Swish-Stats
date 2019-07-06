@@ -35,13 +35,17 @@ interface Props {
     onClick: () => void;
 }
 
-const ClearAllChip = (props: Props) => (
-    <PlayerBadge pill onClick={props.onClick}>
-        <Row>
-            <UsersIcon color="white" size={30} />
-            <BadgeText className="align-self-center">Clear All</BadgeText>
-            <RemoveIcon className="align-self-center" color="white" />
-        </Row>
-    </PlayerBadge>
-);
+const ClearAllChip = (props: Props) => {
+    const { onClick } = props;
+
+    return (
+        <PlayerBadge pill onClick={onClick}>
+            <Row>
+                <UsersIcon color="white" size={30} />
+                <BadgeText className="align-self-center">Clear All</BadgeText>
+                <RemoveIcon className="align-self-center" color="white" />
+            </Row>
+        </PlayerBadge>
+    );
+};
 export default ClearAllChip;

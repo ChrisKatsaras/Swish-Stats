@@ -57,12 +57,13 @@ interface Props {
 }
 
 const StatCard = (props: Props) => {
+    const { footerText, statistics, categoryAbbreviation } = props;
     const playerContext = useContext(PlayersInfoContext);
 
     return (
         <div className="col-lg-4 col-md-6">
             <Card className="card">
-                {props.statistics.map(stat => {
+                {statistics.map(stat => {
                     const playerInfo = playerContext.playersInfo.find(
                         (player: Player) => player.id === stat.player_id
                     );
@@ -98,7 +99,7 @@ const StatCard = (props: Props) => {
                                             {stat.stat}
                                         </h3>
                                         <CardCategory className="text-light">
-                                            {props.categoryAbbreviation}
+                                            {categoryAbbreviation}
                                         </CardCategory>
                                     </div>
                                 </CardStatistic>
@@ -107,7 +108,7 @@ const StatCard = (props: Props) => {
                         </StatCardBody>
                     );
                 })}
-                <Footer footerText={props.footerText} />
+                <Footer footerText={footerText} />
             </Card>
         </div>
     );

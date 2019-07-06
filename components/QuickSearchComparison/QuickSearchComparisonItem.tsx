@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Button, Row } from "react-bootstrap";
 import styled from "styled-components";
 import teamLogos from "../../helpers/TeamLogos";
@@ -84,59 +84,37 @@ interface Props {
     isLoading: boolean;
 }
 
-interface State {}
+const QuickSearchComparisonItem = (props: Props) => {
+    const { onClick, quickSearchDisabled, players, isLoading } = props;
+    const playerContext = useContext(PlayersInfoContext);
 
-export default class QuickSearchComparisonItem extends React.Component<
-    Props,
-    State
-> {
-    public static contextType = PlayersInfoContext;
-    constructor({ props, state }: { props: Props; state: State }) {
-        super(props, state);
-        this.state = {};
+    if (isLoading) {
+        return null;
     }
 
-    public render() {
-        let quickSearch;
-        if (this.props.isLoading) {
-            quickSearch = null;
-        } else {
-            quickSearch = (
-                <StyledButton
-                    disabled={this.props.quickSearchDisabled}
-                    onClick={() => {
-                        this.props.onClick(this.props.players);
-                    }}>
-                    <Row>
-                        <TeamIconLeft
-                            src={
-                                teamLogos[
-                                    this.props.players[0].team.abbreviation
-                                ]
-                            }
-                        />
-                        <div className="align-self-center">
-                            <ButtonText>
-                                {`${this.props.players[0].first_name}
-                                ${this.props.players[0].last_name}`}
-                            </ButtonText>
-                            <ButtonText>vs</ButtonText>
-                            <ButtonText>
-                                {`${this.props.players[1].first_name}
-                                ${this.props.players[1].last_name}`}
-                            </ButtonText>
-                        </div>
-                        <TeamIconRight
-                            src={
-                                teamLogos[
-                                    this.props.players[1].team.abbreviation
-                                ]
-                            }
-                        />
-                    </Row>
-                </StyledButton>
-            );
-        }
-        return quickSearch;
-    }
-}
+    return (
+        <StyledButton
+            disabled={quickSearchDisabled}
+            onClick={() => {
+                onClick(players);
+            }}>
+            <Row>
+                <TeamIconLeft src={teamLogos[players[0].team.abbreviation]} />
+                <div className="align-self-center">
+                    <ButtonText>
+                        {`${players[0].first_name}
+                    ${players[0].last_name}`}
+                    </ButtonText>
+                    <ButtonText>vs</ButtonText>
+                    <ButtonText>
+                        {`${players[1].first_name}
+                    ${players[1].last_name}`}
+                    </ButtonText>
+                </div>
+                <TeamIconRight src={teamLogos[players[1].team.abbreviation]} />
+            </Row>
+        </StyledButton>
+    );
+};
+
+export default QuickSearchComparisonItem;

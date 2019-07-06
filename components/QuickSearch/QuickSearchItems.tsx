@@ -60,21 +60,19 @@ export default class QuickSearchItems extends React.Component<Props, State> {
     }
 
     public render() {
-        let quickSearch;
         if (this.state.isLoading) {
-            quickSearch = null;
-        } else {
-            quickSearch = this.state.players.map(player => (
-                <QuickSearchItem
-                    key={player.id}
-                    player={player}
-                    isLoading={this.state.isLoading}
-                    onClick={() => {
-                        this.props.onClick(player);
-                    }}
-                />
-            ));
+            return null;
         }
-        return quickSearch;
+
+        return this.state.players.map(player => (
+            <QuickSearchItem
+                key={player.id}
+                player={player}
+                isLoading={this.state.isLoading}
+                onClick={() => {
+                    this.props.onClick(player);
+                }}
+            />
+        ));
     }
 }

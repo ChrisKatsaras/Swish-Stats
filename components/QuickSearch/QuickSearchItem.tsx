@@ -84,37 +84,30 @@ interface Props {
 }
 
 const QuickSearchItem = (props: Props) => {
+    const { onClick, player, isLoading } = props;
+
     const playerContext = useContext(PlayersInfoContext);
 
-    const isQuickSearchDisabled = () => {
-        if (playerContext.playersInfo.length >= 10) {
-            return true;
-        }
-        return false;
-    };
-
-    let quickSearch;
-    if (props.isLoading) {
-        quickSearch = null;
-    } else {
-        quickSearch = (
-            <StyledButton
-                disabled={isQuickSearchDisabled()}
-                onClick={() => props.onClick(props.player)}
-                key={props.player.id}>
-                <ButtonContent>
-                    <TeamIcon src={teamLogos[props.player.team.abbreviation]} />
-                    <div className="align-self-center">
-                        <ButtonText>
-                            {`${props.player.first_name}
-                                ${props.player.last_name}`}
-                        </ButtonText>
-                    </div>
-                </ButtonContent>
-            </StyledButton>
-        );
+    if (isLoading) {
+        return null;
     }
-    return quickSearch;
+
+    return (
+        <StyledButton
+            disabled={playerContext.playersInfo.length >= 10}
+            onClick={() => onClick(player)}
+            key={player.id}>
+            <ButtonContent>
+                <TeamIcon src={teamLogos[player.team.abbreviation]} />
+                <div className="align-self-center">
+                    <ButtonText>
+                        {`${player.first_name}
+                                ${player.last_name}`}
+                    </ButtonText>
+                </div>
+            </ButtonContent>
+        </StyledButton>
+    );
 };
 
 export default QuickSearchItem;

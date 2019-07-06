@@ -64,7 +64,7 @@ interface State {
 
 export default class Search extends React.Component<Props, State> {
     public static contextType = PlayersInfoContext;
-    public handleSearch = debounce(1000, query => {
+    public handleSearch = debounce(1, query => {
         this.setState({ isLoading: true });
         fetch(`https://www.balldontlie.io/api/v1/players?search=${query}`)
             .then(resp => resp.json())
@@ -106,6 +106,8 @@ export default class Search extends React.Component<Props, State> {
     }
 
     public render() {
+        const { searchPlayer } = this.props;
+
         return (
             <StyledSearch
                 id="Search"
@@ -117,7 +119,7 @@ export default class Search extends React.Component<Props, State> {
                 isLoading={this.state.isLoading}
                 minLength={3}
                 onSearch={this.handleSearch}
-                onChange={e => this.props.searchPlayer(e)}
+                onChange={e => searchPlayer(e)}
                 placeholder="Search Player Name"
                 options={this.state.options}
                 renderMenuItemChildren={(option: Player) => (

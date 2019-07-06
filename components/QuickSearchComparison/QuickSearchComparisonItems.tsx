@@ -66,6 +66,7 @@ export default class QuickSearchComparisonItems extends React.Component<
     }
 
     public render() {
+        const { onClick } = this.props;
         let quickSearch;
         if (this.state.isLoading) {
             quickSearch = null;
@@ -77,7 +78,7 @@ export default class QuickSearchComparisonItems extends React.Component<
                     quickSearchDisabled={false}
                     isLoading={this.state.isLoading}
                     onClick={() => {
-                        this.props.onClick(player);
+                        onClick(player);
                     }}
                 />
             ));
