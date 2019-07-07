@@ -38,21 +38,24 @@ interface Props {
     onClick: (player: number) => void;
 }
 
-const PlayerChip = (props: Props) => (
-    <PlayerBadge
-        pill
-        onClick={() => {
-            props.onClick(props.player.id);
-        }}>
-        <Row>
-            <TeamIcon src={teamLogos[props.player.team.abbreviation]} />
-            <BadgeText className="align-self-center">
-                {`${props.player.first_name}
-                         ${props.player.last_name}`}
-            </BadgeText>
-            <RemoveIcon className="align-self-center" color="white" />
-        </Row>
-    </PlayerBadge>
-);
+const PlayerChip = (props: Props) => {
+    const { player, onClick } = props;
+    return (
+        <PlayerBadge
+            pill
+            onClick={() => {
+                onClick(player.id);
+            }}>
+            <Row>
+                <TeamIcon src={teamLogos[player.team.abbreviation]} />
+                <BadgeText className="align-self-center">
+                    {`${player.first_name}
+                         ${player.last_name}`}
+                </BadgeText>
+                <RemoveIcon className="align-self-center" color="white" />
+            </Row>
+        </PlayerBadge>
+    );
+};
 
 export default PlayerChip;

@@ -86,7 +86,6 @@ interface Props {
 
 const QuickSearchComparisonItem = (props: Props) => {
     const { onClick, quickSearchDisabled, players, isLoading } = props;
-    const playerContext = useContext(PlayersInfoContext);
 
     if (isLoading) {
         return null;

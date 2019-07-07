@@ -51,25 +51,6 @@ const Header = (props: Props) => {
         playerContext.addPlayerInfo(players);
     };
 
-    let searchBar = null;
-
-    if (props.router.route !== "/") {
-        searchBar = (
-            <React.Fragment>
-                <StyledToggle />
-                <Navbar.Collapse
-                    className="justify-content-end"
-                    id="basic-navbar-nav">
-                    <Nav.Item className="justify-content-end fill my-1 mr-sm-2">
-                        <div className="input-group">
-                            <Search searchPlayer={searchPlayer} />
-                        </div>
-                    </Nav.Item>
-                </Navbar.Collapse>
-            </React.Fragment>
-        );
-    }
-
     return (
         <StyledHeader className="navbar" variant="dark" expand="sm">
             <Navbar.Brand>
@@ -84,7 +65,20 @@ const Header = (props: Props) => {
                     </Link>
                 )}
             </Nav.Item>
-            {searchBar}
+            {props.router.route !== "/" && (
+                <React.Fragment>
+                    <StyledToggle />
+                    <Navbar.Collapse
+                        className="justify-content-end"
+                        id="basic-navbar-nav">
+                        <Nav.Item className="justify-content-end fill my-1 mr-sm-2">
+                            <div className="input-group">
+                                <Search searchPlayer={searchPlayer} />
+                            </div>
+                        </Nav.Item>
+                    </Navbar.Collapse>
+                </React.Fragment>
+            )}
         </StyledHeader>
     );
 };

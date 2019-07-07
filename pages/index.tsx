@@ -30,47 +30,39 @@ interface State {
     quickSearchDisabled: boolean;
 }
 
-export default class Index extends React.Component<{}, State> {
+export default class Index extends React.Component {
     public static contextType = PlayersInfoContext;
 
-    constructor(props: {}, state: State) {
-        super(props, state);
-        this.state = {
-            isLoading: true,
-            players: [],
-            quickSearchDisabled: true
-        };
-        this.searchPlayer = this.searchPlayer.bind(this);
-        this.quickSearchPlayer = this.quickSearchPlayer.bind(this);
-        this.quickSearchPlayerComparison = this.quickSearchPlayerComparison.bind(
-            this
-        );
-    }
-
-    public searchPlayer(players: Player[]) {
-        this.context.addPlayerInfo(players);
-        Router.push({
-            pathname: "/results"
-        });
-    }
-
-    public quickSearchPlayer(player: Player) {
-        this.context.addPlayerInfo([player]);
-
-        Router.push({
-            pathname: "/results"
-        });
-    }
-
-    public quickSearchPlayerComparison(players: Player[]) {
-        this.context.setPlayersInfo(players);
-
-        Router.push({
-            pathname: "/results"
-        });
-    }
+    public state = {
+        isLoading: true,
+        players: [],
+        quickSearchDisabled: true
+    };
 
     public render() {
+        const searchPlayer = (players: Player[]) => {
+            this.context.addPlayerInfo(players);
+            Router.push({
+                pathname: "/results"
+            });
+        };
+
+        const quickSearchPlayer = (player: Player) => {
+            this.context.addPlayerInfo([player]);
+
+            Router.push({
+                pathname: "/results"
+            });
+        };
+
+        const quickSearchPlayerComparison = (players: Player[]) => {
+            this.context.setPlayersInfo(players);
+
+            Router.push({
+                pathname: "/results"
+            });
+        };
+
         let limitWarning = null;
         if (this.context.playersInfo.length >= playerLimit) {
             limitWarning = (
@@ -88,19 +80,19 @@ export default class Index extends React.Component<{}, State> {
                     <H1 className="display-4 text-light">Swish Stats</H1>
                 </div>
                 <div className="col-lg-5 my-5 container">
-                    <Search searchPlayer={this.searchPlayer} />
+                    <Search searchPlayer={searchPlayer} />
                 </div>
                 <H4 className="display-12 text-light">Quick Search</H4>
                 {limitWarning}
                 <Row className="col-sm-12 justify-content-center">
                     <QuickSearchItems
-                        onClick={this.quickSearchPlayer}
+                        onClick={quickSearchPlayer}
                         numberOfItems={5}
                     />
                 </Row>
                 <Row className="col-sm-12 justify-content-center">
                     <QuickSearchComparisonItems
-                        onClick={this.quickSearchPlayerComparison}
+                        onClick={quickSearchPlayerComparison}
                         numberOfItems={4}
                     />
                 </Row>
