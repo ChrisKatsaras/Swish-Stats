@@ -1,13 +1,8 @@
 import React from "react";
 import playersData from "../../data/players";
-import { importTeamLogos } from "../../helpers/image.helper";
 import { Player } from "../../models/player";
 import { PlayersInfoContext } from "../PlayersProvider";
 import QuickSearchItem from "./QuickSearchItem";
-
-const teamLogos: { [key: string]: string } = importTeamLogos(
-    require.context("../../static", false, /\.(svg)$/)
-);
 
 interface Props {
     onClick: (player: Player) => void;
@@ -41,44 +36,43 @@ export default class QuickSearchItems extends React.Component<Props, State> {
     }
 
     public getRandomPlayerList(length: number): Player[] {
-        const result = [];
-
+        const playerList = [];
+        let remainingItems = length;
         // Remove players that are already being searched for
         const filteredPlayerData = playersData.filter(
             player => !this.context.playersInfo.includes(player)
         );
-        let len = filteredPlayerData.length;
+        let playerDataLength = filteredPlayerData.length;
         const taken: number[] = [];
 
-        while (length--) {
-            const x = Math.floor(Math.random() * len);
-            result[length] = filteredPlayerData[x in taken ? taken[x] : x];
-            taken[x] = --len in taken ? taken[len] : len;
+        while (remainingItems > 0) {
+            const x = Math.floor(Math.random() * playerDataLength);
+            playerList[remainingItems] =
+                filteredPlayerData[x in taken ? taken[x] : x];
+            taken[x] =
+                --playerDataLength in taken
+                    ? taken[playerDataLength]
+                    : playerDataLength;
+            remainingItems -= 1;
         }
 
-        return result;
-    }
-
-    public getTeamLogo(team: string) {
-        return teamLogos[team];
+        return playerList;
     }
 
     public render() {
-        let quickSearch;
         if (this.state.isLoading) {
-            quickSearch = null;
-        } else {
-            quickSearch = this.state.players.map(player => (
-                <QuickSearchItem
-                    key={player.id}
-                    player={player}
-                    isLoading={this.state.isLoading}
-                    onClick={() => {
-                        this.props.onClick(player);
-                    }}
-                />
-            ));
+            return null;
         }
-        return quickSearch;
+
+        return this.state.players.map(player => (
+            <QuickSearchItem
+                key={player.id}
+                player={player}
+                isLoading={this.state.isLoading}
+                onClick={() => {
+                    this.props.onClick(player);
+                }}
+            />
+        ));
     }
 }

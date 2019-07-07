@@ -9,4 +9,5 @@ export interface Player {
     height_inches: number;
     weight_pounds: number;
     team: Team;
+    teamColor?: string;
 }

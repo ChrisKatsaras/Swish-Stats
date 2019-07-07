@@ -4,15 +4,37 @@ import * as React from "react";
 import { AsyncTypeahead } from "react-bootstrap-typeahead";
 import styled from "styled-components";
 import { debounce } from "throttle-debounce";
-import { importTeamLogos } from "../helpers/image.helper";
+import teamLogos from "../helpers/TeamLogos";
 import { Player } from "../models/player";
 import { PlayersInfoContext } from "./PlayersProvider";
 
-const TeamBadge = styled.div.attrs({
-    style: (props: any) => ({
-        background: props.bg
-    })
-})`
+const StyledSearch = styled(AsyncTypeahead)`
+    &&& {
+        border-radius: 30px;
+        min-width: 275px;
+        > .form-control: {
+            border-radius: 30px;
+        }
+        > .rbt-input-main: {
+            border-radius: 30px;
+        }
+
+        &:nth-child(1) {
+            > :nth-child(1) {
+                > :nth-child(1) {
+                    border-radius: 20px;
+                }
+            }
+        }
+    }
+`;
+
+interface TeamBadgeProps {
+    background: string;
+}
+const TeamBadge = styled.div.attrs((props: TeamBadgeProps) => ({
+    style: { background: props.background }
+}))`
     color: white;
 `;
 
@@ -20,11 +42,10 @@ const TeamLogo = styled.img`
     max-height: 50px;
 `;
 
-const teamLogos: { [key: string]: string } = importTeamLogos(
-    require.context("../static", false, /\.(svg)$/)
-);
-
-const filterByCallback = function callback(option: Player, props: any) {
+const filterByCallback = function callback(
+    option: Player,
+    props: any
+): boolean {
     return (
         props.text.toLowerCase().indexOf(option.first_name.toLowerCase()) !==
             -1 ||
@@ -43,7 +64,7 @@ interface State {
 
 export default class Search extends React.Component<Props, State> {
     public static contextType = PlayersInfoContext;
-    public handleSearch = debounce(1000, query => {
+    public handleSearch = debounce(1, query => {
         this.setState({ isLoading: true });
         fetch(`https://www.balldontlie.io/api/v1/players?search=${query}`)
             .then(resp => resp.json())
@@ -71,26 +92,24 @@ export default class Search extends React.Component<Props, State> {
 
     public setTeamColours(searchData: Player[]) {
         searchData.forEach(element => {
-            element.colour = getMainColor(element.team.abbreviation);
+            element.teamColor = getMainColor(element.team.abbreviation).hex;
         });
 
         this.setState({ options: searchData });
     }
 
-    public getTeamLogo(team: string) {
-        return teamLogos[team];
-    }
-
     public isSearchDisabled() {
-        if (this.context.playersInfo.length >= 4) {
+        if (this.context.playersInfo.length >= 10) {
             return true;
         }
         return false;
     }
 
     public render() {
+        const { searchPlayer } = this.props;
+
         return (
-            <AsyncTypeahead
+            <StyledSearch
                 id="Search"
                 filterBy={filterByCallback}
                 disabled={this.isSearchDisabled()}
@@ -100,22 +119,25 @@ export default class Search extends React.Component<Props, State> {
                 isLoading={this.state.isLoading}
                 minLength={3}
                 onSearch={this.handleSearch}
-                onChange={e => this.props.searchPlayer(e)}
+                onChange={e => searchPlayer(e)}
                 placeholder="Search Player Name"
                 options={this.state.options}
-                renderMenuItemChildren={option => (
+                renderMenuItemChildren={(option: Player) => (
                     <div className="col-xs-*">
                         {option.first_name} {option.last_name}
                         <div>
                             <TeamLogo
-                                src={this.getTeamLogo(option.team.abbreviation)}
+                                src={teamLogos[option.team.abbreviation]}
                             />
-                            <TeamBadge className="badge" bg={option.colour.hex}>
+                            <TeamBadge
+                                className="badge"
+                                background={option.teamColor}>
                                 {option.team.full_name}
                             </TeamBadge>
                         </div>
                     </div>
                 )}
+                style={{ borderRadius: "30px" }}
             />
         );
     }

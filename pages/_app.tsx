@@ -27,7 +27,7 @@ export default class Application extends App<Props, State> {
         };
     }
 
-    public trackPageView(url) {
+    public trackPageView(url: string) {
         try {
             window.gtag("config", "UA-142981522-1", {
                 page_location: url

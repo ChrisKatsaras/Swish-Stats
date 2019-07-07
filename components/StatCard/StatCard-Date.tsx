@@ -7,8 +7,13 @@ const StyledDate = styled.p`
     margin-top: 0px;
 `;
 
-const CardDate = (props: any) => (
-    <StyledDate className="text-light">{props.date}</StyledDate>
-);
+interface Props {
+    date: string;
+}
+
+const CardDate = (props: Props) => {
+    const { date } = props;
+    return <StyledDate className="text-light">{date}</StyledDate>;
+};
 
 export default CardDate;

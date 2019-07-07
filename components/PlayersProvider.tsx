@@ -1,7 +1,14 @@
 import React, { Component } from "react";
 import { Player } from "../models/player";
 
-const PlayersInfoContext = React.createContext({});
+interface ContextProps {
+    playersInfo: Player[];
+    addPlayerInfo: (players: Player[]) => void;
+    setPlayersInfo: (players: Player[]) => void;
+    removePlayerInfo: (playerId: number) => void;
+}
+
+const PlayersInfoContext = React.createContext({} as ContextProps);
 
 interface State {
     playersInfo: Player[];

@@ -7,8 +7,14 @@ const StyledFooter = styled.div`
     color: white;
 `;
 
-const Footer = (props: any) => (
-    <StyledFooter className="card-footer">{props.footerText}</StyledFooter>
+interface Props {
+    footerText: string;
+}
+
+const Footer = (props: Props) => (
+    <StyledFooter className="card-footer text-center">
+        {props.footerText}
+    </StyledFooter>
 );
 
 export default Footer;

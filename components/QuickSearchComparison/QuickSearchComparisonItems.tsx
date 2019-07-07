@@ -1,13 +1,8 @@
 import React from "react";
 import playersData from "../../data/players";
-import { importTeamLogos } from "../../helpers/image.helper";
 import { Player } from "../../models/player";
 import { PlayersInfoContext } from "../PlayersProvider";
 import QuickSearchComparisonItem from "./QuickSearchComparisonItem";
-
-const teamLogos: { [key: string]: string } = importTeamLogos(
-    require.context("../../static", false, /\.(svg)$/)
-);
 
 interface Props {
     onClick: (player: Player[]) => void;
@@ -70,11 +65,8 @@ export default class QuickSearchComparisonItems extends React.Component<
         return result;
     }
 
-    public getTeamLogo(team: string) {
-        return teamLogos[team];
-    }
-
     public render() {
+        const { onClick } = this.props;
         let quickSearch;
         if (this.state.isLoading) {
             quickSearch = null;
@@ -86,7 +78,7 @@ export default class QuickSearchComparisonItems extends React.Component<
                     quickSearchDisabled={false}
                     isLoading={this.state.isLoading}
                     onClick={() => {
-                        this.props.onClick(player);
+                        onClick(player);
                     }}
                 />
             ));
