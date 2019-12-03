@@ -700,5 +700,77 @@ export default [
             name: "Lakers"
         },
         weight_pounds: 253
+    },
+    {
+        id: 228,
+        first_name: "Kyrie",
+        height_feet: 6,
+        height_inches: 3,
+        last_name: "Irving",
+        position: "G",
+        team: {
+            id: 3,
+            abbreviation: "BKN",
+            city: "Brooklyn",
+            conference: "East",
+            division: "Atlantic",
+            full_name: "Brooklyn Nets",
+            name: "Nets"
+        },
+        weight_pounds: 193
+    },
+    {
+        id: 666786,
+        first_name: "Ja",
+        height_feet: null,
+        height_inches: null,
+        last_name: "Morant",
+        position: "G",
+        team: {
+            id: 15,
+            abbreviation: "MEM",
+            city: "Memphis",
+            conference: "West",
+            division: "Southwest",
+            full_name: "Memphis Grizzlies",
+            name: "Grizzlies"
+        },
+        weight_pounds: null
+    },
+    {
+        id: 335,
+        first_name: "Jamal",
+        height_feet: 6,
+        height_inches: 4,
+        last_name: "Murray",
+        position: "G",
+        team: {
+            id: 8,
+            abbreviation: "DEN",
+            city: "Denver",
+            conference: "West",
+            division: "Northwest",
+            full_name: "Denver Nuggets",
+            name: "Nuggets"
+        },
+        weight_pounds: 207
+    },
+    {
+        id: 175,
+        first_name: "Shai",
+        height_feet: 6,
+        height_inches: 6,
+        last_name: "Gilgeous-Alexander",
+        position: "G",
+        team: {
+            id: 21,
+            abbreviation: "OKC",
+            city: "Oklahoma City",
+            conference: "West",
+            division: "Northwest",
+            full_name: "Oklahoma City Thunder",
+            name: "Thunder"
+        },
+        weight_pounds: 181
     }
 ];
