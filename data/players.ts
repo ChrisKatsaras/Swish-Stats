@@ -61,13 +61,13 @@ export default [
         last_name: "Leonard",
         position: "F",
         team: {
-            id: 28,
-            abbreviation: "TOR",
-            city: "Toronto",
-            conference: "East",
-            division: "Atlantic",
-            full_name: "Toronto Raptors",
-            name: "Raptors"
+            id: 13,
+            abbreviation: "LAC",
+            city: "LA",
+            conference: "West",
+            division: "Pacific",
+            full_name: "LA Clippers",
+            name: "Clippers"
         },
         weight_pounds: 230
     },
@@ -133,13 +133,13 @@ export default [
         last_name: "Westbrook",
         position: "G",
         team: {
-            id: 21,
-            abbreviation: "OKC",
-            city: "Oklahoma City",
+            id: 11,
+            abbreviation: "HOU",
+            city: "Houston",
             conference: "West",
-            division: "Northwest",
-            full_name: "Oklahoma City Thunder",
-            name: "Thunder"
+            division: "Southwest",
+            full_name: "Houston Rockets",
+            name: "Rockets"
         },
         weight_pounds: 200
     },
@@ -151,13 +151,13 @@ export default [
         last_name: "George",
         position: "F",
         team: {
-            id: 21,
-            abbreviation: "OKC",
-            city: "Oklahoma City",
+            id: 13,
+            abbreviation: "LAC",
+            city: "LA",
             conference: "West",
-            division: "Northwest",
-            full_name: "Oklahoma City Thunder",
-            name: "Thunder"
+            division: "Pacific",
+            full_name: "LA Clippers",
+            name: "Clippers"
         },
         weight_pounds: 220
     },
@@ -493,13 +493,13 @@ export default [
         last_name: "Richardson",
         position: "G-F",
         team: {
-            id: 16,
-            abbreviation: "MIA",
-            city: "Miami",
+            id: 23,
+            abbreviation: "PHI",
+            city: "Philadelphia",
             conference: "East",
-            division: "Southeast",
-            full_name: "Miami Heat",
-            name: "Heat"
+            division: "Atlantic",
+            full_name: "Philadelphia 76ers",
+            name: "76ers"
         },
         weight_pounds: 200
     },
@@ -547,13 +547,13 @@ export default [
         last_name: "Russell",
         position: "G",
         team: {
-            id: 3,
-            abbreviation: "BKN",
-            city: "Brooklyn",
-            conference: "East",
-            division: "Atlantic",
-            full_name: "Brooklyn Nets",
-            name: "Nets"
+            id: 10,
+            abbreviation: "GSW",
+            city: "Golden State",
+            conference: "West",
+            division: "Pacific",
+            full_name: "Golden State Warriors",
+            name: "Warriors"
         },
         weight_pounds: 198
     },
@@ -565,13 +565,13 @@ export default [
         last_name: "Walker",
         position: "G",
         team: {
-            id: 4,
-            abbreviation: "CHA",
-            city: "Charlotte",
+            id: 2,
+            abbreviation: "BOS",
+            city: "Boston",
             conference: "East",
-            division: "Southeast",
-            full_name: "Charlotte Hornets",
-            name: "Hornets"
+            division: "Atlantic",
+            full_name: "Boston Celtics",
+            name: "Celtics"
         },
         weight_pounds: 184
     },
@@ -610,24 +610,6 @@ export default [
             name: "Wizards"
         },
         weight_pounds: 207
-    },
-    {
-        id: 421,
-        first_name: "Dennis",
-        height_feet: 6,
-        height_inches: 3,
-        last_name: "Smith Jr.",
-        position: "G",
-        team: {
-            id: 20,
-            abbreviation: "NYK",
-            city: "New York",
-            conference: "East",
-            division: "Atlantic",
-            full_name: "New York Knicks",
-            name: "Knicks"
-        },
-        weight_pounds: 195
     },
     {
         id: 268,
@@ -700,5 +682,23 @@ export default [
             name: "Pelicans"
         },
         weight_pounds: 205
+    },
+    {
+        id: 117,
+        first_name: "Anthony",
+        height_feet: 6,
+        height_inches: 10,
+        last_name: "Davis",
+        position: "F-C",
+        team: {
+            id: 14,
+            abbreviation: "LAL",
+            city: "Los Angeles",
+            conference: "West",
+            division: "Pacific",
+            full_name: "Los Angeles Lakers",
+            name: "Lakers"
+        },
+        weight_pounds: 253
     }
 ];
