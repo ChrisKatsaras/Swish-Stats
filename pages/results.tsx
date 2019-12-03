@@ -8,6 +8,7 @@ import { PlayersInfoContext } from "../components/PlayersProvider";
 import StatCard from "../components/StatCard/StatCard";
 import { getPlayersSeasonAverages } from "../helpers/stat.helper";
 import { Player } from "../models/player";
+import { getCurrentSeasonYear } from "../helpers/date.helper";
 
 const ResultsPage = styled.div`
     background: ${props => props.theme.primary};
@@ -28,6 +29,8 @@ const Loader = styled.div`
     bottom: 0;
     right: 0;
 `;
+
+const currentYear = getCurrentSeasonYear();
 
 interface State {
     playerSeasonAverages: any;
@@ -60,7 +63,7 @@ export default class Results extends React.Component<{}, State> {
 
         if (this.context.playersInfo.length > 0) {
             this.setState({ isLoading: true });
-            getPlayersSeasonAverages(2018, playerIds).then(res => {
+            getPlayersSeasonAverages(currentYear, playerIds).then(res => {
                 this.setState({ playerSeasonAverages: res });
                 this.setState({ isLoading: false });
             });
@@ -86,7 +89,7 @@ export default class Results extends React.Component<{}, State> {
             this.setState({ playerIds });
             if (this.context.playersInfo.length > 0) {
                 this.setState({ isLoading: true });
-                getPlayersSeasonAverages(2018, playerIds).then(res => {
+                getPlayersSeasonAverages(currentYear, playerIds).then(res => {
                     this.setState({ playerSeasonAverages: res });
                     this.setState({ isLoading: false });
                 });

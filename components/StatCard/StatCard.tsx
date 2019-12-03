@@ -7,6 +7,7 @@ import { PlayersInfoContext } from "../PlayersProvider";
 import CardDate from "./StatCard-Date";
 import StatCardDivider from "./StatCard-Divider";
 import Footer from "./StatCard-Footer";
+import { getCurrentSeasonYear } from "../../helpers/date.helper";
 
 const Card = styled.div`
     background: ${props => props.theme.secondary};
@@ -44,6 +45,11 @@ const CardCategory = styled.p`
     margin-bottom: 0px;
     margin-top: -10px;
 `;
+
+function formatDateHeader() {
+    const currentYear = getCurrentSeasonYear();
+    return `${currentYear} / ${currentYear + 1}`;
+}
 
 interface Props {
     footerText: string;
@@ -94,7 +100,7 @@ const StatCard = (props: Props) => {
                                 </CardInfo>
                                 <CardStatistic className="col-4">
                                     <div className="column">
-                                        <CardDate date="2018 / 2019" />
+                                        <CardDate date={formatDateHeader()} />
                                         <h3 className="h3 text-light">
                                             {stat.stat}
                                         </h3>
