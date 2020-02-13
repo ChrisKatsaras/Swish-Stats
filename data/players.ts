@@ -241,13 +241,13 @@ export default [
         last_name: "Drummond",
         position: "C",
         team: {
-            id: 9,
-            abbreviation: "DET",
-            city: "Detroit",
+            id: 6,
+            abbreviation: "CLE",
+            city: "Cleveland",
             conference: "East",
             division: "Central",
-            full_name: "Detroit Pistons",
-            name: "Pistons"
+            full_name: "Cleveland Cavaliers",
+            name: "Cavaliers"
         },
         weight_pounds: 279
     },
@@ -547,13 +547,13 @@ export default [
         last_name: "Russell",
         position: "G",
         team: {
-            id: 10,
-            abbreviation: "GSW",
-            city: "Golden State",
+            id: 18,
+            abbreviation: "MIN",
+            city: "Minnesota",
             conference: "West",
-            division: "Pacific",
-            full_name: "Golden State Warriors",
-            name: "Warriors"
+            division: "Northwest",
+            full_name: "Minnesota Timberwolves",
+            name: "Timberwolves"
         },
         weight_pounds: 198
     },
