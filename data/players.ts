@@ -1,3 +1,5 @@
+import { Player } from "../models/player";
+
 export default [
     {
         id: 237,
@@ -722,8 +724,8 @@ export default [
     {
         id: 666786,
         first_name: "Ja",
-        height_feet: null,
-        height_inches: null,
+        height_feet: 6,
+        height_inches: 3,
         last_name: "Morant",
         position: "G",
         team: {
@@ -735,7 +737,7 @@ export default [
             full_name: "Memphis Grizzlies",
             name: "Grizzlies"
         },
-        weight_pounds: null
+        weight_pounds: 174
     },
     {
         id: 335,
@@ -773,4 +775,4 @@ export default [
         },
         weight_pounds: 181
     }
-];
+] as Player[];

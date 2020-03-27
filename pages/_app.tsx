@@ -1,10 +1,16 @@
-import App, { Container } from "next/app";
+import App from "next/app";
 import Router from "next/router";
 import React from "react";
 import { ThemeProvider } from "styled-components";
 import Layout from "../components/Layout";
 import PlayersInfoProvider from "../components/PlayersProvider";
 import { Player } from "../models/player";
+
+declare global {
+    interface Window {
+        gtag: any;
+    }
+}
 
 interface Props {
     pageProps: any;
@@ -22,9 +28,9 @@ export default class Application extends App<Props, State> {
     }
 
     public componentDidMount() {
-        Router.onRouteChangeComplete = url => {
+        Router.events.on("routeChangeComplete", url => {
             this.trackPageView(url);
-        };
+        });
     }
 
     public trackPageView(url: string) {
@@ -45,13 +51,11 @@ export default class Application extends App<Props, State> {
 
         return (
             <ThemeProvider theme={darkTheme}>
-                <Container>
-                    <PlayersInfoProvider>
-                        <Layout>
-                            <Component {...pageProps} />
-                        </Layout>
-                    </PlayersInfoProvider>
-                </Container>
+                <PlayersInfoProvider>
+                    <Layout>
+                        <Component {...pageProps} />
+                    </Layout>
+                </PlayersInfoProvider>
             </ThemeProvider>
         );
     }

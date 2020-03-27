@@ -1,9 +1,8 @@
 import React from "react";
-import playersData from "../../data/players";
+import PlayerData from "../../data/players";
 import { Player } from "../../models/player";
 import { PlayersInfoContext } from "../PlayersProvider";
 import QuickSearchItem from "./QuickSearchItem";
-
 interface Props {
     onClick: (player: Player) => void;
     numberOfItems: number;
@@ -36,11 +35,11 @@ export default class QuickSearchItems extends React.Component<Props, State> {
     }
 
     public getRandomPlayerList(length: number): Player[] {
-        const playerList = [];
-        let remainingItems = length;
+        const playerList: Player[] = [];
+        let remainingItems: number = length;
         // Remove players that are already being searched for
-        const filteredPlayerData = playersData.filter(
-            player => !this.context.playersInfo.includes(player)
+        const filteredPlayerData: Player[] = PlayerData.filter(
+            (player: Player) => !this.context.playersInfo.includes(player)
         );
         let playerDataLength = filteredPlayerData.length;
         const taken: number[] = [];

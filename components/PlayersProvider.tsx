@@ -14,7 +14,7 @@ interface State {
     playersInfo: Player[];
 }
 
-class PlayersInfoProvider extends Component<State> {
+class PlayersInfoProvider extends Component<{}, State> {
     constructor(state: State) {
         super(state);
 

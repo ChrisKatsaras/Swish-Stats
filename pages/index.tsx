@@ -24,12 +24,6 @@ const H4 = styled.h4`
     font-family: "Ubuntu", sans-serif;
 `;
 
-interface State {
-    isLoading: boolean;
-    players: Player[];
-    quickSearchDisabled: boolean;
-}
-
 export default class Index extends React.Component {
     public static contextType = PlayersInfoContext;
 

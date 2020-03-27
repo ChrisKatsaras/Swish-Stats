@@ -1,9 +1,8 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Button, Row } from "react-bootstrap";
 import styled from "styled-components";
 import teamLogos from "../../helpers/TeamLogos";
 import { Player } from "../../models/player";
-import { PlayersInfoContext } from "../PlayersProvider";
 
 const StyledButton = styled(Button)`
     &&& {

@@ -1,6 +1,6 @@
 import React from "react";
 import { Alert } from "react-bootstrap";
-import AlertTriangle from "react-feather/dist/icons/alert-triangle";
+import { AlertTriangle } from "react-feather";
 import styled from "styled-components";
 
 const StyledAlertTriangle = styled(AlertTriangle)`

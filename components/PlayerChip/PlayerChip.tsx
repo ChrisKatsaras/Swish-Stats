@@ -4,7 +4,6 @@ import { X } from "react-feather";
 import styled from "styled-components";
 import teamLogos from "../../helpers/TeamLogos";
 import { Player } from "../../models/player";
-import { PlayersInfoContext } from "../PlayersProvider";
 
 const TeamIcon = styled.img`
     max-height: 30px;

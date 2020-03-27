@@ -8,6 +8,13 @@ import teamLogos from "../helpers/TeamLogos";
 import { Player } from "../models/player";
 import { PlayersInfoContext } from "./PlayersProvider";
 
+// Workaround for custom attribute
+declare module "react" {
+    interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T> {
+        background?: string;
+    }
+}
+
 const StyledSearch = styled(AsyncTypeahead)`
     &&& {
         border-radius: 30px;
@@ -32,7 +39,7 @@ const StyledSearch = styled(AsyncTypeahead)`
 interface TeamBadgeProps {
     background: string;
 }
-const TeamBadge = styled.div.attrs((props: TeamBadgeProps) => ({
+const TeamBadge = styled.div.attrs<TeamBadgeProps>(props => ({
     style: { background: props.background }
 }))`
     color: white;
@@ -109,36 +116,42 @@ export default class Search extends React.Component<Props, State> {
         const { searchPlayer } = this.props;
 
         return (
-            <StyledSearch
-                id="Search"
-                filterBy={filterByCallback}
-                disabled={this.isSearchDisabled()}
-                labelKey={(option: Player) =>
-                    `${option.first_name} ${option.last_name}`
-                }
-                isLoading={this.state.isLoading}
-                minLength={3}
-                onSearch={this.handleSearch}
-                onChange={e => searchPlayer(e)}
-                placeholder="Search Player Name"
-                options={this.state.options}
-                renderMenuItemChildren={(option: Player) => (
-                    <div className="col-xs-*">
-                        {option.first_name} {option.last_name}
-                        <div>
-                            <TeamLogo
-                                src={teamLogos[option.team.abbreviation]}
-                            />
-                            <TeamBadge
-                                className="badge"
-                                background={option.teamColor}>
-                                {option.team.full_name}
-                            </TeamBadge>
+            <div>
+                {/*
+                // @ts-ignore */}
+                <StyledSearch
+                    id="Search"
+                    filterBy={filterByCallback}
+                    disabled={this.isSearchDisabled()}
+                    labelKey={(option: Player) =>
+                        `${option.first_name} ${option.last_name}`
+                    }
+                    isLoading={this.state.isLoading}
+                    minLength={3}
+                    onSearch={this.handleSearch}
+                    onChange={(e: any) => searchPlayer(e)}
+                    placeholder="Search Player Name"
+                    options={this.state.options}
+                    renderMenuItemChildren={(option: Player) => (
+                        <div className="col-xs-*">
+                            {option.first_name} {option.last_name}
+                            <div>
+                                <TeamLogo
+                                    src={teamLogos[option.team.abbreviation]}
+                                />
+                                {/*
+                                    // @ts-ignore */}
+                                <TeamBadge
+                                    background={option.teamColor}
+                                    className="badge">
+                                    {option.team.full_name}
+                                </TeamBadge>
+                            </div>
                         </div>
-                    </div>
-                )}
-                style={{ borderRadius: "30px" }}
-            />
+                    )}
+                    style={{ borderRadius: "30px" }}
+                />
+            </div>
         );
     }
 }
