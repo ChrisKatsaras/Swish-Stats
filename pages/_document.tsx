@@ -3,7 +3,7 @@ import React from "react";
 import { ServerStyleSheet } from "styled-components";
 
 export default class CustomDocument extends Document {
-    public static async getInitialProps(ctx) {
+    public static async getInitialProps(ctx: any) {
         const isProduction = process.env.NODE_ENV === "production";
         const sheet = new ServerStyleSheet();
         const originalRenderPage = ctx.renderPage;
@@ -11,7 +11,7 @@ export default class CustomDocument extends Document {
         try {
             ctx.renderPage = () =>
                 originalRenderPage({
-                    enhanceApp: App => props =>
+                    enhanceApp: (App: any) => (props: any) =>
                         sheet.collectStyles(<App {...props} />)
                 });
             const initialProps = await Document.getInitialProps(ctx);
@@ -43,7 +43,7 @@ export default class CustomDocument extends Document {
     }
 
     public render() {
-        const { isProduction } = this.props;
+        const isProduction = this.props;
 
         return (
             <html lang="en">
