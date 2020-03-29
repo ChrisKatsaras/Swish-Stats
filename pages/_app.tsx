@@ -1,3 +1,6 @@
+import "bootstrap/dist/css/bootstrap.css";
+import "react-bootstrap-typeahead/css/Typeahead.css";
+
 import App from "next/app";
 import Router from "next/router";
 import React from "react";

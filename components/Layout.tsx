@@ -1,7 +1,5 @@
-import "bootstrap/dist/css/bootstrap.css";
 import Head from "next/head";
 import * as React from "react";
-import "react-bootstrap-typeahead/css/Typeahead.css";
 import Header from "./Header";
 
 interface Props {
