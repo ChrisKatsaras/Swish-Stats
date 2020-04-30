@@ -21,7 +21,7 @@
         "babel-plugin-styled-components": "^1.10.7",
         "bootstrap": "^4.4.1",
         "isomorphic-unfetch": "^3.0.0",
-        "jquery": "^3.4.1",
+        "jquery": "^3.5.0",
         "nba-color": "^1.4.1",
         "next": "^9.3.2",
         "next-compose-plugins": "^2.2.0",
