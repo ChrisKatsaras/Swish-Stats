@@ -135,13 +135,13 @@ export default [
         last_name: "Westbrook",
         position: "G",
         team: {
-            id: 11,
-            abbreviation: "HOU",
-            city: "Houston",
-            conference: "West",
-            division: "Southwest",
-            full_name: "Houston Rockets",
-            name: "Rockets"
+            id: 30,
+            abbreviation: "WAS",
+            city: "Washington",
+            conference: "East",
+            division: "Southeast",
+            full_name: "Washington Wizards",
+            name: "Wizards"
         },
         weight_pounds: 200
     },
@@ -495,13 +495,13 @@ export default [
         last_name: "Richardson",
         position: "G-F",
         team: {
-            id: 23,
-            abbreviation: "PHI",
-            city: "Philadelphia",
-            conference: "East",
-            division: "Atlantic",
-            full_name: "Philadelphia 76ers",
-            name: "76ers"
+            id: 7,
+            abbreviation: "DAL",
+            city: "Dallas",
+            conference: "West",
+            division: "Southwest",
+            full_name: "Dallas Mavericks",
+            name: "Mavericks"
         },
         weight_pounds: 200
     },
@@ -639,13 +639,13 @@ export default [
         last_name: "Harrell",
         position: "F-C",
         team: {
-            id: 13,
-            abbreviation: "LAC",
-            city: "LA",
+            id: 14,
+            abbreviation: "LAL",
+            city: "Los Angeles",
             conference: "West",
             division: "Pacific",
-            full_name: "LA Clippers",
-            name: "Clippers"
+            full_name: "Los Angeles Lakers",
+            name: "Lakers"
         },
         weight_pounds: 240
     },
@@ -675,13 +675,13 @@ export default [
         last_name: "Holiday",
         position: "G",
         team: {
-            id: 19,
-            abbreviation: "NOP",
-            city: "New Orleans",
-            conference: "West",
-            division: "Southwest",
-            full_name: "New Orleans Pelicans",
-            name: "Pelicans"
+            id: 17,
+            abbreviation: "MIL",
+            city: "Milwaukee",
+            conference: "East",
+            division: "Central",
+            full_name: "Milwaukee Bucks",
+            name: "Bucks"
         },
         weight_pounds: 205
     },
